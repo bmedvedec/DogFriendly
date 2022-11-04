@@ -5,7 +5,7 @@ import styles from "../styles/layout.module.css";
 
 export default function Layout({ children, page }) {
 	return (
-		<>
+		<div styles={{height: "100%"}}>
 			<Head>
 				<title>{page === 'index' ? 'Dog Friendly' : 'Dog Friendly - ' + page}</title>
 				<meta
@@ -33,6 +33,6 @@ export default function Layout({ children, page }) {
 			{/* <Header /> */}
 			<main>{children}</main>
 			{/* <Footer /> */}
-		</>
+		</div>
 	);
 }
