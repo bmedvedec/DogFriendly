@@ -13,20 +13,20 @@ export default function Layout({ children, page }) {
 					content="Dog Friendly, a website for dog owners and dog lovers."
 				/>
 				{/* generics */}
-				<link rel="icon" href="/favicon.svg" sizes="32x32" />
-				<link rel="icon" href="/favicon.svg" sizes="128x128" />
-				<link rel="icon" href="/favicon.svg" sizes="180x180" />
-				<link rel="icon" href="/favicon.svg" sizes="192x192" />
+				<link rel="icon" href="/corgi.png" sizes="32x32" />
+				<link rel="icon" href="/corgi.png" sizes="128x128" />
+				<link rel="icon" href="/corgi.png" sizes="180x180" />
+				<link rel="icon" href="/corgi.png" sizes="192x192" />
 				{/* iOS */}
 				<link
 					rel="apple-touch-icon"
-					href="/favicon.svg"
+					href="/corgi.png"
 					sizes="180x180"
 				/>
 				{/* Android */}
 				<link
 					rel="shortcut icon"
-					href="/favicon.svg"
+					href="/corgi.png"
 					sizes="192x192"
 				/>
 			</Head>

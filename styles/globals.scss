@@ -75,3 +75,15 @@ button:hover {
   cursor: pointer;
   transition: 0.2s ease-in-out;
 }
+
+label {
+  font-family: 'Raleway';
+  margin-right: auto;
+  font-size: 1.2rem;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

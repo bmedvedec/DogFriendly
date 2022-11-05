@@ -3,10 +3,14 @@ import Layout from "../components/layout";
 import styles from "../styles/register.module.scss";
 import { useAuth } from "../lib/context";
 import { useRouter } from "next/router";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 export default function Register(params) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const [username, setUsername] = useState("");
 	const { firebaseCreateUserEmailPass } = useAuth();
 	const router = useRouter();
 
@@ -14,8 +18,18 @@ export default function Register(params) {
 		event.preventDefault();
 
 		firebaseCreateUserEmailPass(email, password)
-			.then((authUser) => {
+			.then(async (authUser) => {
 				//Signed in
+				try {
+					const docRef = await addDoc(collection(db, "users"), {
+						username: username,
+						email: email,
+					});
+					console.log("Document written with ID: ", docRef.id);
+				} catch (e) {
+					
+				}
+
 				router.push("/");
 				// ...
 			})
@@ -32,20 +46,52 @@ export default function Register(params) {
 				<form onSubmit={handleSubmit}>
 					<div className="card">
 						<h1>Register</h1>
-						<input
-							type="email"
-							value={email}
-							onChange={(event) => {
-								setEmail(event.target.value);
-							}}
-						/>
-						<input
-							type="password"
-							value={password}
-							onChange={(event) => {
-								setPassword(event.target.value);
-							}}
-						/>
+						<div className="input-container">
+							<label htmlFor="username">username:</label>
+							<input
+								name="username"
+								type="text"
+								value={username}
+								onChange={(event) =>
+									setUsername(event.target.value)
+								}
+							/>
+						</div>
+						<div className="input-container">
+							<label htmlFor="email">email:</label>
+							<input
+								name="email"
+								type="email"
+								value={email}
+								onChange={(event) => {
+									setEmail(event.target.value);
+								}}
+							/>
+						</div>
+						<div className="input-container">
+							<label htmlFor="password">password:</label>
+							<input
+								name="password"
+								type="password"
+								value={password}
+								onChange={(event) => {
+									setPassword(event.target.value);
+								}}
+							/>
+						</div>
+						<div className="input-container">
+							<label htmlFor="passwordconfirm">
+								confirm password:
+							</label>
+							<input
+								name="passwordconfirm"
+								type="password"
+								value={confirmPassword}
+								onChange={(event) => {
+									setConfirmPassword(event.target.value);
+								}}
+							/>
+						</div>
 						<input
 							className="button"
 							type="submit"
