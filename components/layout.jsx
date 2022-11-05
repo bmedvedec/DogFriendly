@@ -4,10 +4,16 @@ import Head from "next/head";
 import styles from "../styles/layout.module.css";
 
 export default function Layout({ children, page }) {
+	
+
 	return (
-		<div styles={{height: "100%"}}>
+		<div styles={{ height: "100%" }}>
 			<Head>
-				<title>{page === 'index' ? 'Dog Friendly' : 'Dog Friendly - ' + page}</title>
+				<title>
+					{page === "index"
+						? "Dog Friendly"
+						: "Dog Friendly - " + page}
+				</title>
 				<meta
 					name="description"
 					content="Dog Friendly, a website for dog owners and dog lovers."
@@ -24,11 +30,7 @@ export default function Layout({ children, page }) {
 					sizes="180x180"
 				/>
 				{/* Android */}
-				<link
-					rel="shortcut icon"
-					href="/corgi.png"
-					sizes="192x192"
-				/>
+				<link rel="shortcut icon" href="/corgi.png" sizes="192x192" />
 			</Head>
 			{/* <Header /> */}
 			<main>{children}</main>

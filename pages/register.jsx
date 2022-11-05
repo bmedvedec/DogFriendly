@@ -3,7 +3,7 @@ import Layout from "../components/layout";
 import styles from "../styles/register.module.scss";
 import { useAuth } from "../lib/context";
 import { useRouter } from "next/router";
-import { addDoc, collection } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
 export default function Register(params) {
@@ -11,31 +11,22 @@ export default function Register(params) {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [username, setUsername] = useState("");
-	const { firebaseCreateUserEmailPass } = useAuth();
+	const { authUser, firebaseCreateUserEmailPass } = useAuth();
 	const router = useRouter();
 
 	function handleSubmit(event) {
 		event.preventDefault();
 
-		firebaseCreateUserEmailPass(email, password)
+		firebaseCreateUserEmailPass(username, email, password)
 			.then(async (authUser) => {
 				//Signed in
-				try {
-					const docRef = await addDoc(collection(db, "users"), {
-						username: username,
-						email: email,
-					});
-					console.log("Document written with ID: ", docRef.id);
-				} catch (e) {
-					
-				}
-
 				router.push("/");
 				// ...
 			})
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
+				console.log(errorCode, errorMessage);
 				// ..
 			});
 	}
