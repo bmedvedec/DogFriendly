@@ -2,37 +2,33 @@ import Layout from "../components/layout";
 import { useAuth } from "../lib/context";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import {useEffect, useState} from "react";
 
+export default function userInfo() {
+    const { authUser, loading } = useAuth();
+    const [userInfo, setUserInfo] = useState(null);
 
-// export default function userInfo() {
-//     const { authUser, loading } = useAuth();
-//     console.log("user: ", authUser);
-//     return (
-//         <Layout>
-//             <h1>user info</h1>
-//             <p>{authUser ? authUser.uid : "no user"}</p>
-//         </Layout>
-//     );}
-const {authUser} = useAuth();
+    useEffect(() => {
+        if (authUser) {
+            const docRef = doc(db, "users", authUser.uid);
+            getDoc(docRef).then((doc) => {
+                if (doc.exists()) {
+                    setUserInfo(doc.data());
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+        }
+    }, [authUser]);
 
-const docRef = doc(db, "users", authUser.uid);
-
-export default async function userInfo() {
-    const docSnap = await getDoc(docRef);
-    console.log("user: ", docSnap.data());
-
-    const username = docSnap.get("username");
-    console.log("username: ", username);
-    const email = docSnap.get("email");
-
-    console.log("user: ", authUser);
     return (
         <Layout>
-            <h1>user info</h1>
-            <p>{authUser ? authUser.uid : "no user"}</p>
-            {/* <p>{username}</p>
-            <p>{email}</p> */}
+            <h1>User info</h1>
+            {userInfo && <p>{userInfo.username}</p>}
+            {userInfo && <p>{userInfo.email}</p>}
         </Layout>
-    );
+    )
 }
-
