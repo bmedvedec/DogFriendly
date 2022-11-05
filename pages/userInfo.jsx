@@ -5,7 +5,7 @@ import { db } from "../lib/firebase";
 import {useEffect, useState} from "react";
 
 export default function userInfo() {
-    const { authUser, loading } = useAuth();
+    const { authUser } = useAuth();
     const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
@@ -15,7 +15,6 @@ export default function userInfo() {
                 if (doc.exists()) {
                     setUserInfo(doc.data());
                 } else {
-                    // doc.data() will be undefined in this case
                     console.log("No such document!");
                 }
             }).catch((error) => {
