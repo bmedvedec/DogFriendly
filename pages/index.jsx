@@ -14,7 +14,7 @@ export default function Home() {
       <br/>
       <a href="/login">login</a>
       <br/>
-      <a href="/user">user</a>
+      <a href="/userInfo">user info</a>
       <br/>
       {authUser && !loading && <button onClick={firebaseSignOut}>sign out</button>}
     </Layout>
