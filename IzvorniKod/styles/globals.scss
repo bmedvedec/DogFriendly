@@ -1,0 +1,89 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Source Sans Pro';
+  height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Raleway'
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.card {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 2px solid black;
+  gap: 16px;
+}
+
+input {
+  padding: 8px 16px;
+  border-radius: 16px;
+  border: 2px solid black;
+  font-size: 1.1rem;
+  transition: 0.2s ease-in-out;
+}
+
+input:focus {
+  background: black;
+  color: white;
+  transition: 0.2s ease-in-out;
+}
+
+button {
+  padding: 8px 16px;
+  border-radius: 16px;
+  background: white;
+  font-size: 1.3rem;
+  transition: 0.2s ease-in-out;
+}
+
+button:hover {
+  background: black;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.button {
+  padding: 8px 16px;
+  border-radius: 16px;
+  background: white;
+  font-size: 1.3rem;
+  transition: 0.2s ease-in-out;
+}
+
+.button:hover {
+  background: black;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+label {
+  font-family: 'Raleway';
+  margin-right: auto;
+  font-size: 1.2rem;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
