@@ -6,6 +6,7 @@ import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	signOut,
+	sendEmailVerification,
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 
@@ -33,6 +34,7 @@ export const auth = getAuth(app);
 const formatAuthUser = (user) => ({
 	uid: user.uid,
 	email: user.email,
+	verified: user.verified
 });
 
 // hook koji vraća podatke o autentificiranom korisniku i funkcije za autentifikaciju
@@ -48,6 +50,7 @@ export function useFirebaseAuth() {
 		}
 
 		setLoading(true);
+		console.log("prije formattedUser", authState);
 		var formattedUser = formatAuthUser(authState);
 		setAuthUser(formattedUser);
 		setLoading(false);
@@ -63,21 +66,24 @@ export function useFirebaseAuth() {
 	};
 
 	const firebaseCreateUserEmailPass = async (username, email, password) => {
-		createUserWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
-			// Signed in
-			var user = userCredential.user;
-			console.log("registered", user.uid);
+		createUserWithEmailAndPassword(auth, email, password).then(
+			async (userCredential) => {
+				// Signed in
+				var user = userCredential.user;
+				console.log("registered", user.uid);
 				try {
 					console.log("setting doc");
 					await setDoc(doc(db, "users", user.uid), {
 						username: username,
 						email: email,
+						verified: false,
 					});
 				} catch (e) {
 					console.error("Error adding document: ", e);
 				}
-			// ...
-			});
+				await sendEmailVerification(user);
+			}
+		);
 	};
 
 	const firebaseSignOut = async () => {
