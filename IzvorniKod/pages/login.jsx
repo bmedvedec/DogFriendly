@@ -1,4 +1,4 @@
-import styles from "../styles/register.module.scss";
+import styles from "../styles/login.module.scss";
 import Layout from "../components/layout";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -6,10 +6,10 @@ import { useAuth } from "../lib/context";
 
 // funkcija za login sa emailom i passwordom koja prima parametre email i password u sklopu params objekta
 export default function Login(params) {
-    // inicijalizacija hook state-a za email i password
+  // inicijalizacija hook state-a za email i password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-    // inicijalizacija hook-a za autentifikaciju
+  // inicijalizacija hook-a za autentifikaciju
   const { firebaseEmailPassSignIn } = useAuth();
   const router = useRouter();
 
@@ -34,25 +34,62 @@ export default function Login(params) {
     <Layout page="Login">
       <div className={styles.container}>
         <form onSubmit={handleSubmit}>
-          <div className="card">
-            <h1>Login</h1>
-            <input
-              type="email"
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-            />
-            <input className="button" type="submit" value="Submit" />
+          <div className={styles.leftSide}>
+            <div className={styles.appName}>
+              <a href="/">
+                <p>
+                  <b>Dog Friendly</b>
+                </p>
+              </a>
+            </div>
+
+            <div className={styles.heading}>
+              <h1 className={styles.headingWelcome}>Welcome Back</h1>
+              <h2 className={styles.headingLogin}>Login</h2>
+            </div>
+
+            <div className="email-container">
+              <input
+                type="email"
+                value={email}
+                placeholder="email"
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
+              />
+            </div>
+
+            <div className="password-container">
+              <input
+                type="password"
+                value={password}
+                placeholder="password"
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                }}
+              />
+            </div>
+            <input className={styles.button} type="submit" value="Login" />
           </div>
         </form>
+
+        <div className={styles.rightSide}>
+          <div className={styles.signup}>
+            <p>
+              New User?{" "}
+              <a href="/register" className={styles.link}>
+                Sign up
+              </a>
+            </p>
+          </div>
+
+          <div className={styles.corgiContainer}>
+            <img src="/corgi.png" alt="corgi" className={styles.corgi} />
+            <p className={styles.text}>
+              <b>Discover</b> new places with your furry best friend.
+            </p>
+          </div>
+        </div>
       </div>
     </Layout>
   );
