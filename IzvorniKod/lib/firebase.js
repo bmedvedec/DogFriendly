@@ -34,7 +34,7 @@ export const auth = getAuth(app);
 const formatAuthUser = (user) => ({
 	uid: user.uid,
 	email: user.email,
-	verified: user.verified
+	verified: user.emailVerified
 });
 
 // hook koji vraća podatke o autentificiranom korisniku i funkcije za autentifikaciju
@@ -76,7 +76,6 @@ export function useFirebaseAuth() {
 					await setDoc(doc(db, "users", user.uid), {
 						username: username,
 						email: email,
-						verified: false,
 					});
 				} catch (e) {
 					console.error("Error adding document: ", e);
