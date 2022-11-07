@@ -36,9 +36,11 @@ export default function Login(params) {
         <form onSubmit={handleSubmit}>
           <div className={styles.leftSide}>
             <div className={styles.appName}>
-              <p>
-                <b>Dog Friendly</b>
-              </p>
+              <a href="/">
+                <p>
+                  <b>Dog Friendly</b>
+                </p>
+              </a>
             </div>
 
             <div className={styles.heading}>
