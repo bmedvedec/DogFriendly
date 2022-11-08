@@ -47,6 +47,7 @@ input {
 input:focus {
   border: 2px solid black;
   transition: 0.2s ease-in-out;
+  outline: none !important;
 }
 
 button {
