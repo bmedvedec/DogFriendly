@@ -4,26 +4,44 @@ import { useAuth } from "../../lib/context";
 import debounce from "lodash.debounce";
 import { collection, doc, getDocs } from "firebase/firestore";
 import { db } from "../../lib/firebase";
-import styles from "../../styles/PrivatnaForm.module.scss"
+import styles from "../../styles/PrivatnaForm.module.scss";
+import { PaymentInputsWrapper } from "react-payment-inputs";
+import usePaymentInputs from "react-payment-inputs/lib/usePaymentInputs";
+import images from "react-payment-inputs/images";
+import { css } from "styled-components";
 
 export default function PrivatnaForm(params) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
 	const [username, setUsername] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [usernameExists, setUsernameExists] = useState(false);
 	const [emailExists, setEmailExists] = useState(false);
 
+	const {
+		wrapperProps,
+		getCardImageProps,
+		getCardNumberProps,
+		getExpiryDateProps,
+		getCVCProps,
+	} = usePaymentInputs();
+
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
-		if(username && password && confirmPassword && email && !usernameExists && !emailExists && !loading && password === confirmPassword) {
+		if (
+			username &&
+			password &&
+			email &&
+			!usernameExists &&
+			!emailExists &&
+			!loading
+		) {
 			setDisabled(false);
 		} else {
 			setDisabled(true);
 		}
-	}, [username, password, confirmPassword, email, usernameExists, loading]);
+	}, [username, password, email, usernameExists, loading]);
 
 	const { firebaseCreateUserEmailPass } = useAuth();
 	const router = useRouter();
@@ -64,12 +82,11 @@ export default function PrivatnaForm(params) {
 					console.log("email exists");
 					setEmailExists(true);
 				}
-			})
+			});
 			setLoading(false);
 		}, 250),
 		[]
 	);
-
 
 	return (
 		<form className="form" onSubmit={handleSubmit}>
@@ -104,18 +121,40 @@ export default function PrivatnaForm(params) {
 					}}
 				/>
 			</div>
-			<div className="input-container">
-				<label htmlFor="passwordconfirm">confirm password:</label>
-				<input
-					name="passwordconfirm"
-					type="password"
-					value={confirmPassword}
-					onChange={(event) => {
-						setConfirmPassword(event.target.value);
-					}}
-				/>
-			</div>
-			<input className={styles.button} type="submit" value="Sign Up" disabled={disabled}/>
+			<PaymentInputsWrapper
+				styles={{
+					input: {
+						base: css`
+							font-family: "Source Sans Pro";
+							font-size: 1.2rem;
+						`,
+					},
+
+					inputWrapper: {
+						base: css`
+							border-radius: 32px;
+						`,
+					},
+
+					errorText: {
+						base: css`
+							font-size: 1rem;
+						`,
+					},
+				}}
+				{...wrapperProps}
+			>
+				<svg {...getCardImageProps({ images })} />
+				<input {...getCardNumberProps()} />
+				<input {...getExpiryDateProps()} />
+				<input {...getCVCProps()} />
+			</PaymentInputsWrapper>
+			<input
+				className={styles.button}
+				type="submit"
+				value="Sign Up"
+				disabled={disabled}
+			/>
 		</form>
 	);
 }
