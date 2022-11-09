@@ -83,9 +83,9 @@ export default function Login(params) {
             </p>
           </div>
 
-          <div className={styles.corgiContainer}>
-            <img src="/corgi.png" alt="corgi" className={styles.corgi} />
-            <p className={styles.text}>
+          <div className={styles.dogContainer}>
+            <img src="/corgi.png" alt="corgi" className={styles.dog} />
+            <p className="text">
               <b>Discover</b> new places with your furry best friend.
             </p>
           </div>

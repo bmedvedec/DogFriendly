@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../../lib/context";
+import styles from "../../styles/VlasnikForm.module.scss";
 
 export default function VlasnikForm(params) {
 	const [email, setEmail] = useState("");
@@ -88,7 +89,7 @@ export default function VlasnikForm(params) {
 					}}
 				/>
 			</div>
-			<input className="button" type="submit" value="Submit" />
+			<input className={styles.button} type="submit" value="Sign Up" />
 		</form>
 	);
 }

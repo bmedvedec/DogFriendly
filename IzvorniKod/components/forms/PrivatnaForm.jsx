@@ -4,6 +4,7 @@ import { useAuth } from "../../lib/context";
 import debounce from "lodash.debounce";
 import { collection, doc, getDocs } from "firebase/firestore";
 import { db } from "../../lib/firebase";
+import styles from "../../styles/PrivatnaForm.module.scss"
 
 export default function PrivatnaForm(params) {
 	const [email, setEmail] = useState("");
@@ -114,7 +115,7 @@ export default function PrivatnaForm(params) {
 					}}
 				/>
 			</div>
-			<input className="button" type="submit" value="Submit" disabled={disabled}/>
+			<input className={styles.button} type="submit" value="Sign Up" disabled={disabled}/>
 		</form>
 	);
 }
