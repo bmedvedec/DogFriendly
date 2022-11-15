@@ -106,8 +106,8 @@ export default function PrivatnaForm(params) {
 	return (
 		<form className="form" onSubmit={handleSubmit}>
 			<div className={styles.regFormTop}>
-				<div>
-					<label>Personal info</label>
+				<div className={styles.info}>
+					<label className={styles.titles}>Personal info</label>
 					<div className="input-container">
 						<input
 							name="username"
@@ -142,8 +142,8 @@ export default function PrivatnaForm(params) {
 						/>
 					</div>
 				</div>
-				<div>
-					<label>Company info</label>
+				<div className={styles.info}>
+					<label className={styles.titles}>Company info</label>
 					<div className="input-container">
 						<input
 							name="companyName"

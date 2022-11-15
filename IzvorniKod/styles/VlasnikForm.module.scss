@@ -15,7 +15,7 @@
 .regFormTop {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: flex-start;
     gap: 16px;
 }
@@ -41,3 +41,14 @@
     color: #D9D9D9;
     font-style: italic;
 }
+
+.titles{
+    color: #3F126B;
+    font-style: italic;
+
+}
+
+.info > div{
+    margin-top: 16px;
+}
+

@@ -69,8 +69,7 @@ export default function Register(params) {
 					</styles>
 					{privatna && <PrivatnaForm />}
 					{vlasnik && <VlasnikForm />}
-					{vlasnik && <VlasnikForm />}
-					{vlasnik && <VlasnikForm />}
+					
 				</div>
 			</div>
 		</Layout>
