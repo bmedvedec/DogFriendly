@@ -87,7 +87,7 @@ export default function PrivatnaForm(params) {
 					name="username"
 					type="text"
 					value={username}
-					placeholder="Username"
+					placeholder="username"
 					onChange={(event) => setUsername(event.target.value)}
 				/>
 			</div>
@@ -96,7 +96,7 @@ export default function PrivatnaForm(params) {
 					name="email"
 					type="email"
 					value={email}
-					placeholder="Email"
+					placeholder="email"
 					onChange={(event) => {
 						setEmail(event.target.value);
 					}}
@@ -107,7 +107,7 @@ export default function PrivatnaForm(params) {
 					name="password"
 					type="password"
 					value={password}
-					placeholder="Password"
+					placeholder="password"
 					onChange={(event) => {
 						setPassword(event.target.value);
 					}}
