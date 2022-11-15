@@ -33,8 +33,8 @@ export default function Login(params) {
   return (
     <Layout page="Login">
       <div className={styles.container}>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.leftSide}>
+        <div className={styles.leftSide}>
+          <form onSubmit={handleSubmit}>
             <div className={styles.appName}>
               <a href="/">
                 <p>
@@ -70,25 +70,25 @@ export default function Login(params) {
               />
             </div>
             <input className={styles.button} type="submit" value="Login" />
-          </div>
-        </form>
+          </form>
+        </div>
 
         <div className={styles.rightSide}>
           <div className={styles.signup}>
             <p>
               New User?{" "}
               <a href="/register" className={styles.link}>
-                Sign up
+                <b>Sign up</b>
               </a>
             </p>
           </div>
 
-          <div className={styles.dogContainer}>
+          {/* <div className={styles.dogContainer}> */}
             <img src="/corgi.png" alt="corgi" className={styles.dog} />
             <p className="text">
               <b>Discover</b> new places with your furry best friend.
             </p>
-          </div>
+          {/* </div> */}
         </div>
       </div>
     </Layout>

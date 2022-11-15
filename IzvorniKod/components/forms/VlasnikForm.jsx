@@ -12,100 +12,100 @@ import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 
 export default function PrivatnaForm(params) {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [username, setUsername] = useState("");
-	const [loading, setLoading] = useState(false);
-	const [usernameExists, setUsernameExists] = useState(false);
-	const [emailExists, setEmailExists] = useState(false);
-	const [companyName, setCompanyName] = useState("");
-	const [companyAddress, setCompanyAddress] = useState("");
-	const [companyOIB, setCompanyOIB] = useState("");
-	const [companyPhone, setCompanyPhone] = useState("");
-	const [companyDesc, setCompanyDesc] = useState("");
-	const [companyType, setCompanyType] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [usernameExists, setUsernameExists] = useState(false);
+  const [emailExists, setEmailExists] = useState(false);
+  const [companyName, setCompanyName] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyOIB, setCompanyOIB] = useState("");
+  const [companyPhone, setCompanyPhone] = useState("");
+  const [companyDesc, setCompanyDesc] = useState("");
+  const [companyType, setCompanyType] = useState("");
 
-	const companyTypes = [
-		"park",
-		"beach",
-		"store",
-		"caffe",
-		"restaurant",
-		"veterinary clicnic",
-		"beauty salon",
-	];
+  const companyTypes = [
+    "park",
+    "beach",
+    "store",
+    "caffe",
+    "restaurant",
+    "veterinary clicnic",
+    "beauty salon",
+  ];
 
-	const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(true);
 
-	useEffect(() => {
-		if (
-			username &&
-			password &&
-			email &&
-			!usernameExists &&
-			!emailExists &&
-			!loading
-		) {
-			setDisabled(false);
-		} else {
-			setDisabled(true);
-		}
-	}, [username, password, email, usernameExists, loading]);
+  useEffect(() => {
+    if (
+      username &&
+      password &&
+      email &&
+      !usernameExists &&
+      !emailExists &&
+      !loading
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [username, password, email, usernameExists, loading]);
 
-	const { firebaseCreateCompanyOwner } = useAuth();
-	const router = useRouter();
+  const { firebaseCreateCompanyOwner } = useAuth();
+  const router = useRouter();
 
-	function handleSubmit(event) {
-		event.preventDefault();
+  function handleSubmit(event) {
+    event.preventDefault();
 
-		firebaseCreateCompanyOwner(
-			username,
-			email,
-			password,
-			companyName,
-			companyAddress,
-			companyOIB,
-			companyPhone,
-			companyDesc,
-			companyType
-		)
-			.then(async (authUser) => {
-				//Signed in
-				router.push("/");
-				// ...
-			})
-			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-				console.log(errorCode, errorMessage);
-				// ..
-			});
-	}
+    firebaseCreateCompanyOwner(
+      username,
+      email,
+      password,
+      companyName,
+      companyAddress,
+      companyOIB,
+      companyPhone,
+      companyDesc,
+      companyType
+    )
+      .then(async (authUser) => {
+        //Signed in
+        router.push("/");
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
+      });
+  }
 
-	useEffect(() => {
-		checkUsernameAndEmail(username, email);
-	}, [username, email]);
+  useEffect(() => {
+    checkUsernameAndEmail(username, email);
+  }, [username, email]);
 
-	const checkUsernameAndEmail = useCallback(
-		debounce(async (username, email) => {
-			setUsernameExists(false);
-			setEmailExists(false);
-			setLoading(true);
-			const querySnapshot = await getDocs(collection(db, "users"));
-			querySnapshot.forEach((doc) => {
-				if (doc.data().username === username) {
-					console.log("username exists");
-					setUsernameExists(true);
-				}
-				if (doc.data().email === email) {
-					console.log("email exists");
-					setEmailExists(true);
-				}
-			});
-			setLoading(false);
-		}, 250),
-		[]
-	);
+  const checkUsernameAndEmail = useCallback(
+    debounce(async (username, email) => {
+      setUsernameExists(false);
+      setEmailExists(false);
+      setLoading(true);
+      const querySnapshot = await getDocs(collection(db, "users"));
+      querySnapshot.forEach((doc) => {
+        if (doc.data().username === username) {
+          console.log("username exists");
+          setUsernameExists(true);
+        }
+        if (doc.data().email === email) {
+          console.log("email exists");
+          setEmailExists(true);
+        }
+      });
+      setLoading(false);
+    }, 250),
+    []
+  );
 
 	const BootstrapInput = styled(InputBase)(({ theme }) => ({
 		"label + &": {
