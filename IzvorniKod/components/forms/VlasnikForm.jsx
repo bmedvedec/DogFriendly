@@ -10,102 +10,216 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import { useMyHooks } from "../../lib/hooks";
 
 export default function PrivatnaForm(params) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [usernameExists, setUsernameExists] = useState(false);
-  const [emailExists, setEmailExists] = useState(false);
-  const [companyName, setCompanyName] = useState("");
-  const [companyAddress, setCompanyAddress] = useState("");
-  const [companyOIB, setCompanyOIB] = useState("");
-  const [companyPhone, setCompanyPhone] = useState("");
-  const [companyDesc, setCompanyDesc] = useState("");
-  const [companyType, setCompanyType] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [username, setUsername] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [companyName, setCompanyName] = useState("");
+	const [companyAddress, setCompanyAddress] = useState("");
+	const [companyOIB, setCompanyOIB] = useState("");
+	const [companyPhone, setCompanyPhone] = useState("");
+	const [companyDesc, setCompanyDesc] = useState("");
+	const [companyType, setCompanyType] = useState("");
 
-  const companyTypes = [
-    "park",
-    "beach",
-    "store",
-    "caffe",
-    "restaurant",
-    "veterinary clicnic",
-    "beauty salon",
-  ];
+	// personal info
+	const [usernameExists, setUsernameExists] = useState(false);
+	const [emailExists, setEmailExists] = useState(false);
+	const [passwordError, setPasswordError] = useState("");
 
-  const [disabled, setDisabled] = useState(true);
+	// company info
+	const [companyNameError, setCompanyNameError] = useState("");
+	// const [companyAddressError, setCompanyAddressError] = useState("");
+	const [companyOIBError, setCompanyOIBError] = useState("");
+	const [companyPhoneError, setCompanyPhoneError] = useState("");
 
-  useEffect(() => {
-    if (
-      username &&
-      password &&
-      email &&
-      !usernameExists &&
-      !emailExists &&
-      !loading
-    ) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  }, [username, password, email, usernameExists, loading]);
+	const companyTypes = [
+		"park",
+		"beach",
+		"store",
+		"caffe",
+		"restaurant",
+		"veterinary clicnic",
+		"beauty salon",
+	];
 
-  const { firebaseCreateCompanyOwner } = useAuth();
-  const router = useRouter();
+	const [disabled, setDisabled] = useState(true);
 
-  function handleSubmit(event) {
-    event.preventDefault();
+	useEffect(() => {
+		if (
+			username &&
+			password &&
+			email &&
+			!usernameExists &&
+			!emailExists &&
+			!loading &&
+			!passwordError &&
+			companyName &&
+			companyAddress &&
+			companyOIB &&
+			companyPhone &&
+			!companyNameError &&
+			!companyOIBError &&
+			!companyPhoneError
+		) {
+			setDisabled(false);
+		} else {
+			setDisabled(true);
+		}
+	}, [
+		username,
+		password,
+		email,
+		usernameExists,
+		loading,
+		companyName,
+		companyAddress,
+		companyOIB,
+		companyPhone,
+		companyType,
+	]);
 
-    firebaseCreateCompanyOwner(
-      username,
-      email,
-      password,
-      companyName,
-      companyAddress,
-      companyOIB,
-      companyPhone,
-      companyDesc,
-      companyType
-    )
-      .then(async (authUser) => {
-        //Signed in
-        router.push("/");
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        // ..
-      });
-  }
+	const { firebaseCreateCompanyOwner } = useAuth();
+	const { checkPasswordBlacklist } = useMyHooks();
+	const router = useRouter();
 
-  useEffect(() => {
-    checkUsernameAndEmail(username, email);
-  }, [username, email]);
+	function handleSubmit(event) {
+		event.preventDefault();
 
-  const checkUsernameAndEmail = useCallback(
-    debounce(async (username, email) => {
-      setUsernameExists(false);
-      setEmailExists(false);
-      setLoading(true);
-      const querySnapshot = await getDocs(collection(db, "users"));
-      querySnapshot.forEach((doc) => {
-        if (doc.data().username === username) {
-          console.log("username exists");
-          setUsernameExists(true);
-        }
-        if (doc.data().email === email) {
-          console.log("email exists");
-          setEmailExists(true);
-        }
-      });
-      setLoading(false);
-    }, 250),
-    []
-  );
+		firebaseCreateCompanyOwner(
+			username,
+			email,
+			password,
+			companyName,
+			companyAddress,
+			companyOIB,
+			companyPhone,
+			companyDesc,
+			companyType
+		)
+			.then(async (authUser) => {
+				//Signed in
+				router.push("/");
+				// ...
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log(errorCode, errorMessage);
+				// ..
+			});
+	}
+
+	useEffect(() => {
+		checkUsernameAndEmail(username, email);
+	}, [username, email]);
+
+	const checkUsernameAndEmail = useCallback(
+		debounce(async (username, email) => {
+			setUsernameExists(false);
+			setEmailExists(false);
+			setLoading(true);
+			const querySnapshot = await getDocs(collection(db, "users"));
+			querySnapshot.forEach((doc) => {
+				if (doc.data().username === username) {
+					console.log("username exists");
+					setUsernameExists(true);
+				}
+				if (doc.data().email === email) {
+					console.log("email exists");
+					setEmailExists(true);
+				}
+			});
+			setLoading(false);
+		}, 250),
+		[]
+	);
+
+	const checkPassword = useCallback(
+		debounce(async (password) => {
+			setLoading(true);
+			if (password.length < 8) {
+				setPasswordError("Password must be at least 8 characters");
+			} else {
+				const isBlacklisted = await checkPasswordBlacklist(password);
+				if (isBlacklisted) {
+					setPasswordError("Password blacklisted, too common!");
+					setLoading(false);
+				} else {
+					setPasswordError("");
+					setLoading(false);
+				}
+			}
+		}, 500),
+		[]
+	);
+
+	const checkCompanyName = useCallback(
+		debounce(async (companyName) => {
+			setLoading(true);
+			const companiesRef = collection(db, "companies");
+			const companiesSnap = await getDocs(companiesRef);
+
+			if (companyName.length < 3) {
+				setCompanyNameError(
+					"Company name must be at least 3 characters"
+				);
+				setLoading(false);
+			} else if (!isNaN(companyName)) {
+				setCompanyNameError("Company name cannot be all numbers");
+				setLoading(false);
+			} else {
+				setCompanyNameError("");
+			}
+
+			companiesSnap.forEach((doc) => {
+				if (doc.data().name === companyName) {
+					setCompanyNameError("Company name already exists");
+					setLoading(false);
+				}
+			});
+
+			setLoading(false);
+		}, 500),
+		[]
+	);
+
+	const checkCompanyOIB = useCallback(
+		debounce(async (companyOIB) => {
+			setLoading(true);
+
+			if (isNaN(companyOIB)) {
+				setCompanyOIBError("OIB must be all numbers");
+				setLoading(false);
+			} else if (companyOIB.length !== 11) {
+				setCompanyOIBError("OIB must be 11 digits long");
+				setLoading(false);
+			} else {
+				setCompanyOIBError("");
+				setLoading(false);
+			}
+		}, 500),
+		[]
+	);
+
+	const checkCompanyPhone = useCallback(
+		debounce(async (companyPhone) => {
+			setLoading(true);
+			var phoneno =
+				/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+			if (companyPhone.match(phoneno)) {
+				setCompanyPhoneError("");
+				setLoading(false);
+			} else {
+				setCompanyPhoneError("Phone not good!");
+				setLoading(false);
+			}
+		}, 500),
+		[]
+	);
 
 	const BootstrapInput = styled(InputBase)(({ theme }) => ({
 		"label + &": {
@@ -143,10 +257,14 @@ export default function PrivatnaForm(params) {
 							type="text"
 							value={username}
 							placeholder="username"
-							onChange={(event) =>
-								setUsername(event.target.value)
-							}
+							onChange={(event) => {
+								setUsername(event.target.value);
+								setLoading(true);
+							}}
 						/>
+						{usernameExists && (
+							<p className="error">Username already exists</p>
+						)}
 					</div>
 					<div className="input-container">
 						<input
@@ -156,8 +274,12 @@ export default function PrivatnaForm(params) {
 							placeholder="email"
 							onChange={(event) => {
 								setEmail(event.target.value);
+								setLoading(true);
 							}}
 						/>
+						{emailExists && (
+							<p className="error">Email already exists</p>
+						)}
 					</div>
 					<div className="input-container">
 						<input
@@ -166,9 +288,14 @@ export default function PrivatnaForm(params) {
 							value={password}
 							placeholder="password"
 							onChange={(event) => {
+								setLoading(true);
 								setPassword(event.target.value);
+								checkPassword(event.target.value);
 							}}
 						/>
+						{passwordError && (
+							<p className="error">{passwordError}</p>
+						)}
 					</div>
 				</div>
 				<div className={styles.info}>
@@ -179,10 +306,15 @@ export default function PrivatnaForm(params) {
 							type="text"
 							value={companyName}
 							placeholder="company name"
-							onChange={(event) =>
-								setCompanyName(event.target.value)
-							}
+							onChange={(event) => {
+								setLoading(true);
+								setCompanyName(event.target.value);
+								checkCompanyName(event.target.value);
+							}}
 						/>
+						{companyNameError && (
+							<p className="error">{companyNameError}</p>
+						)}
 					</div>
 					<div className="input-container">
 						<input
@@ -201,10 +333,15 @@ export default function PrivatnaForm(params) {
 							type="number"
 							value={companyOIB}
 							placeholder="company OIB"
-							onChange={(event) =>
-								setCompanyOIB(event.target.value)
-							}
+							onChange={(event) => {
+								setLoading(true);
+								setCompanyOIB(event.target.value);
+								checkCompanyOIB(event.target.value);
+							}}
 						/>
+						{companyOIBError && (
+							<p className="error">{companyOIBError}</p>
+						)}
 					</div>
 					<div className="input-container">
 						<input
@@ -212,10 +349,15 @@ export default function PrivatnaForm(params) {
 							type="tel"
 							value={companyPhone}
 							placeholder="contact number"
-							onChange={(event) =>
-								setCompanyPhone(event.target.value)
-							}
+							onChange={(event) => {
+								setLoading(true);
+								setCompanyPhone(event.target.value);
+								checkCompanyPhone(event.target.value);
+							}}
 						/>
+						{companyPhoneError && (
+							<p className="error">{companyPhoneError}</p>
+						)}
 					</div>
 					<div className="input-container">
 						<input
@@ -233,9 +375,10 @@ export default function PrivatnaForm(params) {
 							<Select
 								displayEmpty
 								value={companyType}
-								onChange={(event) =>
-									setCompanyType(event.target.value)
-								}
+								onChange={(event) => {
+									// setLoading(true);
+									setCompanyType(event.target.value);
+								}}
 								input={<BootstrapInput />}
 								inputProps={{ "aria-label": "Without label" }}
 							>
