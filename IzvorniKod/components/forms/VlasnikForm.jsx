@@ -214,7 +214,7 @@ export default function PrivatnaForm(params) {
 				setCompanyPhoneError("");
 				setLoading(false);
 			} else {
-				setCompanyPhoneError("Phone not good!");
+				setCompanyPhoneError("Invalid phone number!");
 				setLoading(false);
 			}
 		}, 500),
