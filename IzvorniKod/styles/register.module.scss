@@ -1,8 +1,6 @@
 .container {
     display: flex;
     flex-direction: row;
-    // justify-content: center;
-    align-items: stretch;
     position: relative;
     min-height: 100vh;
 
@@ -12,13 +10,15 @@
         .leftSide {
             width: 100%;
             height: 50%;
-            padding-top: 24px;
+            padding-top: 48px;
+            flex-grow: 1;
         }
         
         .rightSide {
             width: 100%;
             height: 50%;
             padding-top: 24px;
+            flex-grow: 1;
         }
 
         .login {
@@ -33,13 +33,16 @@
     justify-content: center;
     align-items: center;
     width: 50%;
-    // height: 100%;
     background: linear-gradient(204.16deg, #423E9E 22.48%, #BD47BE 88.65%);
     font-size: 2rem;
     font-weight: 400;
     text-align: center;
     color: #F5F5F5;
-    padding: 0px 16px;
+    padding: 24px;
+
+    @media (max-width: 430px) {
+        font-size: 1.5rem;
+    }
 }
 
 .appName {
@@ -49,6 +52,11 @@
     color: white;
     font-size: 1.1rem;
     font-weight: 700;
+
+    @media (max-width: 430px) {
+        left: 24px;
+        font-size: 1rem;
+    }
 }
 
 .dog {
@@ -63,8 +71,7 @@
     justify-content: center;
     align-items: center;
     width: 50%;
-    padding: 32px 16px
-    // height: 100%;
+    padding: 24px;
 }
 
 .login {
@@ -74,6 +81,11 @@
     font-size: 1.1rem;
     color: #423E9E;
     font-weight: 100;
+
+    @media (max-width: 430px) {
+        right: 24px;
+        font-size: 1rem;
+    }
 }
 
 .link {
@@ -90,6 +102,10 @@
     color: #3F126B;
     margin-bottom: 0;
     padding: 0px 12px;
+
+    @media (max-width: 430px) {
+        font-size: 1.8rem;
+    }
 }
 
 .headingRegister {
@@ -98,6 +114,10 @@
     font-size: 1.5rem;
     font-weight: 400;
     color: #B646BC;
+
+    @media (max-width: 430px) {
+        font-size: 1.2rem;
+    }
 }
 
 .registerChoiceContainer {
@@ -106,3 +126,12 @@
     margin-bottom: 16px;
 }
 
+.heroText {
+    margin: 0;
+}
+
+.already {
+    @media (max-width: 370px) {
+        display: none;
+    }
+}

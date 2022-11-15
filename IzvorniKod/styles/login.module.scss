@@ -1,8 +1,6 @@
 .container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
     position: relative;
     min-height: 100vh;
 
@@ -12,11 +10,15 @@
         .leftSide {
             width: 100%;
             height: 50%;
+            padding-top: 24px;
+            flex-grow: 1;
         }
 
         .rightSide {
             width: 100%;
             height: 50%;
+            padding-top: 24px;
+            flex-grow: 1;
         }
 
         .signup {
@@ -41,6 +43,11 @@
     color: #423E9E;
     font-size: 1.1rem;
     font-weight: 700;
+
+    @media (max-width: 430px) {
+        left: 24px;
+        font-size: 1rem;
+    }
 }
 
 .heading {
@@ -52,6 +59,10 @@
     font-weight: bolder;
     color: #3F126B;
     margin-bottom: 0;
+
+    @media (max-width: 430px) {
+        font-size: 1.8rem;
+    }
 }
 
 .headingLogin {
@@ -60,6 +71,10 @@
     font-size: 1.5rem;
     font-weight: 400;
     color: #B646BC;
+
+    @media (max-width: 430px) {
+        font-size: 1.2rem;
+    }
 }
 
 .button {
@@ -88,6 +103,10 @@
     text-align: center;
     color: #F5F5F5;
     padding: 32px 16px;
+
+    @media (max-width: 430px) {
+        font-size: 1.5rem;
+    }
 }
 
 .signup {
@@ -97,10 +116,19 @@
     font-size: 1.1rem;
     color: white;
     font-weight: 100;
+
+    @media (max-width: 430px) {
+        right: 24px;
+        font-size: 1rem;
+    }
 }
 
 .dog {
     width: 40%;
     height: auto;
     object-fit: cover;
+}
+
+.link {
+    font-weight: bold;
 }

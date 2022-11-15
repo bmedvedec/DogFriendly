@@ -18,14 +18,6 @@ export default function PrivatnaForm(params) {
 	const [usernameExists, setUsernameExists] = useState(false);
 	const [emailExists, setEmailExists] = useState(false);
 
-	const {
-		wrapperProps,
-		getCardImageProps,
-		getCardNumberProps,
-		getExpiryDateProps,
-		getCVCProps,
-	} = usePaymentInputs();
-
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
@@ -121,34 +113,6 @@ export default function PrivatnaForm(params) {
 					}}
 				/>
 			</div>
-			<PaymentInputsWrapper
-				styles={{
-					input: {
-						base: css`
-							font-family: "Source Sans Pro";
-							font-size: 1.2rem;
-						`,
-					},
-
-					inputWrapper: {
-						base: css`
-							border-radius: 32px;
-						`,
-					},
-
-					errorText: {
-						base: css`
-							font-size: 1rem;
-						`,
-					},
-				}}
-				{...wrapperProps}
-			>
-				<svg {...getCardImageProps({ images })} />
-				<input {...getCardNumberProps()} />
-				<input {...getExpiryDateProps()} />
-				<input {...getCVCProps()} />
-			</PaymentInputsWrapper>
 			<input
 				className={styles.button}
 				type="submit"

@@ -83,12 +83,10 @@ export default function Login(params) {
             </p>
           </div>
 
-          {/* <div className={styles.dogContainer}> */}
             <img src="/corgi.png" alt="corgi" className={styles.dog} />
             <p className="text">
               <b>Discover</b> new places with your furry best friend.
             </p>
-          {/* </div> */}
         </div>
       </div>
     </Layout>

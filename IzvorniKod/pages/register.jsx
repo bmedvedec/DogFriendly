@@ -20,22 +20,20 @@ export default function Register(params) {
 						</a>
 					</div>
 
-					{/* <div className={styles.dogContainer}> */}
 						<img
 							src="/chihuahua.png"
 							alt="dog"
 							className={styles.dog}
 						/>
-						<p>
+						<p className={styles.heroText}>
 							<b>Discover</b> new places with your furry best friend.
 						</p>
-					{/* </div> */}
 				</div>
 
 				<div className={styles.rightSide}>
 					<div className={styles.login}>
 						<p>
-							Already have an account?{" "}
+							<span className={styles.already}>Already have an account?</span>{" "}
 							<a
 								href="/login"
 								className={styles.link}>
