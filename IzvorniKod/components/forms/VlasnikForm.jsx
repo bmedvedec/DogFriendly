@@ -34,6 +34,7 @@ export default function PrivatnaForm(params) {
 	// const [companyAddressError, setCompanyAddressError] = useState("");
 	const [companyOIBError, setCompanyOIBError] = useState("");
 	const [companyPhoneError, setCompanyPhoneError] = useState("");
+	const [companyDescError, setCompanyDescError] = useState("");
 
 	const companyTypes = [
 		"park",
@@ -60,9 +61,11 @@ export default function PrivatnaForm(params) {
 			companyAddress &&
 			companyOIB &&
 			companyPhone &&
+			companyDesc &&
 			!companyNameError &&
 			!companyOIBError &&
-			!companyPhoneError
+			!companyPhoneError &&
+			!companyDescError
 		) {
 			setDisabled(false);
 		} else {
@@ -78,6 +81,7 @@ export default function PrivatnaForm(params) {
 		companyAddress,
 		companyOIB,
 		companyPhone,
+		companyDesc,
 		companyType,
 	]);
 
@@ -215,6 +219,22 @@ export default function PrivatnaForm(params) {
 				setLoading(false);
 			} else {
 				setCompanyPhoneError("Invalid phone number!");
+				setLoading(false);
+			}
+		}, 500),
+		[]
+	);
+
+	const checkCompanyDesc = useCallback(
+		debounce(async (companyDesc) => {
+			setLoading(true);
+			if (companyDesc.length < 30) {
+				setCompanyDescError(
+					"Description must be at least 30 characters"
+				);
+				setLoading(false);
+			} else {
+				setCompanyDescError("");
 				setLoading(false);
 			}
 		}, 500),
@@ -365,10 +385,13 @@ export default function PrivatnaForm(params) {
 							type="text"
 							value={companyDesc}
 							placeholder="description"
-							onChange={(event) =>
-								setCompanyDesc(event.target.value)
-							}
+							onChange={(event) => {
+								setLoading(true);
+								setCompanyDesc(event.target.value);
+								checkCompanyDesc(event.target.value);
+							}}
 						/>
+						{companyDescError && (<p className="error">{companyDescError}</p>)}
 					</div>
 					<div className="input-container">
 						<FormControl>
