@@ -17,14 +17,14 @@ export default function PrivatnaForm(params) {
 	const [loading, setLoading] = useState(false);
 	const [usernameExists, setUsernameExists] = useState(false);
 	const [emailExists, setEmailExists] = useState(false);
-	const [craftName, setCraftName] = useState("");
-	const [craftAddress, setCraftAddress] = useState("");
-	const [craftOIB, setCraftOIB] = useState("");
-	const [craftPhone, setCraftPhone] = useState("");
-	const [craftDesc, setCraftDesc] = useState("");
-	const [craftType, setCraftType] = useState("");
+	const [companyName, setCompanyName] = useState("");
+	const [companyAddress, setCompanyAddress] = useState("");
+	const [companyOIB, setCompanyOIB] = useState("");
+	const [companyPhone, setCompanyPhone] = useState("");
+	const [companyDesc, setCompanyDesc] = useState("");
+	const [companyType, setCompanyType] = useState("");
 
-	const craftTypes = [
+	const companyTypes = [
 		"park",
 		"beach",
 		"store",
@@ -107,31 +107,31 @@ export default function PrivatnaForm(params) {
 	return (
 		<form className="form" onSubmit={handleSubmit}>
 			<div className="input-container">
-				<label htmlFor="username">username:</label>
 				<input
 					name="username"
 					type="text"
 					value={username}
+					placeholder="username"
 					onChange={(event) => setUsername(event.target.value)}
 				/>
 			</div>
 			<div className="input-container">
-				<label htmlFor="email">email:</label>
 				<input
 					name="email"
 					type="email"
 					value={email}
+					placeholder="email"
 					onChange={(event) => {
 						setEmail(event.target.value);
 					}}
 				/>
 			</div>
 			<div className="input-container">
-				<label htmlFor="password">password:</label>
 				<input
 					name="password"
 					type="password"
 					value={password}
+					placeholder="password"
 					onChange={(event) => {
 						setPassword(event.target.value);
 					}}
@@ -166,59 +166,59 @@ export default function PrivatnaForm(params) {
 				<input {...getCVCProps()} />
 			</PaymentInputsWrapper>
 			<div className="input-container">
-				<label htmlFor="craftName">craft name:</label>
 				<input
-					name="craftName"
+					name="companyName"
 					type="text"
-					value={craftName}
-					onChange={(event) => setCraftName(event.target.value)}
+					value={companyName}
+					placeholder="company name"
+					onChange={(event) => setCompanyName(event.target.value)}
 				/>
 			</div>
 			<div className="input-container">
-				<label htmlFor="craftAddress">craft address:</label>
 				<input
-					name="craftAddress"
+					name="companyAddress"
 					type="text"
-					value={craftAddress}
-					onChange={(event) => setCraftAddress(event.target.value)}
+					value={companyAddress}
+					placeholder="company address"
+					onChange={(event) => setCompanyAddress(event.target.value)}
 				/>
 			</div>
 			<div className="input-container">
-				<label htmlFor="craftOIB">craft oib:</label>
 				<input
-					name="craftOIB"
+					name="companyOIB"
 					type="number"
-					value={craftOIB}
-					onChange={(event) => setCraftOIB(event.target.value)}
+					value={companyOIB}
+					placeholder="company OIB"
+					onChange={(event) => setCompanyOIB(event.target.value)}
 				/>
 			</div>
 			<div className="input-container">
-				<label htmlFor="craftPhone">contact phone:</label>
 				<input
-					name="craftPhone"
+					name="companyPhone"
 					type="tel"
-					value={craftPhone}
-					onChange={(event) => setCraftPhone(event.target.value)}
+					value={companyPhone}
+					placeholder="contact number"
+					onChange={(event) => setCompanyPhone(event.target.value)}
 				/>
 			</div>
 
 			<div className="input-container">
-				<label htmlFor="craftDesc">craft description:</label>
 				<input
-					name="craftDesc"
+					name="companyDesc"
 					type="text"
-					value={craftDesc}
-					onChange={(event) => setCraftDesc(event.target.value)}
+					value={companyDesc}
+					placeholder="description"
+					onChange={(event) => setCompanyDesc(event.target.value)}
 				/>
 			</div>
 			<div className="input-container">
-				<label htmlFor="craftType">craft type:</label>
 				<select
-					name="craftType"
-					value={craftType}
-					onChange={(event) => setCraftType(event.target.value)}
+					name="companyType"
+					value={companyType}
+					option="type of business"
+					onChange={(event) => setCompanyType(event.target.value)}
 				>
-					{craftTypes.map((type) => (
+					{companyTypes.map((type) => (
 						<option key={type} value={type}>
 							{type}
 						</option>

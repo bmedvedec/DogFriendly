@@ -91,31 +91,31 @@ export default function PrivatnaForm(params) {
 	return (
 		<form className="form" onSubmit={handleSubmit}>
 			<div className="input-container">
-				<label htmlFor="username">username:</label>
 				<input
 					name="username"
 					type="text"
 					value={username}
+					placeholder="Username"
 					onChange={(event) => setUsername(event.target.value)}
 				/>
 			</div>
 			<div className="input-container">
-				<label htmlFor="email">email:</label>
 				<input
 					name="email"
 					type="email"
 					value={email}
+					placeholder="Email"
 					onChange={(event) => {
 						setEmail(event.target.value);
 					}}
 				/>
 			</div>
 			<div className="input-container">
-				<label htmlFor="password">password:</label>
 				<input
 					name="password"
 					type="password"
 					value={password}
+					placeholder="Password"
 					onChange={(event) => {
 						setPassword(event.target.value);
 					}}
