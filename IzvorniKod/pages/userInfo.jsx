@@ -46,7 +46,7 @@ export default function UserInfo() {
             {userInfo && <p>{userInfo.username}</p>}
             {userInfo && <p>{userInfo.email}</p>}
             <br/>
-            {companyInfo && <p>Company info</p>}
+            {companyInfo && <p><b>Company info</b></p>}
             {companyInfo && <p>{companyInfo.name}</p>}
             {companyInfo && <p>{companyInfo.address}</p>}
             {companyInfo && <p>{companyInfo.description}</p>}
