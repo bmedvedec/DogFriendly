@@ -48,13 +48,13 @@ export default function PrivatnaForm(params) {
 		}
 	}, [username, password, email, usernameExists, loading]);
 
-	const { firebaseCreateUserEmailPass } = useAuth();
+	const { firebaseCreateCompanyOwner } = useAuth();
 	const router = useRouter();
 
 	function handleSubmit(event) {
 		event.preventDefault();
-
-		firebaseCreateUserEmailPass(username, email, password)
+		
+		firebaseCreateCompanyOwner(username, email, password, companyName, companyAddress, companyOIB, companyPhone, companyDesc, companyType)
 			.then(async (authUser) => {
 				//Signed in
 				router.push("/");

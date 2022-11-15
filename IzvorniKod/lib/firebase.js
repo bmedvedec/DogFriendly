@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { collection, doc, getFirestore, setDoc, writeBatch } from "firebase/firestore";
 import {
 	getAuth,
 	onAuthStateChanged,
@@ -34,7 +34,7 @@ export const auth = getAuth(app);
 const formatAuthUser = (user) => ({
 	uid: user.uid,
 	email: user.email,
-	verified: user.emailVerified
+	verified: user.emailVerified,
 });
 
 // hook koji vraća podatke o autentificiranom korisniku i funkcije za autentifikaciju
@@ -85,6 +85,33 @@ export function useFirebaseAuth() {
 		);
 	};
 
+	const firebaseCreateCompanyOwner = async (
+		username,
+		email,
+		password,
+		companyName,
+		companyAddress,
+		companyOIB,
+		companyPhone,
+		companyDesc,
+		companyType
+	) => {
+		createUserWithEmailAndPassword(auth, email, password).then(
+			async (userCredential) => {
+				var user = userCredential.user;
+				console.log("registered", user.uid);
+
+				const batch = writeBatch(db);
+				const userRef = doc(db, "users", user.uid);
+				batch.set(userRef, { username: username, email: email });
+				const companyRef = doc(collection(db, "companies"));
+				batch.set(companyRef, {owner: user.uid, name: companyName, address: companyAddress, oib: companyOIB, phone: companyPhone, description: companyDesc, type: companyType});
+
+				await batch.commit();
+			}
+		);
+	};
+
 	const firebaseSignOut = async () => {
 		signOut(auth).then(clear);
 	};
@@ -99,6 +126,7 @@ export function useFirebaseAuth() {
 		loading,
 		firebaseEmailPassSignIn,
 		firebaseCreateUserEmailPass,
+		firebaseCreateCompanyOwner,
 		firebaseSignOut,
 	};
 }
