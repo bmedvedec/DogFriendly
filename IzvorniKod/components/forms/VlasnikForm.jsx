@@ -53,8 +53,18 @@ export default function PrivatnaForm(params) {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		
-		firebaseCreateCompanyOwner(username, email, password, companyName, companyAddress, companyOIB, companyPhone, companyDesc, companyType)
+
+		firebaseCreateCompanyOwner(
+			username,
+			email,
+			password,
+			companyName,
+			companyAddress,
+			companyOIB,
+			companyPhone,
+			companyDesc,
+			companyType
+		)
 			.then(async (authUser) => {
 				//Signed in
 				router.push("/");
@@ -104,7 +114,9 @@ export default function PrivatnaForm(params) {
 							type="text"
 							value={username}
 							placeholder="username"
-							onChange={(event) => setUsername(event.target.value)}
+							onChange={(event) =>
+								setUsername(event.target.value)
+							}
 						/>
 					</div>
 					<div className="input-container">
@@ -129,7 +141,6 @@ export default function PrivatnaForm(params) {
 							}}
 						/>
 					</div>
-				
 				</div>
 				<div>
 					<label>Company info</label>
@@ -139,7 +150,9 @@ export default function PrivatnaForm(params) {
 							type="text"
 							value={companyName}
 							placeholder="company name"
-							onChange={(event) => setCompanyName(event.target.value)}
+							onChange={(event) =>
+								setCompanyName(event.target.value)
+							}
 						/>
 					</div>
 					<div className="input-container">
@@ -148,7 +161,9 @@ export default function PrivatnaForm(params) {
 							type="text"
 							value={companyAddress}
 							placeholder="company address"
-							onChange={(event) => setCompanyAddress(event.target.value)}
+							onChange={(event) =>
+								setCompanyAddress(event.target.value)
+							}
 						/>
 					</div>
 					<div className="input-container">
@@ -157,7 +172,9 @@ export default function PrivatnaForm(params) {
 							type="number"
 							value={companyOIB}
 							placeholder="company OIB"
-							onChange={(event) => setCompanyOIB(event.target.value)}
+							onChange={(event) =>
+								setCompanyOIB(event.target.value)
+							}
 						/>
 					</div>
 					<div className="input-container">
@@ -166,7 +183,9 @@ export default function PrivatnaForm(params) {
 							type="tel"
 							value={companyPhone}
 							placeholder="contact number"
-							onChange={(event) => setCompanyPhone(event.target.value)}
+							onChange={(event) =>
+								setCompanyPhone(event.target.value)
+							}
 						/>
 					</div>
 					<div className="input-container">
@@ -175,16 +194,22 @@ export default function PrivatnaForm(params) {
 							type="text"
 							value={companyDesc}
 							placeholder="description"
-							onChange={(event) => setCompanyDesc(event.target.value)}
+							onChange={(event) =>
+								setCompanyDesc(event.target.value)
+							}
 						/>
 					</div>
 					<div className="input-container">
-						<select className={styles.dropDown}
+						<select
 							name="companyType"
 							value={companyType}
-							onChange={(event) => setCompanyType(event.target.value)}
+							onChange={(event) =>
+								setCompanyType(event.target.value)
+							}
 						>
-							<option hidden className={styles.holder}>type of business</option>
+							<option hidden className={styles.holder}>
+								type of business
+							</option>
 							{companyTypes.map((type) => (
 								<option key={type} value={type}>
 									{type}
@@ -194,12 +219,12 @@ export default function PrivatnaForm(params) {
 					</div>
 				</div>
 			</div>
-				<input
-					className={styles.button}
-					type="submit"
-					value="Sign Up"
-					disabled={disabled}
-				/>
+			<input
+				className={styles.button}
+				type="submit"
+				value="Sign Up"
+				disabled={disabled}
+			/>
 		</form>
 	);
 }

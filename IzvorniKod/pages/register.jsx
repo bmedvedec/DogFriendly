@@ -20,7 +20,7 @@ export default function Register(params) {
 						</a>
 					</div>
 
-					<div className={styles.dogContainer}>
+					{/* <div className={styles.dogContainer}> */}
 						<img
 							src="/chihuahua.png"
 							alt="dog"
@@ -29,7 +29,7 @@ export default function Register(params) {
 						<p>
 							<b>Discover</b> new places with your furry best friend.
 						</p>
-					</div>
+					{/* </div> */}
 				</div>
 
 				<div className={styles.rightSide}>
@@ -68,6 +68,8 @@ export default function Register(params) {
 						</div>
 					</styles>
 					{privatna && <PrivatnaForm />}
+					{vlasnik && <VlasnikForm />}
+					{vlasnik && <VlasnikForm />}
 					{vlasnik && <VlasnikForm />}
 				</div>
 			</div>
