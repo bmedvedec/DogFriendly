@@ -125,6 +125,7 @@ export default function PrivatnaForm(params) {
 			fontFamily: "Source Sans Pro",
 			transition: "all 0.2s ease-in-out",
 			"&:focus": {
+				borderRadius: 32,
 				border: "2px solid black",
 				transition: "all 0.2s ease-in-out",
 			},

@@ -49,7 +49,7 @@ export default function Register(params) {
 
 					<styles className={styles.registerChoiceContainer}>
 						<div
-							className={`tabButton-personal ${privatna ? "tabButtonSelected" : ""}`}
+							className={`tabButton tabButton-personal ${privatna ? "tabButtonSelected" : ""}`}
 							onClick={() => {
 								setPrivatna(true);
 								setVlasnik(false);
@@ -57,7 +57,7 @@ export default function Register(params) {
 							Personal
 						</div>
 						<div
-							className={`tabButton-company ${vlasnik ? "tabButtonSelected" : ""}`}
+							className={`tabButton tabButton-company ${vlasnik ? "tabButtonSelected" : ""}`}
 							onClick={() => {
 								setPrivatna(false);
 								setVlasnik(true);
