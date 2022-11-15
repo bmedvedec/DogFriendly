@@ -89,6 +89,16 @@
         border: 4px solid #dba3de;
         cursor: pointer;
     }
+
+    &:focus {
+        outline: none;
+        border: 4px solid #dba3de;
+    }
+
+    &:disabled {
+        background: #e0d0e0;
+        cursor: not-allowed;
+    }
 }
 
 .rightSide {

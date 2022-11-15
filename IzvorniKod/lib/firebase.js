@@ -68,13 +68,10 @@ export function useFirebaseAuth() {
 	};
 
 	const firebaseEmailPassSignIn = async (email, password) => {
-		signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+		return signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
 			// Signed in
 			console.log("signed in");
-		}).catch((error) => {
-			console.log("error", error);
-			throw error;
-		});
+		})
 	};
 
 	const firebaseCreateUserEmailPass = async (username, email, password) => {

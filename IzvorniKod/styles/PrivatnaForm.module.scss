@@ -13,7 +13,11 @@
 
     &:disabled {
         background: #e0d0e0;
-        border: 4px solid #e0d0e0;
         cursor: not-allowed;
+    }
+
+    &:focus {
+        outline: none;
+        border: 0px;
     }
 }

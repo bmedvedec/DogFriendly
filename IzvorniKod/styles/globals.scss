@@ -51,6 +51,10 @@ input {
 	&[type=number] {
 		-moz-appearance: textfield;
 	}
+	&::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 }
 
 select {
@@ -93,6 +97,10 @@ button:hover {
 		color: white;
 		cursor: pointer;
 		transition: 0.2s ease-in-out;
+	}
+
+	&:focus {
+		outline: none;
 	}
 }
 
@@ -164,6 +172,7 @@ form {
 	align-items: center;
 	gap: 16px;
 	width: 60%;
+	max-width: 350px;
 }
 
 .error {
