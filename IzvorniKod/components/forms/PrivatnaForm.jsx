@@ -5,15 +5,17 @@ import debounce from "lodash.debounce";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import styles from "../../styles/PrivatnaForm.module.scss";
+import { useMyHooks } from "../../lib/hooks";
 
 export default function PrivatnaForm(params) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
+
 	const [loading, setLoading] = useState(false);
 	const [usernameExists, setUsernameExists] = useState(false);
 	const [emailExists, setEmailExists] = useState(false);
-
+	const [passwordError, setPasswordError] = useState("");
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
@@ -23,15 +25,19 @@ export default function PrivatnaForm(params) {
 			email &&
 			!usernameExists &&
 			!emailExists &&
+			!passwordError &&
 			!loading
 		) {
+			console.log("enabled");
 			setDisabled(false);
 		} else {
+			console.log("disabled");
 			setDisabled(true);
 		}
 	}, [username, password, email, usernameExists, loading]);
 
 	const { firebaseCreateUserEmailPass } = useAuth();
+	const { checkPasswordBlacklist } = useMyHooks();
 	const router = useRouter();
 
 	function handleSubmit(event) {
@@ -72,20 +78,45 @@ export default function PrivatnaForm(params) {
 				}
 			});
 			setLoading(false);
-		}, 250),
+		}, 500),
+		[]
+	);
+
+	const checkPassword = useCallback(
+		debounce(async (password) => {
+			setLoading(true);
+			if (password.length < 8) {
+				setPasswordError("Password must be at least 8 characters");
+			} else {
+				const isBlacklisted = await checkPasswordBlacklist(password);
+				if (isBlacklisted) {
+					setPasswordError("Password blacklisted, too common!");
+					setLoading(false);
+				} else {
+					setPasswordError("");
+					setLoading(false);
+				}
+			}
+		}, 500),
 		[]
 	);
 
 	return (
-		<form className="form" onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit}>
 			<div className="input-container">
 				<input
 					name="username"
 					type="text"
 					value={username}
 					placeholder="username"
-					onChange={(event) => setUsername(event.target.value)}
+					onChange={(event) => {
+						setUsername(event.target.value);
+						setLoading(true);
+					}}
 				/>
+				{usernameExists && (
+					<p className="error">Username already exists</p>
+				)}
 			</div>
 			<div className="input-container">
 				<input
@@ -94,9 +125,11 @@ export default function PrivatnaForm(params) {
 					value={email}
 					placeholder="email"
 					onChange={(event) => {
+						setLoading(true);
 						setEmail(event.target.value);
 					}}
 				/>
+				{emailExists && <p className="error">Email already exists</p>}
 			</div>
 			<div className="input-container">
 				<input
@@ -105,9 +138,12 @@ export default function PrivatnaForm(params) {
 					value={password}
 					placeholder="password"
 					onChange={(event) => {
+						setLoading(true);
 						setPassword(event.target.value);
+						checkPassword(event.target.value);
 					}}
 				/>
+				{passwordError && <p className="error">{passwordError}</p>}
 			</div>
 			<input
 				className={styles.button}

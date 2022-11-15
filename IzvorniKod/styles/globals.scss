@@ -140,7 +140,8 @@ label {
 .input-container {
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	gap: 2px;
+	width: 100%;
 }
 
 select {
@@ -162,4 +163,11 @@ form {
 	justify-content: center;
 	align-items: center;
 	gap: 16px;
+	width: 60%;
+}
+
+.error {
+	margin: 0;
+	padding-left: 12px;
+	color: red;
 }

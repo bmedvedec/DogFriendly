@@ -10,4 +10,10 @@
         border: 4px solid #dba3de;
         cursor: pointer;
     }
+
+    &:disabled {
+        background: #e0d0e0;
+        border: 4px solid #e0d0e0;
+        cursor: not-allowed;
+    }
 }
