@@ -33,11 +33,16 @@
 
 .titles{
     color: #3F126B;
-    font-style: italic;
 
 }
 
 .info > div{
-    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-top: 8px;
+}
+
+//select last child of info div
+.info > div:last-child{
+    margin-bottom: 0px;
 }
 
