@@ -5,7 +5,11 @@ import debounce from "lodash.debounce";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import styles from "../../styles/VlasnikForm.module.scss";
-import { css } from "styled-components";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { styled } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
 
 export default function PrivatnaForm(params) {
 	const [email, setEmail] = useState("");
@@ -102,6 +106,30 @@ export default function PrivatnaForm(params) {
 		}, 250),
 		[]
 	);
+
+	const BootstrapInput = styled(InputBase)(({ theme }) => ({
+		"label + &": {
+			marginTop: theme.spacing(3),
+		},
+		"& .MuiInputBase-input": {
+			borderRadius: 32,
+			position: "relative",
+			backgroundColor: "white",
+			border: "2px solid #d9d9d9",
+			fontSize: "1.2rem",
+			padding: "8px 16px",
+			transition: theme.transitions.create([
+				"border-color",
+				"box-shadow",
+			]),
+			fontFamily: "Source Sans Pro",
+			transition: "all 0.2s ease-in-out",
+			"&:focus": {
+				border: "2px solid black",
+				transition: "all 0.2s ease-in-out",
+			},
+		},
+	}));
 
 	return (
 		<form className="form" onSubmit={handleSubmit}>
@@ -200,22 +228,26 @@ export default function PrivatnaForm(params) {
 						/>
 					</div>
 					<div className="input-container">
-						<select
-							name="companyType"
-							value={companyType}
-							onChange={(event) =>
-								setCompanyType(event.target.value)
-							}
-						>
-							<option hidden className={styles.holder}>
-								type of business
-							</option>
-							{companyTypes.map((type) => (
-								<option key={type} value={type}>
-									{type}
-								</option>
-							))}
-						</select>
+						<FormControl>
+							<Select
+								displayEmpty
+								value={companyType}
+								onChange={(event) =>
+									setCompanyType(event.target.value)
+								}
+								input={<BootstrapInput />}
+								inputProps={{ "aria-label": "Without label" }}
+							>
+								<MenuItem disabled value="">
+									<em>type of business</em>
+								</MenuItem>
+								{companyTypes.map((type) => (
+									<MenuItem key={type} value={type}>
+										{type}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
 					</div>
 				</div>
 			</div>
