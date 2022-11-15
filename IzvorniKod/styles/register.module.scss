@@ -13,7 +13,7 @@
             padding-top: 48px;
             flex-grow: 1;
         }
-        
+
         .rightSide {
             width: 100%;
             height: 50%;
@@ -121,9 +121,12 @@
 }
 
 .registerChoiceContainer {
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #3F126B;
     display: flex;
     margin-bottom: 16px;
+    //strech children over the whole width
+    justify-content: space-between;
+    width: 75%;
 }
 
 .heroText {

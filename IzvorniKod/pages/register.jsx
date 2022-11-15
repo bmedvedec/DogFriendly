@@ -5,7 +5,7 @@ import PrivatnaForm from "../components/forms/PrivatnaForm";
 import VlasnikForm from "../components/forms/VlasnikForm";
 
 export default function Register(params) {
-	const [privatna, setPrivatna] = useState(false);
+	const [privatna, setPrivatna] = useState(true);
 	const [vlasnik, setVlasnik] = useState(false);
 
 	return (
@@ -49,20 +49,20 @@ export default function Register(params) {
 
 					<styles className={styles.registerChoiceContainer}>
 						<div
-							className={`tabButton ${privatna ? "tabButtonSelected" : ""}`}
+							className={`tabButton-personal ${privatna ? "tabButtonSelected" : ""}`}
 							onClick={() => {
 								setPrivatna(true);
 								setVlasnik(false);
 							}}>
-							Privatna osoba
+							Personal
 						</div>
 						<div
-							className={`tabButton ${vlasnik ? "tabButtonSelected" : ""}`}
+							className={`tabButton-company ${vlasnik ? "tabButtonSelected" : ""}`}
 							onClick={() => {
 								setPrivatna(false);
 								setVlasnik(true);
 							}}>
-							Vlasnik obrta
+							Company
 						</div>
 					</styles>
 					{privatna && <PrivatnaForm />}
