@@ -2,13 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../../lib/context";
 import debounce from "lodash.debounce";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import styles from "../../styles/PrivatnaForm.module.scss";
-import { PaymentInputsWrapper } from "react-payment-inputs";
-import usePaymentInputs from "react-payment-inputs/lib/usePaymentInputs";
-import images from "react-payment-inputs/images";
-import { css } from "styled-components";
 
 export default function PrivatnaForm(params) {
 	const [email, setEmail] = useState("");

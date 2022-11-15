@@ -1,5 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { collection, doc, getFirestore, setDoc, writeBatch } from "firebase/firestore";
+import {
+	collection,
+	doc,
+	getFirestore,
+	setDoc,
+	writeBatch,
+} from "firebase/firestore";
 import {
 	getAuth,
 	onAuthStateChanged,
@@ -76,6 +82,7 @@ export function useFirebaseAuth() {
 					await setDoc(doc(db, "users", user.uid), {
 						username: username,
 						email: email,
+						companyOwner: false,
 					});
 				} catch (e) {
 					console.error("Error adding document: ", e);
@@ -103,9 +110,21 @@ export function useFirebaseAuth() {
 
 				const batch = writeBatch(db);
 				const userRef = doc(db, "users", user.uid);
-				batch.set(userRef, { username: username, email: email });
+				batch.set(userRef, {
+					username: username,
+					email: email,
+					companyOwner: true,
+				});
 				const companyRef = doc(collection(db, "companies"));
-				batch.set(companyRef, {owner: user.uid, name: companyName, address: companyAddress, oib: companyOIB, phone: companyPhone, description: companyDesc, type: companyType});
+				batch.set(companyRef, {
+					owner: user.uid,
+					name: companyName,
+					address: companyAddress,
+					oib: companyOIB,
+					phone: companyPhone,
+					description: companyDesc,
+					type: companyType,
+				});
 
 				await batch.commit();
 			}
