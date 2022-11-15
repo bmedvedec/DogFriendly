@@ -11,3 +11,31 @@
         cursor: pointer;
     }
 }
+
+.regFormTop {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.dropDown {
+    padding: 8px 16px;
+    border-radius: 32px;
+    border: 2px solid #D9D9D9;
+    font-size: 1.2rem;
+    transition: 0.2s ease-in-out;
+
+}
+
+// .holder[value=""][disabled]{
+//     font-style: italic;
+//     color: #D9D9D9;
+// }
+
+
+.holder[default] {
+    color: #D9D9D9;
+    font-style: italic;
+}

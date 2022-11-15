@@ -4,10 +4,7 @@ import { useAuth } from "../../lib/context";
 import debounce from "lodash.debounce";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../lib/firebase";
-import styles from "../../styles/PrivatnaForm.module.scss";
-import { PaymentInputsWrapper } from "react-payment-inputs";
-import usePaymentInputs from "react-payment-inputs/lib/usePaymentInputs";
-import images from "react-payment-inputs/images";
+import styles from "../../styles/VlasnikForm.module.scss";
 import { css } from "styled-components";
 
 export default function PrivatnaForm(params) {
@@ -33,14 +30,6 @@ export default function PrivatnaForm(params) {
 		"veterinary clicnic",
 		"beauty salon",
 	];
-
-	const {
-		wrapperProps,
-		getCardImageProps,
-		getCardNumberProps,
-		getExpiryDateProps,
-		getCVCProps,
-	} = usePaymentInputs();
 
 	const [disabled, setDisabled] = useState(true);
 
@@ -106,131 +95,111 @@ export default function PrivatnaForm(params) {
 
 	return (
 		<form className="form" onSubmit={handleSubmit}>
-			<div className="input-container">
+			<div className={styles.regFormTop}>
+				<div>
+					<label>Personal info</label>
+					<div className="input-container">
+						<input
+							name="username"
+							type="text"
+							value={username}
+							placeholder="username"
+							onChange={(event) => setUsername(event.target.value)}
+						/>
+					</div>
+					<div className="input-container">
+						<input
+							name="email"
+							type="email"
+							value={email}
+							placeholder="email"
+							onChange={(event) => {
+								setEmail(event.target.value);
+							}}
+						/>
+					</div>
+					<div className="input-container">
+						<input
+							name="password"
+							type="password"
+							value={password}
+							placeholder="password"
+							onChange={(event) => {
+								setPassword(event.target.value);
+							}}
+						/>
+					</div>
+				
+				</div>
+				<div>
+					<label>Company info</label>
+					<div className="input-container">
+						<input
+							name="companyName"
+							type="text"
+							value={companyName}
+							placeholder="company name"
+							onChange={(event) => setCompanyName(event.target.value)}
+						/>
+					</div>
+					<div className="input-container">
+						<input
+							name="companyAddress"
+							type="text"
+							value={companyAddress}
+							placeholder="company address"
+							onChange={(event) => setCompanyAddress(event.target.value)}
+						/>
+					</div>
+					<div className="input-container">
+						<input
+							name="companyOIB"
+							type="number"
+							value={companyOIB}
+							placeholder="company OIB"
+							onChange={(event) => setCompanyOIB(event.target.value)}
+						/>
+					</div>
+					<div className="input-container">
+						<input
+							name="companyPhone"
+							type="tel"
+							value={companyPhone}
+							placeholder="contact number"
+							onChange={(event) => setCompanyPhone(event.target.value)}
+						/>
+					</div>
+					<div className="input-container">
+						<input
+							name="companyDesc"
+							type="text"
+							value={companyDesc}
+							placeholder="description"
+							onChange={(event) => setCompanyDesc(event.target.value)}
+						/>
+					</div>
+					<div className="input-container">
+						<select className={styles.dropDown}
+							name="companyType"
+							value={companyType}
+							onChange={(event) => setCompanyType(event.target.value)}
+						>
+							<option hidden className={styles.holder}>type of business</option>
+							{companyTypes.map((type) => (
+								<option key={type} value={type}>
+									{type}
+								</option>
+							))}
+						</select>
+					</div>
+				</div>
+			</div>
 				<input
-					name="username"
-					type="text"
-					value={username}
-					placeholder="username"
-					onChange={(event) => setUsername(event.target.value)}
+					className={styles.button}
+					type="submit"
+					value="Sign Up"
+					disabled={disabled}
 				/>
-			</div>
-			<div className="input-container">
-				<input
-					name="email"
-					type="email"
-					value={email}
-					placeholder="email"
-					onChange={(event) => {
-						setEmail(event.target.value);
-					}}
-				/>
-			</div>
-			<div className="input-container">
-				<input
-					name="password"
-					type="password"
-					value={password}
-					placeholder="password"
-					onChange={(event) => {
-						setPassword(event.target.value);
-					}}
-				/>
-			</div>
-			<PaymentInputsWrapper
-				styles={{
-					input: {
-						base: css`
-							font-family: "Source Sans Pro";
-							font-size: 1.2rem;
-						`,
-					},
-
-					inputWrapper: {
-						base: css`
-							border-radius: 32px;
-						`,
-					},
-
-					errorText: {
-						base: css`
-							font-size: 1rem;
-						`,
-					},
-				}}
-				{...wrapperProps}
-			>
-				<svg {...getCardImageProps({ images })} />
-				<input {...getCardNumberProps()} />
-				<input {...getExpiryDateProps()} />
-				<input {...getCVCProps()} />
-			</PaymentInputsWrapper>
-			<div className="input-container">
-				<input
-					name="companyName"
-					type="text"
-					value={companyName}
-					placeholder="company name"
-					onChange={(event) => setCompanyName(event.target.value)}
-				/>
-			</div>
-			<div className="input-container">
-				<input
-					name="companyAddress"
-					type="text"
-					value={companyAddress}
-					placeholder="company address"
-					onChange={(event) => setCompanyAddress(event.target.value)}
-				/>
-			</div>
-			<div className="input-container">
-				<input
-					name="companyOIB"
-					type="number"
-					value={companyOIB}
-					placeholder="company OIB"
-					onChange={(event) => setCompanyOIB(event.target.value)}
-				/>
-			</div>
-			<div className="input-container">
-				<input
-					name="companyPhone"
-					type="tel"
-					value={companyPhone}
-					placeholder="contact number"
-					onChange={(event) => setCompanyPhone(event.target.value)}
-				/>
-			</div>
-
-			<div className="input-container">
-				<input
-					name="companyDesc"
-					type="text"
-					value={companyDesc}
-					placeholder="description"
-					onChange={(event) => setCompanyDesc(event.target.value)}
-				/>
-			</div>
-			<div className="input-container">
-				<select
-					name="companyType"
-					value={companyType}
-					option="type of business"
-					onChange={(event) => setCompanyType(event.target.value)}
-				>
-					{companyTypes.map((type) => (
-						<option key={type} value={type}>
-							{type}
-						</option>
-					))}
-				</select>
-			</div>
-			<input
-				className={styles.button}
-				type="submit"
-				value="Sign Up"
-				disabled={disabled}
-			/>
 		</form>
 	);
 }
