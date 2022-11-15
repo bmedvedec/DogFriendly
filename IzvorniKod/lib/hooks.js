@@ -1,8 +1,8 @@
 export function useMyHooks() {
 	const checkPasswordBlacklist = async (password) => {
-        const file = await fetch("/password_blacklist.txt");
-        const text = await file.text();
-        const blacklist = text.split("\n");
+        const file = await fetch("/password_blacklist.json");
+        const blacklist = await file.json();
+        console.log(blacklist);
 		if (blacklist.includes(password)) {
             console.log("password is in blacklist");
 			return true;

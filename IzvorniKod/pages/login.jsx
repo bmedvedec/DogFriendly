@@ -9,6 +9,7 @@ export default function Login(params) {
   // inicijalizacija hook state-a za email i password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   // inicijalizacija hook-a za autentifikaciju
   const { firebaseEmailPassSignIn } = useAuth();
   const router = useRouter();
@@ -24,8 +25,10 @@ export default function Login(params) {
         router.push("/");
       })
       .catch((error) => {
+        console.log("caught error", error);
         const errorCode = error.code;
         const errorMessage = error.message;
+        setError(errorMessage);
       });
   }
 
@@ -47,7 +50,7 @@ export default function Login(params) {
               <h1 className={styles.headingWelcome}>Welcome Back</h1>
               <h2 className={styles.headingLogin}>Login</h2>
             </div>
-
+            {error && <p className="error">{error}</p>}
             <div className="email-container">
               <input
                 type="email"
