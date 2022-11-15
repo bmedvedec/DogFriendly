@@ -35,12 +35,43 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \multicolumn{3}{|c|}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline {\textbf{Users}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}UserId & VARCHAR	&  	Hashirani string jedinstven za svakog korisnika  	\\ \hline
+					Username	& VARCHAR & Nadimak pod kojim će se korisnik predstavljati u aplikaciji  	\\ \hline 
+					email & VARCHAR &  E-mail adresa korisnika \\ \hline 
+					Verified & BOOLEAN	&  True ako je korisnik potvrdio registraciju preko maila, inače False		\\ \hline  
+				\end{longtblr}
+
+                \begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline {\textbf{Locations}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}Name & VARCHAR	&  Ime lokacije  	\\ \hline
+					\SetCell{LightBlue} User	& VARCHAR &  Ime korisnika koji je dodao lokaciju 	\\ \hline  
+					Prikladna & BOOLEAN	&  True ako je prikladna za ljubimce, inače False		\\ \hline 
+                    Coordinates & VARCHAR &  Koordinate lokacije \\ \hline 
+				\end{longtblr}
+
+                \begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline {\textbf{Companies}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}OIB & VARCHAR	&  Niz od 11 znamenki karakterističan za tu pravnu osobu  	\\ \hline
+					\SetCell{LightBlue} OwnerId	& VARCHAR &  Hashirani string niz jedinstven za korisnika koji je ujedino i vlasnik obrta 	\\ \hline  
+					Adresa & VARCHAR	&  Adresa obrta	\\ \hline 
+                    Ime & VARCHAR &  Ime obrta \\ \hline 
+                    Tip & VARCHAR &  Kategorija kojoj obrt pripada \\ \hline 
+                    Opis & VARCHAR &  Kratki opis obrta \\ \hline 
 				\end{longtblr}
 				
 				
