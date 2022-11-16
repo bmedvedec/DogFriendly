@@ -153,6 +153,8 @@ export default function VlasnikForm(params) {
 		[]
 	);
 
+	// funkcija za provjeru ispravnosti password-a
+	// password mora biti duzi od 8 znakova i ne smije biti blacklist-an
 	const checkPassword = useCallback(
 		debounce(async (password) => {
 			setLoading(true);
@@ -172,11 +174,13 @@ export default function VlasnikForm(params) {
 		[]
 	);
 
+	// funkcija za provjeru ispravnosti naziva tvrtke
+	// naziv tvrtke mora biti duzi od 3 znaka, ne smiju biti svi brojevi i ne smije vec postojat u bazi
 	const checkCompanyName = useCallback(
 		debounce(async (companyName) => {
 			setLoading(true);
-			const companiesRef = collection(db, "companies");
-			const companiesSnap = await getDocs(companiesRef);
+			const companiesRef = collection(db, "companies"); // referenca na kolekciju tvrtki
+			const companiesSnap = await getDocs(companiesRef); // dohvaca kolekciju companies iz baze
 
 			if (companyName.length < 3) {
 				setCompanyNameError(
@@ -202,6 +206,8 @@ export default function VlasnikForm(params) {
 		[]
 	);
 
+	// funkcija za provjeru ispravnosti OIB-a tvrtke
+	// OIB mora imati tocno 11 brojeva
 	const checkCompanyOIB = useCallback(
 		debounce(async (companyOIB) => {
 			setLoading(true);
@@ -220,6 +226,7 @@ export default function VlasnikForm(params) {
 		[]
 	);
 
+	// funkcija za provjeru ispravnosti kontakta tvrtke/obrta
 	const checkCompanyPhone = useCallback(
 		debounce(async (companyPhone) => {
 			setLoading(true);
@@ -237,6 +244,7 @@ export default function VlasnikForm(params) {
 		[]
 	);
 
+	// funkcija za provjeru jel upisano barem 30 znakova za opis tvrtke/obrta
 	const checkCompanyDesc = useCallback(
 		debounce(async (companyDesc) => {
 			setLoading(true);
@@ -253,6 +261,7 @@ export default function VlasnikForm(params) {
 		[]
 	);
 
+	// funkcija koja se koristi u select inputu za tip tvrtke (stil)
 	const BootstrapInput = styled(InputBase)(({ theme }) => ({
 		"label + &": {
 			marginTop: theme.spacing(3),
@@ -278,11 +287,16 @@ export default function VlasnikForm(params) {
 		},
 	}));
 
+	// kod za prikaz vlasnik forme
 	return (
-		<form className="form" onSubmit={handleSubmit}>
+		<form
+			className="form"
+			onSubmit={handleSubmit}>
 			<div className={styles.regFormTop}>
 				<div className={styles.info}>
+					{/* personal info tab */}
 					<label className={styles.titles}>Personal info</label>
+
 					<div className="input-container">
 						<input
 							name="username"
@@ -294,10 +308,12 @@ export default function VlasnikForm(params) {
 								setLoading(true);
 							}}
 						/>
+						{/* prikaz greske ispod inputa ako je state postavljen na true */}
 						{usernameExists && (
 							<p className="error">Username already exists</p>
 						)}
 					</div>
+
 					<div className="input-container">
 						<input
 							name="email"
@@ -313,6 +329,7 @@ export default function VlasnikForm(params) {
 							<p className="error">Email already exists</p>
 						)}
 					</div>
+
 					<div className="input-container">
 						<input
 							name="password"
@@ -320,6 +337,7 @@ export default function VlasnikForm(params) {
 							value={password}
 							placeholder="password"
 							onChange={(event) => {
+								// svaki put kada se promijeni vrijednost password-a, pozovi funkciju checkPassword
 								setLoading(true);
 								setPassword(event.target.value);
 								checkPassword(event.target.value);
@@ -330,8 +348,11 @@ export default function VlasnikForm(params) {
 						)}
 					</div>
 				</div>
+
+				{/* company info tab */}
 				<div className={styles.info}>
 					<label className={styles.titles}>Company info</label>
+
 					<div className="input-container">
 						<input
 							name="companyName"
@@ -348,6 +369,7 @@ export default function VlasnikForm(params) {
 							<p className="error">{companyNameError}</p>
 						)}
 					</div>
+
 					<div className="input-container">
 						<input
 							name="companyAddress"
@@ -359,6 +381,7 @@ export default function VlasnikForm(params) {
 							}
 						/>
 					</div>
+
 					<div className="input-container">
 						<input
 							name="companyOIB"
@@ -375,6 +398,7 @@ export default function VlasnikForm(params) {
 							<p className="error">{companyOIBError}</p>
 						)}
 					</div>
+
 					<div className="input-container">
 						<input
 							name="companyPhone"
@@ -391,6 +415,7 @@ export default function VlasnikForm(params) {
 							<p className="error">{companyPhoneError}</p>
 						)}
 					</div>
+
 					<div className="input-container">
 						<input
 							name="companyDesc"
@@ -407,6 +432,8 @@ export default function VlasnikForm(params) {
 							<p className="error">{companyDescError}</p>
 						)}
 					</div>
+
+					{/* custom select forma za odabir tipa tvrtke/obrta */}
 					<div className="input-container">
 						<FormControl>
 							<Select
@@ -417,13 +444,16 @@ export default function VlasnikForm(params) {
 									setCompanyType(event.target.value);
 								}}
 								input={<BootstrapInput />}
-								inputProps={{ "aria-label": "Without label" }}
-							>
-								<MenuItem disabled value="">
+								inputProps={{ "aria-label": "Without label" }}>
+								<MenuItem
+									disabled
+									value="">
 									<em>type of business</em>
 								</MenuItem>
 								{companyTypes.map((type) => (
-									<MenuItem key={type} value={type}>
+									<MenuItem
+										key={type}
+										value={type}>
 										{type}
 									</MenuItem>
 								))}
@@ -432,6 +462,7 @@ export default function VlasnikForm(params) {
 					</div>
 				</div>
 			</div>
+
 			<input
 				className={styles.button}
 				type="submit"

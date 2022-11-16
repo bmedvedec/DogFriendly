@@ -149,7 +149,7 @@ export default function PrivatnaForm(params) {
 					value={password}
 					placeholder="password"
 					onChange={(event) => {
-						// svaki put kada se promijeni vrijednost passworda, pozovi funkciju checkPassword
+						// svaki put kada se promijeni vrijednost password-a, pozovi funkciju checkPassword
 						setLoading(true);
 						setPassword(event.target.value);
 						checkPassword(event.target.value);
