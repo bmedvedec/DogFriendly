@@ -4,10 +4,15 @@ import styles from "../styles/register.module.scss";
 import PrivatnaForm from "../components/forms/PrivatnaForm";
 import VlasnikForm from "../components/forms/VlasnikForm";
 
+// funkcija za registraciju koja prima parametre email i password u sklopu params objekta
 export default function Register(params) {
+	// inicijalizacija hook state-a za forme privatna i vlasnik
+	// ako je privatna true, prikazuje se PrivatnaForm, inace VlasnikForm
+	// privatna je default true
 	const [privatna, setPrivatna] = useState(true);
 	const [vlasnik, setVlasnik] = useState(false);
 
+	// kod za prikaz register stranice
 	return (
 		<Layout page="Register">
 			<div className={styles.container}>
@@ -47,7 +52,8 @@ export default function Register(params) {
 						<h2 className={styles.headingRegister}>Register</h2>
 					</div>
 
-					<styles className={styles.registerChoiceContainer}>
+					{/* div sa dva tabButtona za odabir privatne ili vlasnik forme */}
+					<div className={styles.registerChoiceContainer}>
 						<div
 							className={`tabButton tabButton-personal ${privatna ? "tabButtonSelected" : ""}`}
 							onClick={() => {
@@ -64,7 +70,8 @@ export default function Register(params) {
 							}}>
 							Company
 						</div>
-					</styles>
+					</div>
+					{/* prikaz jedne od formi u zavisnosti od state-a privatna i vlasnik */}
 					{privatna && <PrivatnaForm />}
 					{vlasnik && <VlasnikForm />}
 				</div>

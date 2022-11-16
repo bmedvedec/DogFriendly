@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Layout from '../components/layout'
 import { useAuth } from '../lib/context';
 
+// home page
 export default function Home() {
   const {authUser, loading, firebaseSignOut } = useAuth();
 

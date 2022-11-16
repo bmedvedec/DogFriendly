@@ -24,7 +24,7 @@ export default function Login(params) {
 		console.log("loading");
 
 		// predajemo email i password custom hooku koji komunicira sa firebaseom
-		// ako je uspjesno autentificiranje, preusmjeri na pocetnu stranicu
+		// ako je uspjesno autentificiranje, preusmjeri na pocetnu stranicu, inace postavi error sa porukom
 		firebaseEmailPassSignIn(email, password)
 			.then((authUser) => {
 				console.log("uspješno");
@@ -39,15 +39,22 @@ export default function Login(params) {
 		console.log("done loading");
 	}
 
+	// funkcija (hook) koja se izvrsava svaki put kada se promijeni vrijednost email ili password
+	// ako oba polja zadovoljavaju uvjete, omoguci submit button, inace onemoguci
 	useEffect(() => {
-		if (email.includes("@") && email.length >= 5 && !email.includes(" ") && password.length >= 8) {
+		if (
+			email.includes("@") &&
+			email.length >= 5 &&
+			!email.includes(" ") &&
+			password.length >= 8
+		) {
 			setDisabled(false);
 		} else {
 			setDisabled(true);
 		}
 	}, [email, password]);
 
-	// prikaz forme za login
+	// kod za prikaz login forme
 	return (
 		<Layout page="Login">
 			<div className={styles.container}>
@@ -67,6 +74,8 @@ export default function Login(params) {
 							</h1>
 							<h2 className={styles.headingLogin}>Login</h2>
 						</div>
+
+						{/* loading animacija koja se prikazuje dok je loading true */}
 						{loading && (
 							<CircularProgress
 								style={{ color: "#b847bd" }}
@@ -81,6 +90,7 @@ export default function Login(params) {
 								{error}
 							</p>
 						)}
+
 						<div className="email-container">
 							<input
 								type="email"
