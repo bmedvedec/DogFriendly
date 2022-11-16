@@ -1,33 +1,66 @@
 import Layout from "../components/layout";
 import { useAuth } from "../lib/context";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { async } from "@firebase/util";
 
-export default function userInfo() {
-    const { authUser } = useAuth();
-    const [userInfo, setUserInfo] = useState(null);
+export default function UserInfo() {
+	// sprema kontekst autentifikacije u authUser
+	const { authUser } = useAuth();
+	// inicijalizacija hook state-a za podatke o korisniku, podatke o firmi i da li je korisnik vlasnik firme
+	const [userInfo, setUserInfo] = useState(null);
+	const [companyInfo, setCompanyInfo] = useState(null);
 
-    useEffect(() => {
-        if (authUser) {
-            const docRef = doc(db, "users", authUser.uid);
-            getDoc(docRef).then((doc) => {
-                if (doc.exists()) {
-                    setUserInfo(doc.data());
-                } else {
-                    console.log("No such document!");
-                }
-            }).catch((error) => {
-                console.log("Error getting document:", error);
-            });
-        }
-    }, [authUser]);
+	// funkcija koja povlaci podatke o korisniku iz baze i ako je korisnik vlasnik firme, povlaci i podatke o firmi
+	// poziva se na promjenu authUser-a
+	useEffect(() => {
+		async function getUserInfo() {
+			const docRef = doc(db, "users", authUser.uid); // referenca na dokument korisnika
+			const docSnap = await getDoc(docRef); // povlaci podatke o korisniku iz baze koji imaju id jednak authUser.uid
+			if (docSnap.exists()) {
+				// ako postoji dokument sa tim id-em
+				setUserInfo(docSnap.data()); // sprema podatke o korisniku u hook state
+				if (docSnap.data().companyOwner) {
+					// ako je korisnik vlasnik firme
+					const companyRef = collection(db, "companies"); // referenca na kolekciju firmi
+					const companySnap = await getDocs(companyRef); // povlaci sve dokumente iz kolekcije firmi
+					companySnap.forEach((doc) => {
+						// prolazi kroz sve dokumente iz kolekcije firmi
+						if (doc.data().owner === authUser.uid) {
+							// ako je id vlasnika firme jednak authUser.uid
+							setCompanyInfo(doc.data()); // sprema podatke o firmi u hook state
+						}
+					});
+				}
+			} else {
+				console.log("No such document!");
+			}
+		}
+		if (authUser) {
+			getUserInfo();
+		}
+	}, [authUser]);
 
-    return (
-        <Layout>
-            <h1>User info</h1>
-            {userInfo && <p>{userInfo.username}</p>}
-            {userInfo && <p>{userInfo.email}</p>}
-        </Layout>
-    )
+	// kod za prikaz podataka o korisniku
+	return (
+		<Layout>
+			<a href="/">Home page link</a>
+
+			<h1>User info</h1>
+			{userInfo && <p>{userInfo.username}</p>}
+			{userInfo && <p>{userInfo.email}</p>}
+			<br />
+			{companyInfo && (
+				<p>
+					<b>Company info</b>
+				</p>
+			)}
+			{companyInfo && <p>{companyInfo.name}</p>}
+			{companyInfo && <p>{companyInfo.address}</p>}
+			{companyInfo && <p>{companyInfo.description}</p>}
+			{companyInfo && <p>{companyInfo.phone}</p>}
+			{companyInfo && <p>{companyInfo.type}</p>}
+		</Layout>
+	);
 }

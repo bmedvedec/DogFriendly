@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Layout from '../components/layout'
 import { useAuth } from '../lib/context';
 
+// home page
 export default function Home() {
   const {authUser, loading, firebaseSignOut } = useAuth();
 
@@ -10,6 +11,7 @@ export default function Home() {
     <Layout>
       <h1>hello</h1>
       <p>{authUser ? authUser.uid : "no user"}</p>
+      <p>{authUser ? "verified: " + authUser.verified : "no user"}</p>
       <a href="/register">register</a>
       <br/>
       <a href="/login">login</a>
