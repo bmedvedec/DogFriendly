@@ -74,9 +74,9 @@
 					\noindent \underbar{\textbf{UC1 - Pregled lokacija na karti}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item \textbf{Glavni sudionik: }Registrirani orisnik, Neregistrirani korisnik
 						\item  \textbf{Cilj:} Pregledati lokacije i osnovne informacije
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Google Maps API
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -93,7 +93,7 @@
 					\noindent \underbar{\textbf{UC2 - Registracija  obrta}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik
+						\item \textbf{Glavni sudionik: }Neregistrirani korisnik
 						\item  \textbf{Cilj:} Stvoriti korisnički račun za pristup sustavu
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -128,7 +128,7 @@
 					\noindent \underbar{\textbf{UC3 - Registracija privatne osobe}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik
+						\item \textbf{Glavni sudionik: }Neregistirani korisnik
 						\item  \textbf{Cilj:} Stvoriti korisnički račun za pristup sustavu
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -163,7 +163,7 @@
 					\noindent \underbar{\textbf{UC4 - Prijava u sustav}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: } Klijent
+						\item \textbf{Glavni sudionik: } Registrirani korisnik
 						\item  \textbf{Cilj:} Dobiti pristup korisničkom sučelju
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Registracija
@@ -194,10 +194,10 @@
 					\noindent \underbar{\textbf{U5 - Pregled osobnih podataka}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: } Klijent
+						\item \textbf{Glavni sudionik: } Registrirani korisnik
 						\item  \textbf{Cilj:} Pregledati osobne podatke
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Klijent je prijavljen
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -213,10 +213,10 @@
 					\noindent \underbar{\textbf{UC6 - Promjena osobnih podataka}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: } Klijent
+						\item \textbf{Glavni sudionik: } Registrirani korisnik
 						\item  \textbf{Cilj:} Promijeniti osobne podatke
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Klijent je prijavljen
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -253,10 +253,10 @@
 					\noindent \underbar{\textbf{UC7 - Brisanje korisničkog računa}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: } Klijent
+						\item \textbf{Glavni sudionik: } Registrirani korisnik
 						\item  \textbf{Cilj:} Izbrisati svoj korisnički račun
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Klijent je prijavljen
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -274,9 +274,9 @@
 					\noindent \underbar{\textbf{UC8 - Pregled informacija o lokaciji}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik, Klijent
+						\item \textbf{Glavni sudionik: }Registrirani/Neregistrirani korisnik
 						\item  \textbf{Cilj:} Pregledati detaljnije informacije o lokaciji
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Google Maps API
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -292,9 +292,9 @@
 					\noindent \underbar{\textbf{UC9 - Pregled informacija o obrtu}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item \textbf{Glavni sudionik: }Registrirani/Neregistrirani korisnik
 						\item  \textbf{Cilj:} Pregledati detaljnije informacije o obrtu
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Google Maps API
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -310,9 +310,9 @@
 					\noindent \underbar{\textbf{UC10 - Filtriranje lokacije prema kategoriji}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item \textbf{Glavni sudionik: }Registrirani/Neregistrirani korisnik
 						\item  \textbf{Cilj:} Filtrirati prikazane lokacije
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Google Maps API
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -329,9 +329,9 @@
 					\noindent \underbar{\textbf{UC11 - Filtriranje lokacije prema unosu u polje za pretraživanje}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item \textbf{Glavni sudionik: }Registrirani/Neregistrirani korisnik
 						\item  \textbf{Cilj:} Filtrirati prikazane lokacije
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Google Maps API
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -348,9 +348,9 @@
 					\noindent \underbar{\textbf{UC12 - Dohvaćanje lokacije uređaja}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item \textbf{Glavni sudionik: }Registrirani/Neregistrirani korisnik
 						\item  \textbf{Cilj:} Prikazati točnu lokaciju korisnika
-						\item  \textbf{Sudionici:} -
+						\item  \textbf{Sudionici:} Google Maps API
 						\item  \textbf{Preduvjet:} Prihvaćena privola za dohvaćanje lokacije uređaja
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -380,9 +380,9 @@
 					\noindent \underbar{\textbf{UC13 - Privola za dohvaćanje lokacije uređaja}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item \textbf{Glavni sudionik: }Registrirani/Neregistrirani korisnik
 						\item  \textbf{Cilj:} Dobiti od korisnika dozvolu za lociranje
-						\item  \textbf{Sudionici:} -
+						\item  \textbf{Sudionici:} Google Maps API
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -412,9 +412,9 @@
 					\noindent \underbar{\textbf{UC14 - Dodavanje lokacija}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Klijent
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item  \textbf{Cilj:} Dodati lokaciju u sustav
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Google Maps API
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -445,9 +445,9 @@
 					\noindent \underbar{\textbf{UC15 - Ocjenjivanje prikladnosti lokacija}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Klijent
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item  \textbf{Cilj:} Ocijeniti je li lokacija prikladna za pse ili nije
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Google Maps API
 						\item  \textbf{Preduvjet:} Lokacija postoji u bazi podataka
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -464,9 +464,9 @@
 					\noindent \underbar{\textbf{UC16 - Reklama obrta uz naknadu}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Klijent
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item  \textbf{Cilj:} Istaknuti svoj objekt na karti
-						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Sudionici:} Baza podataka, Google Maps API
 						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
@@ -498,7 +498,7 @@
 					\noindent \underbar{\textbf{UC17 - Uređivanje podataka o obrtu}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Klijent
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item  \textbf{Cilj:} Prikazati točnu lokaciju korisnika
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
