@@ -16,7 +16,6 @@
 				\item Vlasnik (naručitelj)
 				\item Vlasnik psa
 				\item Vlasnik obrta
-				\item Administrator
 				\item Razvojni tim
 				
 			\end{packed_enum}
@@ -36,7 +35,7 @@
 					
 				\end{packed_enum}
 			
-				\item  \underbar{Klijent(inicijator) može:}
+				\item  \underbar{Klijent(registirani korisnik) može:}
 				
 				\begin{packed_enum}
 					
@@ -47,17 +46,7 @@
 					
 				\end{packed_enum}
 				
-				\item  \underbar{Administrator može:}
-				
-				\begin{packed_enum}
-					
-					\item vidjeti popis svih registriranih korisnika i njihovih osobnih podataka
-					\item korisnike brisati i mijenjati im razinu pristupa aplikaciji (klijent, vlasnik psa, vlasnik obrta)
-					\item brisati recenzije koje su u suprotnosti s pravilima koristenja aplikacije
-					\item dodati ili obrisati lokaciju
-					
-				\end{packed_enum}
-				
+			
 				\item  \underbar{Baza podataka(sudionik):}
 				
 				\begin{packed_enum}
@@ -82,7 +71,7 @@
 					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
 					
 
-					\noindent \underbar{\textbf{UC1 - Pregled restorana}}
+					\noindent \underbar{\textbf{UC1 - Pregled lokacija na karti}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Korisnik, klijent
@@ -101,7 +90,7 @@
 						
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC2 - Registracija}}
+					\noindent \underbar{\textbf{UC2 - Registracija  obrta}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Korisnik
@@ -113,10 +102,11 @@
 						\item[] \begin{packed_enum}
 	
 							\item Korisnik odabire opciju za registraciju
-							\item Korisnik unosi potrebne korisničke podatke
+							\item Korisnik odabire opciju "Company"
+							\item Korisnik unosi podatke
 							\item Korisnik prima e-mail za potvrdu registracije
 							\item Korisnik potvrđuje registraciju
-							\item Korisnik prima obavijest o uspješnoj registraciji
+							\item Prikazuje se poruka o uspještnoj registraciji
 
 						\end{packed_enum}
 						
@@ -124,7 +114,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkog podatka u nedozvoljenom formatu ili pružanje neispravnog e-maila
+							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkih podataka u nedozvoljenom formatu ili pružanje neispravnog e-maila, ne zadovoljavanje kompleksnosti lozinke
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obajveštava korisnika o neuspjelom upisu i vraća ga na stranicu za registraciju
@@ -135,7 +125,42 @@
 						\end{packed_item}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC3 - Prijava u sustav}}
+					\noindent \underbar{\textbf{UC3 - Registracija privatne osobe}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Korisnik
+						\item  \textbf{Cilj:} Stvoriti korisnički račun za pristup sustavu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za registraciju
+							\item Korisnik odabire opciju "personal"
+							\item Korisnik unosi podatke
+							\item Korisnik prima e-mail za potvrdu registracije
+							\item Korisnik potvrđuje registraciju
+							\item Prikazuje se poruka o uspještnoj registraciji
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkih podataka u nedozvoljenom formatu ili pružanje neispravnog e-maila, ne zadovoljavanje kompleksnosti lozinke
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obajveštava korisnika o neuspjelom upisu i vraća ga na stranicu za registraciju
+								\item Korisnik mijenja podatke te završava unos ili odustaje od registracije
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC4 - Prijava u sustav}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: } Klijent
@@ -146,7 +171,7 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Unos korisničkog imena i lozinke
+							\item Unos e-maila i lozinke
 							\item Potvrda ispravnosti unesenih podataka
 							\item Pristup korisničkim funkcijama
 
@@ -159,14 +184,14 @@
 							\item[2.a] Neispravno korisničko ime/lozinka
 							\item[] \begin{packed_enum}
 								
-								\item Sustav obavještava korisnika o neuspjelom upisu i vraća ga na stranicu za registraciju
+								\item Sustav obavještava korisnika o neuspjelom upisu i vraća ga na stranicu za prijavu
 								
 							\end{packed_enum}
 
 						\end{packed_item}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC4 - Pregled osobnih podataka}}
+					\noindent \underbar{\textbf{U5 - Pregled osobnih podataka}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: } Klijent
@@ -185,7 +210,7 @@
 						
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC5 - Promjena osobnih podataka}}
+					\noindent \underbar{\textbf{UC6 - Promjena osobnih podataka}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: } Klijent
@@ -213,11 +238,19 @@
 								\item Sustav obavještava korisnika da nije spremio podatke prije izlaska iz prozora
 
 							\end{packed_enum}
+							\item[2.b] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkog podatka u nedozvoljenom formatu ili pružanje neispravnog e-maila, ne zadovoljavanje kompleksnosti lozinke, promjenjena lozinka je jednaka trenutnoj
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obajveštava korisnika o neuspjelom upisu i vraća ga na stranicu za promjenu podataka
+								\item Korisnik mijenja podatke te završava unos ili odustaje od promjene podataka
+								
+							\end{packed_enum}
+							
 							
 						\end{packed_item}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC6 - Brisanje korisničkog računa}}
+					\noindent \underbar{\textbf{UC7 - Brisanje korisničkog računa}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: } Klijent
@@ -228,7 +261,6 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Korisnik pregledava osobne podatke
 							\item Otvara se stranica s osobnim podacima korisnika
 							\item Korisnik briše račun
 							\item Korisnički račun se izbriše iz baze podataka
@@ -236,6 +268,263 @@
 
 						\end{packed_enum}
 						
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC8 - Pregled informacija o lokaciji}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Korisnik, Klijent
+						\item  \textbf{Cilj:} Pregledati detaljnije informacije o lokaciji
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire određenu lokaciju
+							\item Prikazuju se detaljne informacije o lokaciji
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC9 - Pregled informacija o obrtu}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item  \textbf{Cilj:} Pregledati detaljnije informacije o obrtu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire određeni obrt
+							\item Prikazuju se detaljne informacije o tom obrtu
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC10 - Filtriranje lokacije prema kategoriji}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item  \textbf{Cilj:} Filtrirati prikazane lokacije
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Karta je prikazana prilikom učitavanja aplikacije
+							\item Korisnik odabire željene kategorije
+							\item Prikazuju se samo lokacije koje odgovaraju unesenim kategorijama
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC11 - Filtriranje lokacije prema unosu u polje za pretraživanje}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item  \textbf{Cilj:} Filtrirati prikazane lokacije
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Karta je prikazana prilikom učitavanja aplikacije
+							\item Korisnik unosi željeni tekst u polje za pretraživanje
+							\item Prikazuju se samo lokacije koje odgovaraju unesenom tekstu
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC12 - Dohvaćanje lokacije uređaja}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item  \textbf{Cilj:} Prikazati točnu lokaciju korisnika
+						\item  \textbf{Sudionici:} -
+						\item  \textbf{Preduvjet:} Prihvaćena privola za dohvaćanje lokacije uređaja
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Karta je prikazana prilikom učitavanja aplikacije
+							\item Traži se privola korisnika
+							\item Prikazuje se točna lokacija uređaja
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Korisnik ne daje privolu
+							\item[] \begin{packed_enum}
+								
+								\item Ne prikazuje se korisnikova lokacija
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC13 - Privola za dohvaćanje lokacije uređaja}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Korisnik, klijent
+						\item  \textbf{Cilj:} Dobiti od korisnika dozvolu za lociranje
+						\item  \textbf{Sudionici:} -
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Prikazuje se prozor u kojem se od korisnika traži dopuštenje
+							\item Korisnik daje dopuštenje
+							\item Prikazuje se točna lokacija uređaja
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Korisnik ne daje privolu
+							\item[] \begin{packed_enum}
+								
+								\item Ne prikazuje se korisnikova lokacija
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC14 - Dodavanje lokacija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Klijent
+						\item  \textbf{Cilj:} Dodati lokaciju u sustav
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju "Dodaj lokaciju"
+							\item Korisnik unosi podatke o lokaciji
+							\item Podatci o lokaciji se spremaju u bazu podataka
+							\item Lokacija se prikazuje na karti
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Korisnik unosi podatke u nedozvoljenom formatu 
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika o pogrešci 
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC15 - Ocjenjivanje prikladnosti lokacija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Klijent
+						\item  \textbf{Cilj:} Ocjeniti je li lokacija prikladna za pse ili nije
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Lokacija postoji u bazi podataka
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju "Ocjeni lokaciju"
+							\item Korisnik daje svoju ocjenu
+							\item Baza podataka se ažurira
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC16 - Reklama obrta uz naknadu}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Klijent
+						\item  \textbf{Cilj:} Istaknuti svoj objekt na karti
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju "Istakni obrt"
+							\item Korisnik unosi kartične podatke
+							\item Korisnik plaća naknadu
+							\item Baza podataka se ažurira
+							\item Lokacija postaje istaknuta na karti
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[3.a] Kartica je odbijena
+							\item[] \begin{packed_enum}
+								
+								\item Prikazuje se poruka o grešci, korisnika se vraća na početnu stranicu
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC17 - Uređivanje podataka o obrtu}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Klijent
+						\item  \textbf{Cilj:} Prikazati točnu lokaciju korisnika
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za promjenu podataka
+							\item Korisnik mijenja podatke o svom obrtu
+							\item Korisnik sprema promjene
+							\item Baza podataka se ažurira
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Korisnik unosi podatke u nedozvoljenom formatu
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika o neuspjelom upisu
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
 						
 					\end{packed_item}
 					
