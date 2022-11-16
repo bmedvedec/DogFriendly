@@ -19,7 +19,7 @@ export default function Login(params) {
 
 	//funckija koja se izvrsava na pritisak gumba
 	function handleSubmit(event) {
-		event.preventDefault();
+		event.preventDefault(); // sprijecava ponovno ucitavanje stranice
 		setLoading(true);
 		console.log("loading");
 

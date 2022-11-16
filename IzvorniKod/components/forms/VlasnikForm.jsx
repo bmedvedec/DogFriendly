@@ -12,7 +12,9 @@ import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useMyHooks } from "../../lib/hooks";
 
-export default function PrivatnaForm(params) {
+// Komponenta za prikaz forme za unos podataka o vlasniku
+export default function VlasnikForm(params) {
+	// inicijalizacija state hooke-ova za prikaz podataka o vlasniku i tvrtki
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
@@ -24,11 +26,13 @@ export default function PrivatnaForm(params) {
 	const [companyDesc, setCompanyDesc] = useState("");
 	const [companyType, setCompanyType] = useState("");
 
+	// inicijalizacija state hooke-ova za prikaz poruke o grešci prilikom unosa podataka o vlasniku
 	// personal info
 	const [usernameExists, setUsernameExists] = useState(false);
 	const [emailExists, setEmailExists] = useState(false);
 	const [passwordError, setPasswordError] = useState("");
 
+	// inicijalizacija state hook-ova za prikaz poruke o grešci prilikom unosa podataka o tvrtki
 	// company info
 	const [companyNameError, setCompanyNameError] = useState("");
 	// const [companyAddressError, setCompanyAddressError] = useState("");
@@ -36,6 +40,7 @@ export default function PrivatnaForm(params) {
 	const [companyPhoneError, setCompanyPhoneError] = useState("");
 	const [companyDescError, setCompanyDescError] = useState("");
 
+	// polje svih tipova tvrtki/obrta
 	const companyTypes = [
 		"park",
 		"beach",
@@ -48,6 +53,7 @@ export default function PrivatnaForm(params) {
 
 	const [disabled, setDisabled] = useState(true);
 
+	// hook koji se poziva na promjenu nekog od navedenih inputa, ako jedan input nije unutar zadovoljavajucih parametara, onemogucava se submit forme
 	useEffect(() => {
 		if (
 			username &&
@@ -85,13 +91,16 @@ export default function PrivatnaForm(params) {
 		companyType,
 	]);
 
+	// inicijalizacija hook-a za kreiranje novog vlasnika tvrtke i provjeru password-a
 	const { firebaseCreateCompanyOwner } = useAuth();
 	const { checkPasswordBlacklist } = useMyHooks();
 	const router = useRouter();
 
+	// funkcija koja se poziva prilikom submita forme
 	function handleSubmit(event) {
-		event.preventDefault();
+		event.preventDefault(); // sprijecava ponovno ucitavanje stranice
 
+		// funkcija koja kreira novog vlasnika tvrtke
 		firebaseCreateCompanyOwner(
 			username,
 			email,
@@ -104,22 +113,23 @@ export default function PrivatnaForm(params) {
 			companyType
 		)
 			.then(async (authUser) => {
-				//Signed in
+				// ako je kreiranje vlasnika tvrtke uspjesno, vlasnik se preusmjerava na stranicu za prijavu
 				router.push("/");
-				// ...
 			})
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
 				console.log(errorCode, errorMessage);
-				// ..
 			});
 	}
 
+	// funkcija koja se poziva prilikom promjene inputa za username ili email
+	// te poziva funkciju za provjeru postojanja username-a ili email-a
 	useEffect(() => {
 		checkUsernameAndEmail(username, email);
 	}, [username, email]);
 
+	// funkcija za provjeru postojanja username-a ili email-a
 	const checkUsernameAndEmail = useCallback(
 		debounce(async (username, email) => {
 			setUsernameExists(false);
@@ -128,10 +138,12 @@ export default function PrivatnaForm(params) {
 			const querySnapshot = await getDocs(collection(db, "users"));
 			querySnapshot.forEach((doc) => {
 				if (doc.data().username === username) {
+					// ako postoji username, postavlja se state hook za prikaz poruke o grešci
 					console.log("username exists");
 					setUsernameExists(true);
 				}
 				if (doc.data().email === email) {
+					// ako postoji email, postavlja se state hook za prikaz poruke o grešci
 					console.log("email exists");
 					setEmailExists(true);
 				}
@@ -391,7 +403,9 @@ export default function PrivatnaForm(params) {
 								checkCompanyDesc(event.target.value);
 							}}
 						/>
-						{companyDescError && (<p className="error">{companyDescError}</p>)}
+						{companyDescError && (
+							<p className="error">{companyDescError}</p>
+						)}
 					</div>
 					<div className="input-container">
 						<FormControl>
