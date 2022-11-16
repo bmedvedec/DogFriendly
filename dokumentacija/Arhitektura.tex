@@ -1,13 +1,45 @@
 \chapter{Arhitektura i dizajn sustava}
-		%komentar
-		\textbf{\textit{dio 1. revizije}}\\
+            \noindent Arhitektura se može podijeliti na četiri podsustava:
+            \begin{packed_item}
+	
+        	\item  Web poslužitelj
+        	\item  Web aplikacija
+        	\item  Baza podataka
+            \item  Servis za autentifikaciju
+            \end{packed_item}
+            \\
+            
+\textit{Web preglednik} je program koji korisniku omogućuje pregled web-stranica i multimedijalnih sadržaja vezanih uz njih. Svaki internetski preglednik je prevoditelj. Dakle, stranica je pisana u kodu koji preglednik nakon toga interpretira kao nešto svakome razumljivo. Korisnik putem web preglednika šalje zahtjev web poslužitelju.
+\begin{figure}[H]
+	\includegraphics[scale=0.4]{slike/ArhitekturaSustava.png} 
+	\centering
+	\caption{Prikaz arhitekture}
+	\label{fig:promjene}
+\end{figure}
 
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
-	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
-	\end{itemize}
+\newline
+\\
+\textit{Web poslužitelj} osnova je rada web aplikacije. Njegova primarna zadaća je komunikacija klijent s aplikacijom. Komunikacija se odvija preko HTTP (engl. \textit{Hyper Text Transfer Protocol}) protokola, što je protokol u prijenosu informacija na webu. Poslužitelj je onaj koji pokreće web aplikaciju te joj prosljeđuje zahtjeve.
+\newline
+\\
+Korisnik korisi \textit{web aplikaciju} za obrađivanje željenih zahtjeva. Web aplikacija obrađuje zahtjev te ovisno o zahtjevu, pristupa bazi podataka i/ili servisu za autentifikaciju nakon čega preko poslužitelja vraća korisniku odgovor u obliku HTML dokumenta vidljivog u web pregledniku.
+\newline
+\\
+Programski jezik kojeg smo odabrali za izradu naše web aplikacije je JavaScript za koji koristimo React biblioteku (engl. \textit{library}) te Next.js radni okvir (engl. \textit{framework}. Za autentifikaciju koristimo Google-ov modul za autentifikaciju iz njihovog servisa Firebase. Odabrano razvojno okruženje je Microsoft Visual Studio Code. Iako ne potpuno, arhitektura sustava temeljit će se na MVC (Model-View-Controller) konceptu. MVC koncept nije potpuno podržan od strane Next.js-a jer je to radni okvir koji omogućava posluživanje React aplikacija sa servera, a u samom React-u MVC koncept nije potpuno podržan. No, radi lakše izrade i organizacije projekta, odlučili smo na što bliži način implementirati MVC koncept.
+\newline
+\\
+Karakteristika MVC koncepta je nezavisan razvoj pojedinih dijelova aplikaicje što za posljedicu ima jednostasvnije ispitivanje kao i jednostsavno razvijanje i dodavanje novih svojstava u sustav.
+\newline
+\\
+MVC koncept sastoji se od:
+
+\begin{packed_item}
+	
+        	\item  \textbf{Model} - Središnja komponenta sustava. Predstavlja dinamičke strukture podataka, neovisne o korisničkom sučelju. Izravno upravlja podacima, logikom i pravilima aplikacije. Također prima ulazne podatke od Controllera
+        	\item \textbf{View} - Bilo kakav prikaz podataka, poput grafa. Mogući su različiti prikazi iste informacije poput grafičkog ili tabličnog prikaza podataka.
+        	\item  \textbf{Controller} - Prima ulaze i prilagođava ih za prosljeđivanje Modelu i Viewu. Upravlja korisničkim zahtjevima i zemeljem njih izvodi daljnju interakciju s ostalim elementima sustava.
+            \end{packed_item}
+
 
 	
 		
@@ -16,15 +48,17 @@
 
 				
 		\section{Baza podataka}
-			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
+
+  Za potrebe našeg sustava koristit ćemo Firestore, Google-ovu NoSQL cloud bazu podataka iz njihovog servisa Firebase koja svojom strukturom omogućava lake izmijene koje će pratiti skaliranje aplikacije. Gradivna jedinka baze je kolekcija (engl. \textit{collection}) definirana svojim imenom i skupom dokumenata (engl. \textit{documents}). Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu. Baza podataka ove aplikacije sastoji se od sljedećih kolekcija:
+  \begin{packed_item}
+	
+        	\item  users
+        	\item  companies
+        	\item  locations
+            \end{packed_item}
 		
 			\subsection{Opis tablica}
 			
-
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
 				
 				
 				\textbf{Users}\hspace{1cm}  Ova tablica sadrži sve relevantne informacije za korisnike aplikacije. Sadrži atribute: UserId, Username, email i verified(boolean atribut koji nam govori je li korisnik verificirao svoj račun). Tablica je u vezi \textit{One-to-One} s tablicom Companies i u vezi \textit{One-to-Many} je s tablicom Locations. 
