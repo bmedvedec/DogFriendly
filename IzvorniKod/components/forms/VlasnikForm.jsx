@@ -12,7 +12,7 @@ import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useMyHooks } from "../../lib/hooks";
 
-export default function PrivatnaForm(params) {
+export default function VlasnikForm(params) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
