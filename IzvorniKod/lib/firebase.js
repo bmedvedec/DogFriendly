@@ -49,33 +49,33 @@ export function useFirebaseAuth() {
 	const [loading, setLoading] = useState(true);
 
 	const authStateChanged = async (authState) => {
-		if (!authState) {
+		if (!authState) { // ukoliko authState nije definiran, nema usera pa treba očistiti podatke o korisniku i javiti aplikaciji da je učitavanje gotovo
 			setAuthUser(null);
 			setLoading(false);
 			return;
 		}
 
-		setLoading(true);
+		setLoading(true); 
 		console.log("prije formattedUser", authState);
-		var formattedUser = formatAuthUser(authState);
+		var formattedUser = formatAuthUser(authState); // formatiranje podataka o korisniku - micanje nepotrebnih polja
 		setAuthUser(formattedUser);
 		setLoading(false);
 	};
 
-	const clear = () => {
+	const clear = () => { // ciscenje podataka o korisniku
 		setAuthUser(null);
 		setLoading(true);
 	};
 
-	const firebaseEmailPassSignIn = async (email, password) => {
+	const firebaseEmailPassSignIn = async (email, password) => { // poziva firebase funkciju te vraća error ukoliko se dogodi koji se hvata u funkciji roditelj u svrhu obrade
 		return signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
 			// Signed in
 			console.log("signed in");
 		})
 	};
 
-	const firebaseCreateUserEmailPass = async (username, email, password) => {
-		createUserWithEmailAndPassword(auth, email, password).then(
+	const firebaseCreateUserEmailPass = async (username, email, password) => { // funkcija za stvaranje običnog korisnika 
+		createUserWithEmailAndPassword(auth, email, password).then( // poziva firebase funkciju i ako je korisnik uspješno kreiran, dohvaća njegov id i upisuje ga u firestore (bazu podataka) s dolje navedenim parametrima
 			async (userCredential) => {
 				// Signed in
 				var user = userCredential.user;
@@ -95,7 +95,7 @@ export function useFirebaseAuth() {
 		);
 	};
 
-	const firebaseCreateCompanyOwner = async (
+	const firebaseCreateCompanyOwner = async ( // funkcija za stvaranje vlasnika obrtnika
 		username,
 		email,
 		password,
@@ -106,7 +106,7 @@ export function useFirebaseAuth() {
 		companyDesc,
 		companyType
 	) => {
-		createUserWithEmailAndPassword(auth, email, password).then(
+		createUserWithEmailAndPassword(auth, email, password).then( // poziva firebase funkciju i ako je uspješna upisuje korisnika u bazu (kao fja iznad) te upisuje i podatke o obrtu u bazu 
 			async (userCredential) => {
 				var user = userCredential.user;
 				console.log("registered", user.uid);
@@ -134,7 +134,7 @@ export function useFirebaseAuth() {
 		);
 	};
 
-	const firebaseSignOut = async () => {
+	const firebaseSignOut = async () => { // prekida sjednicu korisnika
 		signOut(auth).then(clear);
 	};
 
@@ -143,7 +143,7 @@ export function useFirebaseAuth() {
 		return () => unsubscribe();
 	}, []);
 
-	return {
+	return { // vraća podatke o korisniku, učitavanju i fjama aplikaciji
 		authUser,
 		loading,
 		firebaseEmailPassSignIn,

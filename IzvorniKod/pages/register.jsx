@@ -3,12 +3,21 @@ import Layout from "../components/layout";
 import styles from "../styles/register.module.scss";
 import PrivatnaForm from "../components/forms/PrivatnaForm";
 import VlasnikForm from "../components/forms/VlasnikForm";
+import { useRouter } from "next/router";
+import { useAuth } from "../lib/context";
 
 // funkcija za registraciju koja prima parametre email i password u sklopu params objekta
 export default function Register(params) {
 	// inicijalizacija hook state-a za forme privatna i vlasnik
 	// ako je privatna true, prikazuje se PrivatnaForm, inace VlasnikForm
 	// privatna je default true
+	const router = useRouter();
+	const { authUser } = useAuth();
+	if(authUser) {
+		router.push("/userInfo");
+		return 
+	}
+
 	const [privatna, setPrivatna] = useState(true);
 	const [vlasnik, setVlasnik] = useState(false);
 

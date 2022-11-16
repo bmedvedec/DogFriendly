@@ -7,6 +7,13 @@ import { CircularProgress } from "@mui/material";
 
 // funkcija za login sa emailom i passwordom koja prima parametre email i password u sklopu params objekta
 export default function Login(params) {
+	const router = useRouter();
+	const { authUser } = useAuth();
+	if(authUser) {
+		router.push("/userInfo");
+		return 
+	}
+
 	// inicijalizacija hook state-a za email i password
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -15,7 +22,6 @@ export default function Login(params) {
 	const [disabled, setDisabled] = useState(true);
 	// inicijalizacija hook-a za autentifikaciju
 	const { firebaseEmailPassSignIn } = useAuth();
-	const router = useRouter();
 
 	//funckija koja se izvrsava na pritisak gumba
 	function handleSubmit(event) {
