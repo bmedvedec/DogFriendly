@@ -547,12 +547,30 @@
 				\textbf{\textit{dio 1. revizije}}\\
 				
 				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+				
+				Obrazac uporabe UC1 - Pregled lokacija na karti
+
+				Registrirani ili neregistrirani korisnik šalje zahtjev za prikaz karte s lokacijama.Poslužitelj dohvaća markere iz baze podataka.
+				Zatim markere preuzima Google Maps API koji ih dodaje na kartu. Poslužitelj dohvaća kartu s markerima te je prikazuje korisniku.
+				Dok god se korisnik kreće po karti, poslužitelj od njega prima zahtjeve za svaki korak jer pomake na karti mora zatražiti od 
+				Google Maps API-ja čija je uloga omogućiti kretanje po karti. Poslužitelj zatim prikazuje pomake na karti korisniku. 
+				
 				\begin{figure}[H]
 					\includegraphics[scale=0.4]{slike/SekvencijskiDijagram1.png}
 					\centering
 					\caption{Sekvencijski dijagram za UC1}
 					\label{fig:promjene}
 				\end{figure}
+
+				Obrazac uporabe U14 - Dodavanje lokacija
+
+				Registrirani korisnik šalje zahtjev za prikaz karte s lokacijama kako bi mogao odabrati opciju dodavanja lokacije.Poslužitelj dohvaća markere iz baze podataka.
+				Zatim markere preuzima Google Maps API koji ih dodaje na kartu. Poslužitelj dohvaća kartu s markerima te je prikazuje korisniku. Korisnik odabire opciju dodavanja
+				lokacije, a poslužitelj mu daje pristup jer je registriran te korisnik unosi podatke o lokaciji (ime lokacije, kategoriju te ocjenu/oznaku prikladnosti). Poslužitelj 
+				za unesene podatke o lokaciji dohvaća iz baze podataka podatke o toj lokaciji. Ako oni ne postoje u bazi podataka, spremaju se u bazu podataka te poslužitelj dohvaća 
+				iz nje novi marker. Preuzima ga Google Maps API koji ga dodaje na kartu te poslužitelj dohvaća kartu s dodanim novim markerom i prikazuje je korisniku. Ako podaci o
+				lokaciji već postoje u bazi, korisnik prima informaciju o postojanju podataka za željenu lokaciju.
+				
 				\begin{figure}[H]
 					\includegraphics[scale=0.4]{slike/SekvencijskiDijagram2.png}
 					\centering
