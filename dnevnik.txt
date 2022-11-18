@@ -29,6 +29,12 @@
         rad na razvoju aplikacije
 
 4. sastanak:
+    datum: 07.11.2022., 18:00
+    prisustvovali: Fran Markulin, Branimir Medvedec
+    teme:
+        rad na razvoju aplikacije
+
+5. sastanak:
     datum: 13.11.2022., 15:00
     prisustvovali: Fran Markulin, Karla Udiljak, Branimir Medvedec, Jura Starčević, Luka Radman, Marko Štrk
     teme:
@@ -38,17 +44,24 @@
         podijela poslova
         zadani rokovi
 
-5. sastanak:
+6. sastanak:
     datum: 15.11.2022, 7:30
     prisustvovali: Fran Markulin, Branimir Medvedec, Luka Radman
     teme:
         rad na razvoju aplikacije
         priprema za prvu predaju
 
-6. sastanak:
+7. sastanak:
     datum: 16.11.2022., 10:30
     prisustvovali: Fran Markulin, Branimir Medvedec
     teme:
         komentiranje programskog koda
         rad na dokumentaciji
         priprema za izradu dijagrama razreda
+
+8. sastanak:
+    datum: 17.11.2022., 13:45
+    prisustvovali: Laura Majer, Fran Markulin, Karla Udiljak, Branimir Medvedec, Jura Starčević, Luka Radman, Marko Štrk
+    teme:
+        demonstracija generičkih funkcionalnosti
+        rješavanje nedoumica
