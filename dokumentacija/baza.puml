@@ -1,0 +1,200 @@
+@startuml modeli iz baze
+authUser <.. User : uid
+authUser ..> Firebase : authUser
+Context ..> authUser
+MyApp ..> Context : AuthUserProvider
+Layout --|> MyApp
+Index --|> Layout
+Register --|> Layout
+Login --|> Layout
+UserInfo --|> Layout
+VlasnikForm --|> Register
+PrivatnaForm --|> Register
+VlasnikForm ..|> useMyHooks
+PrivatnaForm ..|> useMyHooks
+Company --* User : companyOwner? -> uid
+
+class authUser {
+    -uid: string
+    -email: string
+    -verified: boolean
+}
+
+class User {
+    -uid: string
+    -email: string
+    -username: string
+    -companyOwner: boolean
+}
+
+class Company {
+    -uid: string
+    -name: string
+    -address: string
+    -phone: string
+    -description: string
+    -type: string
+    -owner: string
+}
+
+class Firebase {
+    -firebaseConfig: object
+    -app: object
+    -db: object
+    -auth: object
+    -formatAuthUser(authUser): object
+    -authStateChanged(): void
+    -firebaseEmailPassSignIn(email, password): promise
+    -firebaseCreateUserEmailPass(username, email, password): void
+    -firebaseCreateCompanyOwner(username, email, password, companyName, companyAddress, companyOIB, companyPhone, companyDesc, companyType): void
+    -firebaseSignOut(): void
+    -firebase(): object
+}
+
+class Context {
+    -authUserContext(authUser, loading, firebaseEmailPassSignIn, firebaseCreateUserEmailPass, firebaseCreateCompanyOwner, firebaseSignOut): object
+    -auth(): object
+    -AuthUserProvider(children): object
+}
+
+interface useMyHooks {
+    -checkPasswordBlaclist(password): boolean
+}
+
+class MyApp {
+    -AuthUserProvider: object
+    -children: any
+    -myapp(): app
+}
+
+abstract class Layout {
+    -children: any
+    -description: string
+    -head: any
+    -linkFavicon: string
+    -title: string
+    -title(page): title
+    -layout(): html
+}
+
+class Login {
+    -router: object
+    -authUser: object
+    -email: string
+    -setEmail(email): void
+    -password: string
+    -setPassword(password): void
+    -error: string
+    -setError(error): void
+    -loading: boolean
+    -setLoading(loading): void
+    -disabled: boolean
+    -setDisabled(disabled): void
+    -firebaseEmailPassSignIn(email, password): promise
+    -handleSubmit(event): void
+    -useEffect(email, password): void
+    -login(): html
+}
+
+class Register {
+    -router: object
+    -authUser: object
+    -privatna: boolean
+    -setPrivatna(privatna): void
+    -vlasnik: boolean
+    -setVlasnik(vlasnik): void
+    -PrivatnaForm: object
+    -VlasnikForm: object
+    -register(): html
+}
+
+class PrivatnaForm {
+    -email: string
+    -setEmail(email): void
+    -password: string
+    -setPassword(password): void
+    -username: string
+    -setUsername(username): void
+    -loading: boolean
+    -setLoading(loading): void
+    -usernameExists: boolean
+    -setUsernameExists(usernameExists): void
+    -emailExists: boolean
+    -setEmailExists(emailExists): void
+    -passwordError: string
+    -setPasswordError(passwordError): void
+    -disabled: boolean
+    -setDisabled(disabled): void
+    -firebaseCreateUserEmailPass(username, email, password)
+    -handleSubmit(event): void
+    -useEffectDisabled(username, password, email, usernameExists, emailExists, passwordError, loading): void
+    -useEffectUsernameEmail(username, email): void
+    -checkUsernameAndEmail(username, email): void
+    -checkPassword(password): void
+    -PrivatnaForm(): html
+}
+
+class VlasnikForm {
+    -email: string
+    -setEmail(email): void
+    -password: string
+    -setPassword(password): void
+    -username: string
+    -setUsername(username): void
+    -loading: boolean
+    -setLoading(loading): void
+    -companyName: string
+    -setCompanyName(companyName): void
+    -companyAddress: string
+    -setCompanyAddress(companyAddress): void
+    -companyOIB: string
+    -setCompanyOIB(companyOIB): void
+    -companyPhone: string
+    -setCompanyPhone(companyPhone): void
+    -companyDesc: string
+    -setCompanyDesc(companyDesc): void
+    -companyType: string
+    -setCompanyType(companyType): void
+    -usernameExists: boolean
+    -setUsernameExists(usernameExists): void
+    -emailExists: boolean
+    -setEmailExists(emailExists): void
+    -passwordError: string
+    -setPasswordError(passwordError): void
+    -companyNameError: string
+    -setCompanyNameError(companyNameError): void
+    -companyPhoneError: string
+    -setCompanyPhoneError(companyPhoneError): void
+    -companyDescError: string
+    -setCompanyDescError(companyDescError): void
+    -companyTypes: array
+    -disabled: boolean
+    -setDisabled(disabled): void
+    -firebaseCreateCompanyOwner(username, email, password, companyName, companyAddress, companyOIB, companyPhone, companyDesc, companyType)
+    -handleSubmit(event): void
+    -useEffectDisabled(username, password, email, usernameExists, loading, companyName, companyAddress, companyOIB, companyPhone, companyDesc, companyType, loading): void
+    -useEffectUsernameEmail(username, email): void
+    -checkUsernameAndEmail(username, email): void
+    -checkPassword(password): void
+    -checkCompanyName(companyName): void
+    -checkCompanyPhone(companyPhone): void
+    -checkCompanyDesc(companyDesc): void
+    -checkCompanyOIB(companyOIB): void
+    -VlasnikForm(): html
+}
+
+class UserInfo {
+    -authUser: object
+    -userInfo: object
+    -setUserInfo(userInfo): void
+    -companyInfo: object
+    -setCompanyInfo(companyInfo): void
+    -useEffect(authUser): void
+    -userInfo(): html
+}
+
+class Index {
+    -authUser: object
+    -loading: boolean
+    -firebaseSignOut(): void
+}
