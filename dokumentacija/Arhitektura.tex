@@ -139,37 +139,58 @@ MVC koncept sastoji se od:
 			\label{fig:promjene}
 		          \end{figure}
 			
-			Na slici 4.3 prikazan je dijagram razreda cijelog projekta. Implementirane metode direktno komuniciraju s bazom podataka te vraćaju tražene podatke
+			Na slici 4.3 prikazan je dijagram razreda cijelog projekta. Implementirane metode direktno komuniciraju s bazom podataka te vraćaju tražene podatke.
 			
+			PrivatnaForm.jsx služi za unos informacija o privatnom korisniku, vrši provjeru ispravnosti unosa i ako je sve u redu kreira korisnika u firebaseu
+			
+			VlasnikForm.jsx služi za unos informacija o obrtu. Sadrži podatke potrebne za neki obrt, provjerava ispravnost unesenih podataka i ako je sve u redu kreira korisnika u firebaseu.
 	
+	        Firebase.js služi za konfiguraciju baze i komunikaciju s istom. 
+	        
+	        Context.js stvara kontekst za trenutnog korisnika
+	        
+	        Hook.js provjerava nalazi li se lozinka u "password blacklisti" i ako da, traži promjenu lozinke.
+	        
+	        Login.jsx korisniku prikazuje stranicu za ulogiravanje u aplikaciju. Prilikom log-ina gleda se postoji li korisnik u bazi, ako ne javlja se greška. Ako postoji ulogirava se u aplikaciju. Ne dozvoljava se upis dok sva polja nisu ispravno upisana.
+	        
+	        Register.jsx korisniku prikazuje stranicu za registraciju. U zavisnisti od odabranog prikazuje se ili "PrivatnaForma" ili "VlasnikForma"
+	        
+	        UseInfo.jsx prikazuje stranicu sa podatcima o ulogiranom korisniku. Prvotno funkcija povlači podatke o korisniku iz baze i ako je korisnik vlasnik firme, povlači i podatke o firmi. Te se isti podatci prikazuju na stranici
+	        
+	        \begin{figure}[H]
+			\includegraphics[scale=0.2]{dokumentacija/slike/modeli_iz_baze.png}
+			\centering
+			\caption{Modeli iz Baze}
+			\label{fig:promjene}
+		          \end{figure}
 			
-			\textbf{\textit{dio 2. revizije}}\\			
+			%\textbf{\textit{dio 2. revizije}}\\			
 			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
+			%\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
 			
 			
 			
-			\eject
+			%\eject
 		
-		\section{Dijagram stanja}
+		%\section{Dijagram stanja}
 			
 			
-			\textbf{\textit{dio 2. revizije}}\\
+			%\textbf{\textit{dio 2. revizije}}\\
 			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
+			%\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
 			
 			
-			\eject 
+			%\eject 
 		
-		\section{Dijagram aktivnosti}
+		%\section{Dijagram aktivnosti}
 			
-			\textbf{\textit{dio 2. revizije}}\\
+			%\textbf{\textit{dio 2. revizije}}\\
 			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			% \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
 			
-			\eject
-		\section{Dijagram komponenti}
+			%\eject
+		%\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+			%\textbf{\textit{dio 2. revizije}}\\
 		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+			 %\textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
