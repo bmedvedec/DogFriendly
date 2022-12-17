@@ -44,7 +44,7 @@ export default function PlacanjeForm({
 	}
 
 	return (
-		<form>
+		<>
 			<div>
 				<input
 					name="name"
@@ -170,6 +170,6 @@ export default function PlacanjeForm({
 					})}
 				/>
 			</PaymentInputsWrapper>
-		</form>
+		</>
 	);
 }
