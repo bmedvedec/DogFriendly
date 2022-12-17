@@ -69,7 +69,6 @@ export function useFirebaseAuth() {
 		}
 
 		setLoading(true);
-		console.log("prije formattedUser", authState);
 		var formattedUser = formatAuthUser(authState); // formatiranje podataka o korisniku - micanje nepotrebnih polja
 		setAuthUser(formattedUser);
 		setLoading(false);
@@ -93,9 +92,7 @@ export function useFirebaseAuth() {
 			async (userCredential) => {
 				// Signed in
 				var user = userCredential.user;
-				console.log("registered", user.uid);
 				try {
-					console.log("setting doc");
 					await setDoc(doc(db, "users", user.uid), {
 						username: username,
 						email: email,
@@ -138,7 +135,6 @@ export function useFirebaseAuth() {
 			// poziva firebase funkciju i ako je uspješna upisuje korisnika u bazu (kao fja iznad) te upisuje i podatke o obrtu u bazu
 			async (userCredential) => {
 				var user = userCredential.user;
-				console.log("registered", user.uid);
 
 				const batch = writeBatch(db);
 				const userRef = doc(db, "users", user.uid);

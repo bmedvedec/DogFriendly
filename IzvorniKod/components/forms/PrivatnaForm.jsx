@@ -32,10 +32,8 @@ export default function PrivatnaForm(params) {
 			!loading
 		) {
 			// ako su sva polja popunjena i nema gresaka, omoguci submit button, inace onemoguci
-			console.log("enabled");
 			setDisabled(false);
 		} else {
-			console.log("disabled");
 			setDisabled(true);
 		}
 	}, [username, password, email, usernameExists, loading]); // state-ovi koji se provjeravaju

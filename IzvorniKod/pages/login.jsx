@@ -29,7 +29,6 @@ export default function Login(params) {
 	function handleSubmit(event) {
 		event.preventDefault(); // sprijecava ponovno ucitavanje stranice
 		setChecking(true);
-		console.log("loading");
 
 		// predajemo email i password custom hooku koji komunicira sa firebaseom
 		// ako je uspjesno autentificiranje, preusmjeri na pocetnu stranicu, inace postavi error sa porukom
@@ -40,12 +39,10 @@ export default function Login(params) {
 				);
 			})
 			.then((authUser) => {
-				console.log("uspješno");
 				router.push("/");
 			});
 
 		setChecking(false);
-		console.log("done loading");
 	}
 
 	// funkcija (hook) koja se izvrsava svaki put kada se promijeni vrijednost email ili password

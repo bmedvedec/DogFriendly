@@ -7,7 +7,6 @@ import Header from '../components/Header';
 export default function Home() {
   const {authUser, loading, firebaseSignOut } = useAuth();
 
-  console.log("index: ", authUser);
   return (
     <Layout>
       <Header />
