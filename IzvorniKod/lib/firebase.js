@@ -110,6 +110,7 @@ export function useFirebaseAuth() {
 	const firebaseCreateCompanyOwner = async ( // funkcija za stvaranje vlasnika obrtnika
 		username,
 		email,
+		dateOfExpiry,
 		password,
 		companyName,
 		companyAddress,
@@ -129,6 +130,7 @@ export function useFirebaseAuth() {
 					username: username,
 					email: email,
 					companyOwner: true,
+					dateOfExpiry: dateOfExpiry
 				});
 				const companyRef = doc(collection(db, "companies"));
 				batch.set(companyRef, {

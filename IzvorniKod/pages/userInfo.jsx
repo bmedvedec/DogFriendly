@@ -43,6 +43,8 @@ export default function UserInfo() {
 	}, [authUser]);
 
 	// kod za prikaz podataka o korisniku
+	// from firebase timestamp to date
+	//const date = userInfo && userInfo.dateOfExpiry.toDate();
 	return (
 		<Layout>
 			<a href="/">Home page link</a>
@@ -61,6 +63,8 @@ export default function UserInfo() {
 			{companyInfo && <p>{companyInfo.description}</p>}
 			{companyInfo && <p>{companyInfo.phone}</p>}
 			{companyInfo && <p>{companyInfo.type}</p>}
+			{companyInfo && <p>{userInfo.dateOfExpiry.toDate().toString()}</p>}
+
 		</Layout>
 	);
 }

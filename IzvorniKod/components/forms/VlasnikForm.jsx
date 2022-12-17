@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../../lib/context";
 import debounce from "lodash.debounce";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, Timestamp } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import styles from "../../styles/VlasnikForm.module.scss";
 import MenuItem from "@mui/material/MenuItem";
@@ -100,17 +100,27 @@ export default function VlasnikForm(params) {
 	function handleSubmit(event) {
 		event.preventDefault(); // sprijecava ponovno ucitavanje stranice
 
+		// 
+		let date = new Date();
+		// add 1 month to current date
+		date.setMonth(date.getMonth() + 1);
+
+		// convert javascript date to firebase timestamp
+		let timestamp = Timestamp.fromDate(date);
+
 		// funkcija koja kreira novog vlasnika tvrtke
 		firebaseCreateCompanyOwner(
 			username,
 			email,
+			timestamp,
 			password,
 			companyName,
 			companyAddress,
 			companyOIB,
 			companyPhone,
 			companyDesc,
-			companyType
+			companyType,
+			
 		)
 			.then(async (authUser) => {
 				// ako je kreiranje vlasnika tvrtke uspjesno, vlasnik se preusmjerava na stranicu za prijavu
