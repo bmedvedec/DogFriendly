@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {
 	collection,
+	connectFirestoreEmulator,
 	doc,
 	getFirestore,
 	setDoc,
@@ -13,6 +14,7 @@ import {
 	createUserWithEmailAndPassword,
 	signOut,
 	sendEmailVerification,
+	connectAuthEmulator,
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 
@@ -35,6 +37,16 @@ export const db = getFirestore(app);
 
 // dohvat servia za autentikaciju
 export const auth = getAuth(app);
+
+if (process.env.NODE_ENV === "development") {
+	console.log("development mode");
+	const EMULATORS_STARTED = "EMULATORS_STARTED";
+	if (!global[EMULATORS_STARTED]) {
+		global[EMULATORS_STARTED] = true;
+		connectFirestoreEmulator(db, "localhost", 8080);
+		connectAuthEmulator(auth, "http://localhost:9099");
+	}
+}
 
 // formatiranje podataka o autentificiranom korisnikom - miču se sva nepotrebna polja
 const formatAuthUser = (user) => ({
