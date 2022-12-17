@@ -78,17 +78,12 @@ export function useFirebaseAuth() {
 	const clear = () => {
 		// ciscenje podataka o korisniku
 		setAuthUser(null);
-		setLoading(true);
+		setLoading(false);
 	};
 
 	const firebaseEmailPassSignIn = async (email, password) => {
 		// poziva firebase funkciju te vraća error ukoliko se dogodi koji se hvata u funkciji roditelj u svrhu obrade
-		return signInWithEmailAndPassword(auth, email, password).then(
-			(userCredential) => {
-				// Signed in
-				console.log("signed in");
-			}
-		);
+		return signInWithEmailAndPassword(auth, email, password)
 	};
 
 	const firebaseCreateUserEmailPass = async (username, email, password) => {
