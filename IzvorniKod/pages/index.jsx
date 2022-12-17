@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import Layout from '../components/layout'
 import { useAuth } from '../lib/context';
 
+import PlacanjeForm from '../components/forms/PlacanjeForm';
+
 // home page
 export default function Home() {
   const {authUser, loading, firebaseSignOut } = useAuth();
@@ -19,6 +21,9 @@ export default function Home() {
       <a href="/userInfo">user info</a>
       <br/>
       {authUser && !loading && <button onClick={firebaseSignOut}>sign out</button>}
+
+      <br/>
+      <PlacanjeForm/>
     </Layout>
   )
 }

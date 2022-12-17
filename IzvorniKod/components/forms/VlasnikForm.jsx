@@ -11,6 +11,7 @@ import Select from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useMyHooks } from "../../lib/hooks";
+import PlacanjeForm from "./PlacanjeForm";
 
 // Komponenta za prikaz forme za unos podataka o vlasniku
 export default function VlasnikForm(params) {
@@ -39,6 +40,20 @@ export default function VlasnikForm(params) {
 	const [companyOIBError, setCompanyOIBError] = useState("");
 	const [companyPhoneError, setCompanyPhoneError] = useState("");
 	const [companyDescError, setCompanyDescError] = useState("");
+
+	// inicijalizacija state hook-ova za prikaz podataka o kartici
+	const [nameOnCard, setNameOnCard] = useState("");
+	const [companyNamePay, setCompanyNamePay] = useState("");
+	const [companyOIBPay, setCompanyOIBPay] = useState("");
+	const [address, setAddress] = useState("");
+	const [country, setCountry] = useState("");
+	const [region, setRegion] = useState("");
+	const [city, setCity] = useState("");
+	const [zipCode, setZipCode] = useState("");
+	const [VAT, setVAT] = useState("");
+	const [cardNumber, setCardNumber] = useState("");
+	const [cardExpiryDate, setCardExpiryDate] = useState("");
+	const [cardCVC, setCardCVC] = useState("");
 
 	// polje svih tipova tvrtki/obrta
 	const companyTypes = [
@@ -120,7 +135,18 @@ export default function VlasnikForm(params) {
 			companyPhone,
 			companyDesc,
 			companyType,
-			
+			nameOnCard,
+			companyNamePay,
+			companyOIBPay,
+			address,
+			country,
+			region,
+			city,
+			zipCode,
+			VAT,
+			cardNumber,
+			cardExpiryDate,
+			cardCVC
 		)
 			.then(async (authUser) => {
 				// ako je kreiranje vlasnika tvrtke uspjesno, vlasnik se preusmjerava na stranicu za prijavu
@@ -472,6 +498,21 @@ export default function VlasnikForm(params) {
 					</div>
 				</div>
 			</div>
+			
+			<PlacanjeForm 
+				updateNameOnCard={setNameOnCard}
+				updateCompanyNamePay={setCompanyNamePay}
+				updateCompanyOIBPay={setCompanyOIBPay}
+				updateAddress={setAddress}
+				updateCountry={setCountry}
+				updateRegion={setRegion}
+				updateCity={setCity}
+				updateZipCode={setZipCode}
+				updateVAT={setVAT}
+				updateCardNumber={setCardNumber}
+				updateCardExpiryDate={setCardExpiryDate}
+				updateCardCVC={setCardCVC}
+			/>
 
 			<input
 				className={styles.button}
