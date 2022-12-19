@@ -3,33 +3,20 @@ import { useState } from "react";
 import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
 import images from "react-payment-inputs/images";
 
-export default function PlacanjeForm({
-	updateNameOnCard,
-	updateCompanyNamePay,
-	updateCompanyOIBPay,
-	updateAddress,
-	updateCountry,
-	updateRegion,
-	updateCity,
-	updateZipCode,
-	updateVAT,
-	updateCardNumber,
-	updateCardExpiryDate,
-	updateCardCVC,
-}) {
-	// const [nameOnCard, setNameOnCard] = useState("");
-	// const [companyName, setCompanyName] = useState("");
-	// const [companyOIB, setCompanyOIB] = useState("");
-	// const [address, setAddress] = useState("");
-	// const [country, setCountry] = useState("");
-	// const [region, setRegion] = useState("");
-	// const [city, setCity] = useState("");
-	// const [zip, setZip] = useState("");
-	// const [VAT, setVAT] = useState("");
+export default function PlacanjeForm() {
+	const [nameOnCard, setNameOnCard] = useState("");
+	const [companyName, setCompanyName] = useState("");
+	const [companyOIB, setCompanyOIB] = useState("");
+	const [address, setAddress] = useState("");
+	const [country, setCountry] = useState("");
+	const [region, setRegion] = useState("");
+	const [city, setCity] = useState("");
+	const [zip, setZip] = useState("");
+	const [VAT, setVAT] = useState("");
 
-	// const [cardNumber, setCardNumber] = useState("");
-	// const [expiryDate, setExpiryDate] = useState("");
-	// const [cvc, setCvc] = useState("");
+	const [cardNumber, setCardNumber] = useState("");
+	const [cardexpiryDate, setCardExpiryDate] = useState("");
+	const [cardCvc, setCardCVC] = useState("");
 
 	const {
 		wrapperProps,
@@ -39,137 +26,138 @@ export default function PlacanjeForm({
 		getCVCProps,
 	} = usePaymentInputs();
 
-	function handleUpdateCardNumber(event) {
-		updateCardNumber(event.target.value);
-	}
-
 	return (
-		<>
+		<form>
 			<div>
 				<input
 					name="name"
 					type="text"
 					placeholder="Name on card"
+					value={nameOnCard}
 					required
 					onChange={(event) => {
-						updateNameOnCard(event.target.value);
+						setNameOnCard(event.target.value);
 					}}
 				/>
 			</div>
-
 			<div>
 				<input
 					name="companyName"
 					type="text"
 					placeholder="Company name"
+					value={companyName}
 					required
 					onChange={(event) => {
-						updateCompanyNamePay(event.target.value);
+						setCompanyName(event.target.value);
 					}}
 				/>
 			</div>
-
 			<div>
 				<input
 					name="companyOIB"
 					type="text"
 					placeholder="Company OIB"
+					value={companyOIB}
 					required
 					onChange={(event) => {
-						updateCompanyOIBPay(event.target.value);
+						setCompanyOIB(event.target.value);
 					}}
 				/>
 			</div>
-
 			<div>
 				<input
 					name="address"
 					type="text"
 					placeholder="Address"
+					value={address}
 					required
 					onChange={(event) => {
-						updateAddress(event.target.value);
+						setAddress(event.target.value);
 					}}
 				/>
 			</div>
-
 			<div>
 				<input
 					name="country"
 					type="text"
 					placeholder="Country"
+					value={country}
 					required
 					onChange={(event) => {
-						updateCountry(event.target.value);
+						setCountry(event.target.value);
 					}}
 				/>
 			</div>
-
 			<div>
 				<input
 					name="region"
 					type="text"
 					placeholder="Region/State"
+					value={region}
 					onChange={(event) => {
-						updateRegion(event.target.value);
+						setRegion(event.target.value);
 					}}
 				/>
 			</div>
-
 			<div>
 				<input
 					name="city"
 					type="text"
 					placeholder="City"
+					value={city}
 					required
 					onChange={(event) => {
-						updateCity(event.target.value);
+						setCity(event.target.value);
 					}}
 				/>
 			</div>
-
 			<div>
 				<input
 					name="zip"
 					type="text"
 					placeholder="ZIP"
+					value={zip}
 					required
 					onChange={(event) => {
-						updateZipCode(event.target.value);
+						setZip(event.target.value);
 					}}
 				/>
 			</div>
-
 			<div>
 				<input
 					name="VAT"
 					type="number"
 					placeholder="VAT"
+					value={VAT}
 					required
 					onChange={(event) => {
-						updateVAT(event.target.value);
+						setVAT(event.target.value);
 					}}
 				/>
 			</div>
-
 			<PaymentInputsWrapper {...wrapperProps}>
 				<svg {...getCardImageProps({ images })} />
 				<input
 					{...getCardNumberProps({
-						onChange: (e) => handleUpdateCardNumber(e),
+						value: cardNumber,
+						onChange: (e) => setCardNumber(e.target.value),
 					})}
 				/>
 				<input
 					{...getExpiryDateProps({
-						onChange: (e) => updateCardExpiryDate(e.target.value),
+						value: cardexpiryDate,
+						onChange: (e) => setCardExpiryDate(e.target.value),
 					})}
 				/>
 				<input
 					{...getCVCProps({
-						onChange: (e) => updateCardCVC(e.target.value),
+						value: cardCvc,
+						onChange: (e) => setCardCVC(e.target.value),
 					})}
 				/>
 			</PaymentInputsWrapper>
-		</>
+
+			<input type="submit" value="Submit" />
+		</form>
 	);
 }

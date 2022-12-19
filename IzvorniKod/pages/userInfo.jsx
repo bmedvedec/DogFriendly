@@ -4,6 +4,7 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useEffect, useState } from "react";
 import { async } from "@firebase/util";
+import PlacanjeForm from "../components/forms/PlacanjeForm";
 
 export default function UserInfo() {
 	// sprema kontekst autentifikacije u authUser
@@ -64,6 +65,8 @@ export default function UserInfo() {
 			{companyInfo && <p>{companyInfo.phone}</p>}
 			{companyInfo && <p>{companyInfo.type}</p>}
 			{companyInfo && <p>{userInfo.dateOfExpiry.toDate().toString()}</p>}
+
+			<PlacanjeForm/>
 
 		</Layout>
 	);
