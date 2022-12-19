@@ -35,7 +35,7 @@ export default function UserInfo() {
 					});
 				}
 			} else {
-				console.log("No such document!");
+				console.log("No such document!"); 
 			}
 		}
 		if (authUser) {
