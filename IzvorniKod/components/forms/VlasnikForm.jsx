@@ -8,19 +8,14 @@ import styles from "../../styles/VlasnikForm.module.scss";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { styled } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useMyHooks } from "../../lib/hooks";
-import {
-	PaymentInputsContainer,
-	PaymentInputsWrapper,
-	usePaymentInputs,
-} from "react-payment-inputs";
-import images from "react-payment-inputs/images";
+import { PaymentInputsContainer, usePaymentInputs, wrapperProps } from "react-payment-inputs";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { alpha, styled } from '@mui/material/styles';
-
+import { purple } from "@mui/material/colors";
+import { autocompleteClasses } from "@mui/material";
 
 // Komponenta za prikaz forme za unos podataka o vlasniku
 export default function VlasnikForm(params) {
@@ -338,7 +333,6 @@ export default function VlasnikForm(params) {
 
 	const {
 		wrapperProps,
-		getCardImageProps,
 		getCardNumberProps,
 		getExpiryDateProps,
 		getCVCProps,
@@ -358,15 +352,32 @@ export default function VlasnikForm(params) {
 		}
 	}
 
-	const UserInfoSwitch = 
+	const UserInfoSwitch = styled(Switch)(({ theme }) => ({
+		"& .MuiSwitch-switchBase.Mui-checked": {
+			color: purple[600],
+			"&:hover": {
+				backgroundColor: alpha(
+					purple[600],
+					theme.palette.action.hoverOpacity
+				),
+			},
+		},
+		"& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+			backgroundColor: purple[600],
+		},
+	}));
+
+	const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 	// kod za prikaz vlasnik forme
 	return (
-		<form className="form" onSubmit={handleSubmit}>
-			<div className={styles.regFormTop}>
+		<form
+			className="form"
+			onSubmit={handleSubmit}>
+			<div className={styles.container}>
 				<div className={styles.personInfo}>
+					{/* personal info tab */}
 					<div className={styles.info}>
-						{/* personal info tab */}
 						<label className={styles.titles}>Personal info</label>
 						<div className="input-container">
 							<input
@@ -417,6 +428,7 @@ export default function VlasnikForm(params) {
 							)}
 						</div>
 					</div>
+
 					{/* company info tab */}
 					<div className={styles.info}>
 						<label className={styles.titles}>Company info</label>
@@ -508,13 +520,16 @@ export default function VlasnikForm(params) {
 									input={<BootstrapInput />}
 									inputProps={{
 										"aria-label": "Without label",
-									}}
-								>
-									<MenuItem disabled value="">
+									}}>
+									<MenuItem
+										disabled
+										value="">
 										<em>type of business</em>
 									</MenuItem>
 									{companyTypes.map((type) => (
-										<MenuItem key={type} value={type}>
+										<MenuItem
+											key={type}
+											value={type}>
 											{type}
 										</MenuItem>
 									))}
@@ -525,176 +540,177 @@ export default function VlasnikForm(params) {
 				</div>
 
 				{/* payment info tab */}
-				<div className={styles.payInfo}>
-					<div className={styles.payLeft}>
-						<label className={styles.titles}>Payment info</label>
-						<div className="input-container">
-							<input
-								name="firstName"
-								type="text"
-								placeholder="First name"
-								value={firstName}
-								required
-								onChange={(event) => {
-									setFirstName(event.target.value);
-								}}
-							/>
+				<div className={styles.payInfoTab}>
+					<label
+						className={styles.titles}
+						style={{ display: "inline-block", width: "100%" }}>
+						Payment info
+					</label>
+
+					<div className={styles.payInfo}>
+						<div className={styles.info}>
+							<div className="input-container">
+								<input
+									name="firstName"
+									type="text"
+									placeholder="First name"
+									value={firstName}
+									required
+									onChange={(event) => {
+										setFirstName(event.target.value);
+									}}
+								/>
+							</div>
+							<div className="input-container">
+								<input
+									name="lastName"
+									type="text"
+									placeholder="Last name"
+									value={lastName}
+									required
+									onChange={(event) => {
+										setLastName(event.target.value);
+									}}
+								/>
+							</div>
+							<PaymentInputsContainer>
+								{({
+									getCardNumberProps,
+									getExpiryDateProps,
+									getCVCProps,
+								}) => (
+									<>
+										<div className="input-container">
+											<input
+												{...getCardNumberProps({
+													value: cardNumber,
+													onChange: (e) =>
+														setCardNumber(
+															e.target.value
+														),
+												})}
+											/>
+										</div>
+										<div className={styles.date-cvc}>
+											<input
+												className={styles.expiryDate}
+												{...getExpiryDateProps({
+													value: cardExpiryDate,
+													onChange: (e) =>
+														setCardExpiryDate(
+															e.target.value
+														),
+												})}
+											/>
+											<input
+												className={styles.cvc}
+												{...getCVCProps({
+													value: cardCVC,
+													onChange: (e) =>
+														setCardCVC(e.target.value),
+												})}
+											/>
+										</div>
+									</>
+								)}
+							</PaymentInputsContainer>
+							<div className="input-container">
+								<input
+									name="city"
+									type="text"
+									placeholder="City"
+									value={city}
+									required
+									onChange={(event) => {
+										setCity(event.target.value);
+									}}
+								/>
+							</div>
+							<div className="input-container">
+								<input
+									name="zip"
+									type="text"
+									placeholder="ZIP"
+									value={zipCode}
+									required
+									onChange={(event) => {
+										setZipCode(event.target.value);
+									}}
+								/>
+							</div>
 						</div>
-
-						<div className="input-container">
-							<input
-								name="lastName"
-								type="text"
-								placeholder="Last name"
-								value={lastName}
-								required
-								onChange={(event) => {
-									setLastName(event.target.value);
-								}}
-							/>
-						</div>
-
-						<PaymentInputsContainer>
-							{({
-								getCardImageProps,
-								getCardNumberProps,
-								getExpiryDateProps,
-								getCVCProps,
-							}) => (
-								<>
-									{/* <svg {...getCardImageProps({ images })} /> */}
-									<input
-										{...getCardNumberProps({
-											value: cardNumber,
-											onChange: (e) =>
-												setCardNumber(e.target.value),
-										})}
-									/>
-									<input
-										className={styles.expiryDate}
-										{...getExpiryDateProps({
-											value: cardExpiryDate,
-											onChange: (e) =>
-												setCardExpiryDate(
-													e.target.value
-												),
-										})}
-									/>
-									<input
-										className={styles.cvc}
-										{...getCVCProps({
-											value: cardCVC,
-											onChange: (e) =>
-												setCardCVC(e.target.value),
-										})}
-									/>
-								</>
-							)}
-						</PaymentInputsContainer>
-
-						<div className="input-container">
-							<input
-								name="city"
-								type="text"
-								placeholder="City"
-								value={city}
-								required
-								onChange={(event) => {
-									setCity(event.target.value);
-								}}
-							/>
-						</div>
-
-						<div className="input-container">
-							<input
-								name="zip"
-								type="text"
-								placeholder="ZIP"
-								value={zipCode}
-								required
-								onChange={(event) => {
-									setZipCode(event.target.value);
-								}}
-							/>
-						</div>
-					</div>
-
-					<div className={styles.payRight}>
-						<div className="input-container">
-							<input
-								name="companyName"
-								type="text"
-								placeholder="Company name"
-								value={companyNamePay}
-								required
-								onChange={(event) => {
-									setCompanyNamePay(event.target.value);
-								}}
-							/>
-						</div>
-
-						<div className="input-container">
-							<input
-								name="companyOIB"
-								type="text"
-								placeholder="Company OIB"
-								value={companyOIBPay}
-								required
-								onChange={(event) => {
-									setCompanyOIBPay(event.target.value);
-								}}
-							/>
-						</div>
-
-						<div className="input-container">
-							<input
-								name="address"
-								type="text"
-								placeholder="Address"
-								value={address}
-								required
-								onChange={(event) => {
-									setAddress(event.target.value);
-								}}
-							/>
-						</div>
-
-						<div className="input-container">
-							<input
-								name="country"
-								type="text"
-								placeholder="Country"
-								value={country}
-								required
-								onChange={(event) => {
-									setCountry(event.target.value);
-								}}
-							/>
-						</div>
-
-						<div className="input-container">
-							<input
-								name="region"
-								type="text"
-								placeholder="Region/State"
-								value={region}
-								onChange={(event) => {
-									setRegion(event.target.value);
-								}}
-							/>
-						</div>
-
-						<div className="input-container">
-							<input
-								name="VAT"
-								type="number"
-								placeholder="VAT"
-								value={VAT}
-								required
-								onChange={(event) => {
-									setVAT(event.target.value);
-								}}
-							/>
+						<div className={styles.info}>
+							<div className="input-container">
+								<input
+									name="companyName"
+									type="text"
+									placeholder="Company name"
+									value={companyNamePay}
+									required
+									onChange={(event) => {
+										setCompanyNamePay(event.target.value);
+									}}
+								/>
+							</div>
+							<div className="input-container">
+								<input
+									name="companyOIB"
+									type="text"
+									placeholder="Company OIB"
+									value={companyOIBPay}
+									required
+									onChange={(event) => {
+										setCompanyOIBPay(event.target.value);
+									}}
+								/>
+							</div>
+							<div className="input-container">
+								<input
+									name="address"
+									type="text"
+									placeholder="Address"
+									value={address}
+									required
+									onChange={(event) => {
+										setAddress(event.target.value);
+									}}
+								/>
+							</div>
+							<div className="input-container">
+								<input
+									name="country"
+									type="text"
+									placeholder="Country"
+									value={country}
+									required
+									onChange={(event) => {
+										setCountry(event.target.value);
+									}}
+								/>
+							</div>
+							<div className="input-container">
+								<input
+									name="region"
+									type="text"
+									placeholder="Region/State"
+									value={region}
+									onChange={(event) => {
+										setRegion(event.target.value);
+									}}
+								/>
+							</div>
+							<div className="input-container">
+								<input
+									name="VAT"
+									type="number"
+									placeholder="VAT"
+									value={VAT}
+									required
+									onChange={(event) => {
+										setVAT(event.target.value);
+									}}
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -702,7 +718,10 @@ export default function VlasnikForm(params) {
 				<FormControlLabel
 					{...label}
 					control={
-						<Switch checked={checked} onChange={addUserInfo} />
+						<UserInfoSwitch
+							checked={checked}
+							onChange={addUserInfo}
+						/>
 					}
 					label="use User Info"
 					labelPlacement="end"

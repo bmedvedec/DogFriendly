@@ -1,95 +1,86 @@
 .button {
-    background: #B847BD;
-    color: white;
-    margin-top: 8px;
-    border: 4px solid white;
-    font-size: 1.2rem;
-    padding: 12px 24px;
+	background: #b847bd;
+	color: white;
+	margin-top: 8px;
+	border: 4px solid white;
+	font-size: 1.2rem;
+	padding: 12px 24px;
 
-    &:hover {
-        border: 4px solid #dba3de;
-        cursor: pointer;
-    }
+	&:hover {
+		border: 4px solid #dba3de;
+		cursor: pointer;
+	}
 
-    &:disabled {
-        background: #e0d0e0;
-        cursor: not-allowed;
-    }
+	&:disabled {
+		background: #e0d0e0;
+		cursor: not-allowed;
+	}
 
-    &:focus {
-        border: 4px solid #dba3de;
-    }
+	&:focus {
+		border: 4px solid #dba3de;
+	}
 }
 
-.regFormTop {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    gap: 16px;
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	gap: 16px;
 
-    @media (max-width: 1200px) {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
+	@media (max-width: 1200px) {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
 }
 
 .holder[default] {
-    color: #D9D9D9;
-    font-style: italic;
+	color: #d9d9d9;
+	font-style: italic;
 }
 
 .titles {
-    color: #3F126B;
-
+	color: #3f126b;
 }
 
-.info>div {
-    margin-bottom: 16px;
-    margin-top: 8px;
+.info > div {
+	// margin-bottom: 16px;
+	// margin-top: 8px;
+	padding: 8px;
 }
 
 //select last child of info div
-.info>div:last-child {
-    margin-bottom: 0px;
+.info > div:last-child {
+	// margin-bottom: 0px;
 }
-
 
 .personInfo {
+	display: flex;
+	flex-direction: row;
+}
+
+.payInfoTab {
+	display: flex;
+	flex-direction: column;
+}
+
+.payInfo {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+.date-cvc {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    padding: 24px;
 }
 
-.payInfo{
-    display: flex;
-    flex-direction: row;
+.expiryDate {
+	width: 40%;
+
 }
 
-.payLeft{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    width: 50%;
-}
-
-.payRight{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    width: 50%;
-}
-
-.expiryDate, .cvc{
-    display:inline-block;
-    width: 40%;
-}
-
-.cvc{
-    width: 40%;
+.cvc {
+	float: right;
+	width: 40%;
 }
