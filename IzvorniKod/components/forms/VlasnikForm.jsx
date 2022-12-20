@@ -409,20 +409,20 @@ export default function VlasnikForm(params) {
 			const companiesSnap = await getDocs(companiesRef); // dohvaca kolekciju companies iz baze
 
 			if (companyNamePay.length < 3) {
-				setCompanyNameError(
+				setCompanyNamePayError(
 					"Company name must be at least 3 characters"
 				);
 				setLoading(false);
 			} else if (!isNaN(companyNamePay)) {
-				setCompanyNameError("Company name cannot be all numbers");
+				setCompanyNamePayError("Company name cannot be all numbers");
 				setLoading(false);
 			} else {
-				setCompanyNameError("");
+				setCompanyNamePayError("");
 			}
 
 			companiesSnap.forEach((doc) => {
 				if (doc.data().name === companyNamePay) {
-					setCompanyNameError("Company name already exists");
+					setCompanyNamePayError("Company name already exists");
 					setLoading(false);
 				}
 			});
@@ -435,17 +435,17 @@ export default function VlasnikForm(params) {
 	// funkcija za provjeru ispravnosti OIB-a tvrtke
 	// OIB mora imati tocno 11 brojeva
 	const checkCompanyOIBPay = useCallback(
-		debounce(async (companyOIB) => {
+		debounce(async (companyOIBPay) => {
 			setLoading(true);
 
-			if (isNaN(companyOIB)) {
-				setCompanyOIBError("OIB must be all numbers");
+			if (isNaN(companyOIBPay)) {
+				setCompanyOIBPayError("OIB must be all numbers");
 				setLoading(false);
-			} else if (companyOIB.length !== 11) {
-				setCompanyOIBError("OIB must be 11 digits long");
+			} else if (companyOIBPay.length !== 11) {
+				setCompanyOIBPayError("OIB must be 11 digits long");
 				setLoading(false);
 			} else {
-				setCompanyOIBError("");
+				setCompanyOIBPayError("");
 				setLoading(false);
 			}
 		}, 500),
