@@ -84,19 +84,19 @@ export default function UserInfo() {
 			{companyInfo && <p>{userInfo.dateOfExpiry.toDate().toString()}</p>}
 
 
-			<h1>Personal Information</h1>
+			{userInfo && <h1>Personal Information</h1>}
 			{userInfo && <PersonalForm props={userInfo} />	}
 
 			<br />
 			<br />
 
-			<h1>Company Information</h1>
+			{companyInfo && <h1>Company Information</h1>}
 			{companyInfo && <CompanyForm props = {companyInfo} />}
 
 			<br />
 			<br />
 
-			<h1>Payment Information</h1>
+			{companyInfo && <h1>Payment Information</h1>}
 			{companyInfo && <PlacanjeForm props={userInfo.paymentInfo}/>}
 
 			
