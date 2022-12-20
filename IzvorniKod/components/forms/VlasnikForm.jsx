@@ -591,7 +591,7 @@ export default function VlasnikForm(params) {
 												})}
 											/>
 										</div>
-										<div className={styles.date-cvc}>
+										<div className={styles.dateCvc}>
 											<input
 												className={styles.expiryDate}
 												{...getExpiryDateProps({
