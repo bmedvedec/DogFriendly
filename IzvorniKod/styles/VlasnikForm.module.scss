@@ -31,6 +31,13 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+
+		.personInfo,
+		.payInfoTab,
+		.payInfo {
+			flex-direction: column;
+			align-items: center;
+		}
 	}
 }
 
@@ -67,20 +74,15 @@
 .payInfo {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-evenly;
 }
 
 .dateCvc {
-    display: flex;
-    flex-direction: row;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
-.expiryDate {
-	width: 40%;
-
-}
-
+.expiryDate,
 .cvc {
-	float: right;
 	width: 40%;
 }

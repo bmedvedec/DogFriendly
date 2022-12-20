@@ -11,7 +11,11 @@ import Select from "@mui/material/Select";
 import { alpha, styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useMyHooks } from "../../lib/hooks";
-import { PaymentInputsContainer, usePaymentInputs, wrapperProps } from "react-payment-inputs";
+import {
+	PaymentInputsContainer,
+	usePaymentInputs,
+	wrapperProps,
+} from "react-payment-inputs";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { purple } from "@mui/material/colors";
@@ -367,8 +371,6 @@ export default function VlasnikForm(params) {
 		},
 	}));
 
-	const label = { inputProps: { "aria-label": "Color switch demo" } };
-
 	// kod za prikaz vlasnik forme
 	return (
 		<form
@@ -557,6 +559,7 @@ export default function VlasnikForm(params) {
 									value={firstName}
 									required
 									onChange={(event) => {
+										setLoading(true);
 										setFirstName(event.target.value);
 									}}
 								/>
@@ -569,6 +572,7 @@ export default function VlasnikForm(params) {
 									value={lastName}
 									required
 									onChange={(event) => {
+										setLoading(true);
 										setLastName(event.target.value);
 									}}
 								/>
@@ -607,7 +611,9 @@ export default function VlasnikForm(params) {
 												{...getCVCProps({
 													value: cardCVC,
 													onChange: (e) =>
-														setCardCVC(e.target.value),
+														setCardCVC(
+															e.target.value
+														),
 												})}
 											/>
 										</div>
@@ -622,6 +628,7 @@ export default function VlasnikForm(params) {
 									value={city}
 									required
 									onChange={(event) => {
+										setLoading(true);
 										setCity(event.target.value);
 									}}
 								/>
@@ -634,6 +641,7 @@ export default function VlasnikForm(params) {
 									value={zipCode}
 									required
 									onChange={(event) => {
+										setLoading(true);
 										setZipCode(event.target.value);
 									}}
 								/>
@@ -648,7 +656,9 @@ export default function VlasnikForm(params) {
 									value={companyNamePay}
 									required
 									onChange={(event) => {
+										setLoading(true);
 										setCompanyNamePay(event.target.value);
+										checkCompanyName(event.target.value);
 									}}
 								/>
 							</div>
@@ -660,7 +670,9 @@ export default function VlasnikForm(params) {
 									value={companyOIBPay}
 									required
 									onChange={(event) => {
+										setLoading(true);
 										setCompanyOIBPay(event.target.value);
+										checkCompanyOIB(event.target.value);
 									}}
 								/>
 							</div>
@@ -672,6 +684,7 @@ export default function VlasnikForm(params) {
 									value={address}
 									required
 									onChange={(event) => {
+										setLoading(true);
 										setAddress(event.target.value);
 									}}
 								/>
@@ -684,6 +697,7 @@ export default function VlasnikForm(params) {
 									value={country}
 									required
 									onChange={(event) => {
+										setLoading(true);
 										setCountry(event.target.value);
 									}}
 								/>
@@ -695,6 +709,7 @@ export default function VlasnikForm(params) {
 									placeholder="Region/State"
 									value={region}
 									onChange={(event) => {
+										setLoading(true);
 										setRegion(event.target.value);
 									}}
 								/>
@@ -707,6 +722,7 @@ export default function VlasnikForm(params) {
 									value={VAT}
 									required
 									onChange={(event) => {
+										setLoading(true);
 										setVAT(event.target.value);
 									}}
 								/>
@@ -716,7 +732,6 @@ export default function VlasnikForm(params) {
 				</div>
 
 				<FormControlLabel
-					{...label}
 					control={
 						<UserInfoSwitch
 							checked={checked}
