@@ -1,0 +1,36 @@
+.main {
+	min-height: 100vh;
+    height: 100%;
+    display: flex;
+}
+
+.left {
+	width: 350px;
+	background: linear-gradient(204.16deg, #423e9e 22.48%, #bd47be 88.65%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    form {
+        width: 75%;
+    }
+
+    input {
+        background: none;
+        color: white;
+        width: 100%;
+
+        &:focus {
+            border: 2px solid white;
+
+            &::placeholder {
+                color: white;
+            }
+        }
+    }
+}
+
+.right {
+    width: 100%;
+}
