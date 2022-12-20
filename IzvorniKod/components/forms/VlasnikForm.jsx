@@ -64,6 +64,9 @@ export default function VlasnikForm(params) {
 	const [cardExpiryDate, setCardExpiryDate] = useState("");
 	const [cardCVC, setCardCVC] = useState("");
 
+	const [companyNamePayError, setCompanyNamePayError] = useState("");
+	const [companyOIBPayError, setCompanyOIBPayError] = useState("");
+
 	// polje svih tipova tvrtki/obrta
 	const companyTypes = [
 		"park",
@@ -97,7 +100,21 @@ export default function VlasnikForm(params) {
 			!companyNameError &&
 			!companyOIBError &&
 			!companyPhoneError &&
-			!companyDescError
+			!companyDescError &&
+			companyNamePay &&
+			companyOIBPay &&
+			!companyNamePayError &&
+			!companyOIBPayError &&
+			firstName &&
+			lastName &&
+			address &&
+			country &&
+			city &&
+			zipCode &&
+			VAT &&
+			cardNumber &&
+			cardExpiryDate &&
+			cardCVC
 		) {
 			setDisabled(false);
 		} else {
@@ -115,6 +132,18 @@ export default function VlasnikForm(params) {
 		companyPhone,
 		companyDesc,
 		companyType,
+		companyNamePay,
+		companyOIBPay,
+		firstName,
+		lastName,
+		address,
+		country,
+		city,
+		zipCode,
+		VAT,
+		cardNumber,
+		cardExpiryDate,
+		cardCVC,
 	]);
 
 	// inicijalizacija hook-a za kreiranje novog vlasnika tvrtke i provjeru password-a
@@ -371,6 +400,58 @@ export default function VlasnikForm(params) {
 		},
 	}));
 
+	// funkcija za provjeru ispravnosti naziva tvrtke
+	// naziv tvrtke mora biti duzi od 3 znaka, ne smiju biti svi brojevi i ne smije vec postojat u bazi
+	const checkCompanyNamePay = useCallback(
+		debounce(async (companyNamePay) => {
+			setLoading(true);
+			const companiesRef = collection(db, "companies"); // referenca na kolekciju tvrtki
+			const companiesSnap = await getDocs(companiesRef); // dohvaca kolekciju companies iz baze
+
+			if (companyNamePay.length < 3) {
+				setCompanyNamePayError(
+					"Company name must be at least 3 characters"
+				);
+				setLoading(false);
+			} else if (!isNaN(companyNamePay)) {
+				setCompanyNamePayError("Company name cannot be all numbers");
+				setLoading(false);
+			} else {
+				setCompanyNamePayError("");
+			}
+
+			companiesSnap.forEach((doc) => {
+				if (doc.data().name === companyNamePay) {
+					setCompanyNamePayError("Company name already exists");
+					setLoading(false);
+				}
+			});
+
+			setLoading(false);
+		}, 500),
+		[]
+	);
+
+	// funkcija za provjeru ispravnosti OIB-a tvrtke
+	// OIB mora imati tocno 11 brojeva
+	const checkCompanyOIBPay = useCallback(
+		debounce(async (companyOIBPay) => {
+			setLoading(true);
+
+			if (isNaN(companyOIBPay)) {
+				setCompanyOIBPayError("OIB must be all numbers");
+				setLoading(false);
+			} else if (companyOIBPay.length !== 11) {
+				setCompanyOIBPayError("OIB must be 11 digits long");
+				setLoading(false);
+			} else {
+				setCompanyOIBPayError("");
+				setLoading(false);
+			}
+		}, 500),
+		[]
+	);
+
 	// kod za prikaz vlasnik forme
 	return (
 		<form
@@ -456,9 +537,10 @@ export default function VlasnikForm(params) {
 								type="text"
 								value={companyAddress}
 								placeholder="company address"
-								onChange={(event) =>
-									setCompanyAddress(event.target.value)
-								}
+								onChange={(event) => {
+									setLoading(true);
+									setCompanyAddress(event.target.value);
+								}}
 							/>
 						</div>
 						<div className="input-container">
@@ -561,6 +643,7 @@ export default function VlasnikForm(params) {
 									onChange={(event) => {
 										setLoading(true);
 										setFirstName(event.target.value);
+										setLoading(false);
 									}}
 								/>
 							</div>
@@ -574,6 +657,7 @@ export default function VlasnikForm(params) {
 									onChange={(event) => {
 										setLoading(true);
 										setLastName(event.target.value);
+										setLoading(false);
 									}}
 								/>
 							</div>
@@ -630,6 +714,7 @@ export default function VlasnikForm(params) {
 									onChange={(event) => {
 										setLoading(true);
 										setCity(event.target.value);
+										setLoading(false);
 									}}
 								/>
 							</div>
@@ -643,6 +728,7 @@ export default function VlasnikForm(params) {
 									onChange={(event) => {
 										setLoading(true);
 										setZipCode(event.target.value);
+										setLoading(false);
 									}}
 								/>
 							</div>
@@ -658,9 +744,12 @@ export default function VlasnikForm(params) {
 									onChange={(event) => {
 										setLoading(true);
 										setCompanyNamePay(event.target.value);
-										checkCompanyName(event.target.value);
+										checkCompanyNamePay(event.target.value);
 									}}
 								/>
+								{companyNamePayError && (
+									<p className="error">{companyNamePayError}</p>
+								)}
 							</div>
 							<div className="input-container">
 								<input
@@ -672,9 +761,12 @@ export default function VlasnikForm(params) {
 									onChange={(event) => {
 										setLoading(true);
 										setCompanyOIBPay(event.target.value);
-										checkCompanyOIB(event.target.value);
+										checkCompanyOIBPay(event.target.value);
 									}}
 								/>
+								{companyOIBPayError && (
+								<p className="error">{companyOIBPayError}</p>
+							)}
 							</div>
 							<div className="input-container">
 								<input
@@ -686,6 +778,7 @@ export default function VlasnikForm(params) {
 									onChange={(event) => {
 										setLoading(true);
 										setAddress(event.target.value);
+										setLoading(false);
 									}}
 								/>
 							</div>
@@ -699,6 +792,7 @@ export default function VlasnikForm(params) {
 									onChange={(event) => {
 										setLoading(true);
 										setCountry(event.target.value);
+										setLoading(false);
 									}}
 								/>
 							</div>
@@ -711,6 +805,7 @@ export default function VlasnikForm(params) {
 									onChange={(event) => {
 										setLoading(true);
 										setRegion(event.target.value);
+										setLoading(false);
 									}}
 								/>
 							</div>
@@ -724,6 +819,7 @@ export default function VlasnikForm(params) {
 									onChange={(event) => {
 										setLoading(true);
 										setVAT(event.target.value);
+										setLoading(false);
 									}}
 								/>
 							</div>
