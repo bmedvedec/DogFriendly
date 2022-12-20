@@ -128,13 +128,13 @@ export default function VlasnikForm(params) {
 		date.setMonth(date.getMonth() + 1);
 
 		// convert javascript date to firebase timestamp
-		let timestamp = Timestamp.fromDate(date);
+		let dateOfExpiry = Timestamp.fromDate(date);
 
 		// funkcija koja kreira novog vlasnika tvrtke
 		firebaseCreateCompanyOwner(
 			username,
 			email,
-			timestamp,
+			dateOfExpiry,
 			password,
 			companyName,
 			companyAddress,

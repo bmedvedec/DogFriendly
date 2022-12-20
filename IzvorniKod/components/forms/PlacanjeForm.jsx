@@ -3,8 +3,9 @@ import { useState } from "react";
 import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
 import images from "react-payment-inputs/images";
 
-export default function PlacanjeForm() {
-	const [nameOnCard, setNameOnCard] = useState("");
+export default function PlacanjeForm({props}) {
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 	const [companyName, setCompanyName] = useState("");
 	const [companyOIB, setCompanyOIB] = useState("");
 	const [address, setAddress] = useState("");
@@ -26,17 +27,46 @@ export default function PlacanjeForm() {
 		getCVCProps,
 	} = usePaymentInputs();
 
+	// set the initial values of form fields to the values from the props
+	React.useEffect(() => {
+		setFirstName(props.firstName);
+		setLastName(props.lastName);
+		setCompanyName(props.companyNamePay);
+		setCompanyOIB(props.companyOIBPay);
+		setAddress(props.address);
+		setCountry(props.country);
+		setRegion(props.region);
+		setCity(props.city);
+		setZip(props.zipCode);
+		setVAT(props.VAT);
+		setCardNumber(props.cardNumber);
+		setCardExpiryDate(props.cardExpiryDate);
+		setCardCVC(props.cardCVC);
+	}, []);
+
 	return (
 		<form>
 			<div>
 				<input
-					name="name"
+					name="FirstName"
 					type="text"
-					placeholder="Name on card"
-					value={nameOnCard}
+					placeholder="first name"
+					value={firstName}
 					required
 					onChange={(event) => {
-						setNameOnCard(event.target.value);
+						setFirstName(event.target.value);
+					}}
+				/>
+			</div>
+			<div>
+				<input
+					name="LastName"
+					type="text"
+					placeholder="last name"
+					value={lastName}
+					required
+					onChange={(event) => {
+						setLastName(event.target.value);
 					}}
 				/>
 			</div>

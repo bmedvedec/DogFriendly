@@ -5,6 +5,8 @@ import { db } from "../lib/firebase";
 import { useEffect, useState } from "react";
 import { async } from "@firebase/util";
 import PlacanjeForm from "../components/forms/PlacanjeForm";
+import PersonalForm from "../components/forms/PersonalForm";
+import CompanyForm from "../components/forms/CompanyForm";
 
 export default function UserInfo() {
 	// sprema kontekst autentifikacije u authUser
@@ -42,10 +44,11 @@ export default function UserInfo() {
 			getUserInfo();
 		}
 	}, [authUser]);
+	
 
-	// kod za prikaz podataka o korisniku
-	// from firebase timestamp to date
-	//const date = userInfo && userInfo.dateOfExpiry.toDate();
+	// prikaži izmjenjivu formu koja kao inicijalne vrijednosti ima podatke o korisniku
+	// ako je korisnik vlasnik firme, prikaži i podatke o firmi
+	
 	return (
 		<Layout>
 			<a href="/">Home page link</a>
@@ -53,6 +56,20 @@ export default function UserInfo() {
 			<h1>User info</h1>
 			{userInfo && <p>{userInfo.username}</p>}
 			{userInfo && <p>{userInfo.email}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.firstName}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.lastName}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.companyNamePay}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.companyOIBPay}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.address}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.country}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.region}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.city}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.zipCode}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.VAT}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.cardNumber}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.cardExpiryDate}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.cardCVC}</p>}
+
 			<br />
 			{companyInfo && (
 				<p>
@@ -66,8 +83,26 @@ export default function UserInfo() {
 			{companyInfo && <p>{companyInfo.type}</p>}
 			{companyInfo && <p>{userInfo.dateOfExpiry.toDate().toString()}</p>}
 
-			<PlacanjeForm/>
+
+			<h1>Personal Information</h1>
+			{userInfo && <PersonalForm props={userInfo} />	}
+
+			<br />
+			<br />
+
+			<h1>Company Information</h1>
+			{companyInfo && <CompanyForm props = {companyInfo} />}
+
+			<br />
+			<br />
+
+			<h1>Payment Information</h1>
+			{companyInfo && <PlacanjeForm props={userInfo.paymentInfo}/>}
+
+			
+
 
 		</Layout>
 	);
+	
 }
