@@ -143,8 +143,10 @@ MVC koncept sastoji se od:
 	        
 	        Context stvara kontekst za trenutnog korisnika
 	        
-	        UseMyHooks provjerava nalazi li se lozinka u "password blacklisti" i ako da, traži promjenu lozinke.
-	        
+	        Hooks provjerava nalazi li se lozinka u "password blacklisti" i ako da, traži promjenu lozinke.
+
+            Index prikazuje početnu stranicu na kojoj se prikazuje mapa, te sa koje se može prebaciti na ostale stranice.
+            
 	        Login korisniku prikazuje stranicu za ulogiravanje u aplikaciju. Prilikom log-ina gleda se postoji li korisnik u bazi, ako ne javlja se greška. Ako postoji ulogirava se u aplikaciju. Ne dozvoljava se upis dok sva polja nisu ispravno upisana.
 	        
 	        Register korisniku prikazuje stranicu za registraciju. U zavisnisti od odabranog prikazuje se ili "PrivatnaForma" ili "VlasnikForma"
