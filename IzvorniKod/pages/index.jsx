@@ -6,7 +6,6 @@ import { styled } from "@mui/material/styles";
 import { FormControl, InputBase, MenuItem, Modal, Select } from "@mui/material";
 import { useState } from "react";
 import {
-	Autocomplete,
 	GoogleMap,
 	MarkerF,
 	StandaloneSearchBox,
@@ -85,10 +84,10 @@ export async function getServerSideProps(context) {
 		const newItem = {};
 		newItem.id = doc.id;
 		Object.entries(doc.data()).forEach(([key, value]) => {
-			if (key === "location") {
+			if (key === "geopoint") {
 				newItem[key] = {
-					lat: value.latitude,
-					lng: value.longitude,
+					latitude: value.latitude,
+					longitude: value.longitude,
 				};
 			} else {
 				newItem[key] = value;
@@ -96,6 +95,7 @@ export async function getServerSideProps(context) {
 		});
 		return newItem;
 	});
+	console.log(initCompanies);
 
 	const locationsRef = collection(db, "locations");
 	const locationsSnapshot = await getDocs(locationsRef);
@@ -103,10 +103,10 @@ export async function getServerSideProps(context) {
 		const newItem = {};
 		newItem.id = doc.id;
 		Object.entries(doc.data()).forEach(([key, value]) => {
-			if (key === "location") {
+			if (key === "geopoint") {
 				newItem[key] = {
-					lat: value.latitude,
-					lng: value.longitude,
+					latitude: value.latitude,
+					longitude: value.longitude,
 				};
 			} else {
 				newItem[key] = value;
@@ -147,7 +147,7 @@ const ChildModal = ({
 		await addDoc(collection(db, "locations"), {
 			name: inputName,
 			address,
-			location: geoPoint,
+			geopoint: geoPoint,
 			category: companyType,
 			upvotes: upvote ? [uid] : [],
 			downvotes: downvote ? [uid] : [],
@@ -357,17 +357,17 @@ export default function Home({ initCompanies, initLocations }) {
 			let companyFound = undefined;
 			companyFound = companies.find(
 				(company) =>
-					company.location.lat ===
+					company.geopoint.latitude ===
 						autocomplete.getPlaces()[0].geometry.location.lat() &&
-					company.location.lng ===
+					company.geopoint.longitude ===
 						autocomplete.getPlaces()[0].geometry.location.lng()
 			);
 			let locationFound = undefined;
 			locationFound = locations.find(
 				(location) =>
-					location.lat ===
+					location.geopoint.latitude ===
 						autocomplete.getPlaces()[0].geometry.location.lat() &&
-					location.lng ===
+					location.geopoint.longitude ===
 						autocomplete.getPlaces()[0].geometry.location.lng()
 			);
 
@@ -463,7 +463,7 @@ export default function Home({ initCompanies, initLocations }) {
 		let companyFound = undefined;
 		companyFound = companies.find(
 			(company) =>
-				company.location.lat === lat && company.location.lng === lng
+				company.geopoint.lat === lat && company.geopoint.lng === lng
 		);
 		let locationFound = undefined;
 		locationFound = locations.find(
@@ -836,8 +836,8 @@ export default function Home({ initCompanies, initLocations }) {
 								<MarkerF
 									key={company.id}
 									position={{
-										lat: company.location.lat,
-										lng: company.location.lng,
+										lat: company.geopoint.latitude,
+										lng: company.geopoint.longitude,
 									}}
 									animation={google.maps.Animation.DROP}
 									onClick={() => {
@@ -857,8 +857,8 @@ export default function Home({ initCompanies, initLocations }) {
 								<MarkerF
 									key={location.id}
 									position={{
-										lat: location.location.lat,
-										lng: location.location.lng,
+										lat: location.geopoint.latitude,
+										lng: location.geopoint.longitude,
 									}}
 									animation={google.maps.Animation.DROP}
 									onClick={() => {

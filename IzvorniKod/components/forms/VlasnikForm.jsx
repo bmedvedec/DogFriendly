@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../../lib/context";
 import debounce from "lodash.debounce";
-import { collection, getDocs, Timestamp } from "firebase/firestore";
+import { collection, GeoPoint, getDocs, Timestamp } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import styles from "../../styles/VlasnikForm.module.scss";
 import MenuItem from "@mui/material/MenuItem";
@@ -20,6 +20,9 @@ import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { purple } from "@mui/material/colors";
 import { autocompleteClasses } from "@mui/material";
+import { StandaloneSearchBox, useLoadScript } from "@react-google-maps/api";
+
+const libraries = ["places"];
 
 // Komponenta za prikaz forme za unos podataka o vlasniku
 export default function VlasnikForm(params) {
@@ -30,6 +33,7 @@ export default function VlasnikForm(params) {
 	const [loading, setLoading] = useState(false);
 	const [companyName, setCompanyName] = useState("");
 	const [companyAddress, setCompanyAddress] = useState("");
+	const [companyGeopoint, setCompanyGeopoint] = useState(null);
 	const [companyOIB, setCompanyOIB] = useState("");
 	const [companyPhone, setCompanyPhone] = useState("");
 	const [companyDesc, setCompanyDesc] = useState("");
@@ -55,6 +59,7 @@ export default function VlasnikForm(params) {
 	const [companyNamePay, setCompanyNamePay] = useState("");
 	const [companyOIBPay, setCompanyOIBPay] = useState("");
 	const [address, setAddress] = useState("");
+	const [geopoint, setGeopoint] = useState(null);
 	const [country, setCountry] = useState("");
 	const [region, setRegion] = useState("");
 	const [city, setCity] = useState("");
@@ -81,6 +86,53 @@ export default function VlasnikForm(params) {
 	const [disabled, setDisabled] = useState(true);
 
 	const [checked, setChecked] = useState(false);
+
+	const { isLoaded, loadError } = useLoadScript({
+		googleMapsApiKey: "AIzaSyDM6Dg-tuF7e6WrT88NoKbKo2BCIUvsa1Y",
+		libraries: libraries,
+	});
+
+	if (loadError) return "Error loading maps";
+
+	const [search, setSearch] = useState(null);
+	const onSearchLoad = (autocomplete) => {
+		setSearch(autocomplete);
+	};
+
+	const [searchCard, setSearchCard] = useState(null);
+	const onSearchLoadCard = (autocomplete) => {
+		setSearchCard(autocomplete);
+	};
+
+	const onPlaceChanged = () => {
+		if (search !== null) {
+			const place = search.getPlaces()[0];
+			if (place !== undefined) {
+				setCompanyAddress(place.formatted_address);
+				setCompanyGeopoint(
+					new GeoPoint(
+						place.geometry.location.lat(),
+						place.geometry.location.lng()
+					)
+				);
+			}
+		}
+	};
+
+	const onPlaceChangedCard = () => {
+		if (search !== null) {
+			const place = search.getPlaces()[0];
+			if (place !== undefined) {
+				setAddress(place.formatted_address);
+				setGeopoint(
+					new GeoPoint(
+						place.geometry.location.lat(),
+						place.geometry.location.lng()
+					)
+				);
+			}
+		}
+	};
 
 	// hook koji se poziva na promjenu nekog od navedenih inputa, ako jedan input nije unutar zadovoljavajucih parametara, onemogucava se submit forme
 	useEffect(() => {
@@ -171,6 +223,7 @@ export default function VlasnikForm(params) {
 			password,
 			companyName,
 			companyAddress,
+			companyGeopoint,
 			companyOIB,
 			companyPhone,
 			companyDesc,
@@ -180,6 +233,7 @@ export default function VlasnikForm(params) {
 			companyNamePay,
 			companyOIBPay,
 			address,
+			geopoint,
 			country,
 			region,
 			city,
@@ -373,15 +427,18 @@ export default function VlasnikForm(params) {
 
 	function addUserInfo() {
 		if (!checked) {
+			console.log(companyAddress)
 			setChecked(true);
 			setCompanyNamePay(companyName);
 			setCompanyOIBPay(companyOIB);
 			setAddress(companyAddress);
+			setGeopoint(companyGeopoint);
 		} else {
 			setChecked(false);
 			setCompanyNamePay("");
 			setCompanyOIBPay("");
 			setAddress("");
+			setGeopoint("");
 		}
 	}
 
@@ -454,9 +511,7 @@ export default function VlasnikForm(params) {
 
 	// kod za prikaz vlasnik forme
 	return (
-		<form
-			className="form"
-			onSubmit={handleSubmit}>
+		<form className="form" onSubmit={handleSubmit}>
 			<div className={styles.container}>
 				<div className={styles.personInfo}>
 					{/* personal info tab */}
@@ -532,16 +587,14 @@ export default function VlasnikForm(params) {
 							)}
 						</div>
 						<div className="input-container">
-							<input
-								name="companyAddress"
-								type="text"
-								value={companyAddress}
-								placeholder="company address"
-								onChange={(event) => {
-									setLoading(true);
-									setCompanyAddress(event.target.value);
-								}}
-							/>
+							{isLoaded && (
+								<StandaloneSearchBox
+									onLoad={onSearchLoad}
+									onPlacesChanged={onPlaceChanged}
+								>
+									<input type="text" placeholder="company address" />
+								</StandaloneSearchBox>
+							)}
 						</div>
 						<div className="input-container">
 							<input
@@ -604,16 +657,13 @@ export default function VlasnikForm(params) {
 									input={<BootstrapInput />}
 									inputProps={{
 										"aria-label": "Without label",
-									}}>
-									<MenuItem
-										disabled
-										value="">
+									}}
+								>
+									<MenuItem disabled value="">
 										<em>type of business</em>
 									</MenuItem>
 									{companyTypes.map((type) => (
-										<MenuItem
-											key={type}
-											value={type}>
+										<MenuItem key={type} value={type}>
 											{type}
 										</MenuItem>
 									))}
@@ -627,7 +677,8 @@ export default function VlasnikForm(params) {
 				<div className={styles.payInfoTab}>
 					<label
 						className={styles.titles}
-						style={{ display: "inline-block", width: "100%" }}>
+						style={{ display: "inline-block", width: "100%" }}
+					>
 						Payment info
 					</label>
 
@@ -748,7 +799,9 @@ export default function VlasnikForm(params) {
 									}}
 								/>
 								{companyNamePayError && (
-									<p className="error">{companyNamePayError}</p>
+									<p className="error">
+										{companyNamePayError}
+									</p>
 								)}
 							</div>
 							<div className="input-container">
@@ -765,22 +818,24 @@ export default function VlasnikForm(params) {
 									}}
 								/>
 								{companyOIBPayError && (
-								<p className="error">{companyOIBPayError}</p>
-							)}
+									<p className="error">
+										{companyOIBPayError}
+									</p>
+								)}
 							</div>
 							<div className="input-container">
-								<input
-									name="address"
-									type="text"
-									placeholder="Address"
-									value={address}
-									required
-									onChange={(event) => {
-										setLoading(true);
-										setAddress(event.target.value);
-										setLoading(false);
-									}}
-								/>
+								{isLoaded && (
+									<StandaloneSearchBox
+										onLoad={onSearchLoadCard}
+										onPlacesChanged={onPlaceChangedCard}
+									>
+										<input
+											type="text"
+											placeholder="card holder address"
+											defaultValue={address}
+										/>
+									</StandaloneSearchBox>
+								)}
 							</div>
 							<div className="input-container">
 								<input
@@ -803,6 +858,7 @@ export default function VlasnikForm(params) {
 									placeholder="Region/State"
 									value={region}
 									onChange={(event) => {
+										console.log(event.target.value);
 										setLoading(true);
 										setRegion(event.target.value);
 										setLoading(false);
@@ -812,11 +868,12 @@ export default function VlasnikForm(params) {
 							<div className="input-container">
 								<input
 									name="VAT"
-									type="number"
+									type="text"
 									placeholder="VAT"
 									value={VAT}
 									required
 									onChange={(event) => {
+										console.log(event.target.value);
 										setLoading(true);
 										setVAT(event.target.value);
 										setLoading(false);
