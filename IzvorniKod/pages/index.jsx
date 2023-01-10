@@ -28,6 +28,7 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { borderBottom } from "@mui/system";
 
 const libraries = ["places"];
 
@@ -59,19 +60,18 @@ const BootstrapInputModal = styled(InputBase)(({ theme }) => ({
 		marginTop: theme.spacing(3),
 	},
 	"& .MuiInputBase-input": {
-		borderRadius: 32,
+		borderRadius: 0,
 		position: "relative",
 		background: "none",
-		border: "2px solid #d9d9d9",
+		border: "none",
+		borderBottom: "2px solid #d9d9d9",
 		fontSize: "1.2rem",
 		padding: "8px 16px",
 		transition: theme.transitions.create(["border-color", "box-shadow"]),
 		fontFamily: "Source Sans Pro",
 		transition: "all 0.2s ease-in-out",
-		color: "black",
+		color: "#7842ACF5",
 		"&:focus": {
-			borderRadius: 32,
-			border: "2px solid black",
 			transition: "all 0.2s ease-in-out",
 		},
 	},
@@ -114,7 +114,7 @@ export async function getServerSideProps(context) {
 		});
 		return newItem;
 	});
-	console.log(initLocations)
+	console.log(initLocations);
 
 	return {
 		props: {
@@ -160,66 +160,138 @@ const ChildModal = ({
 
 	return (
 		<>
-			<button onClick={() => setOpen(true)}>Add location</button>
-			<Modal open={open} onClose={() => setOpen(false)}>
+			<button
+				className={styles.gumb}
+				onClick={() => setOpen(true)}>
+				Add location
+			</button>
+			<Modal
+				open={open}
+				onClose={() => setOpen(false)}>
 				<div className="modal">
-					<form onSubmit={handleSubmit}>
-						<input
-							type="text"
-							value={inputName}
-							onChange={(e) => setInputName(e.target.value)}
-							disabled={
-								name === "Unknown location" ? false : true
-							}
-						/>
-						<input type="text" value={address} disabled />
-						<div className="input-container">
-							<FormControl>
-								<Select
-									displayEmpty
-									value={companyType}
-									onChange={(event) => {
-										setCompanyType(event.target.value);
-									}}
-									input={<BootstrapInputModal />}
-									inputProps={{
-										"aria-label": "Without label",
-									}}
-								>
-									<MenuItem disabled value="">
-										<em>Category</em>
-									</MenuItem>
-									{categories.map((type) => (
-										<MenuItem key={type} value={type}>
-											{type}
+					<div>
+						<form
+							onSubmit={handleSubmit}
+							style={{ width: "100%" }}>
+							<div>
+								<span className={styles.inputs}>name</span>
+								<br />
+								<input
+									className={styles.text}
+									type="text"
+									value={inputName}
+									onChange={(e) =>
+										setInputName(e.target.value)
+									}
+									disabled={
+										name === "Unknown location"
+											? false
+											: true
+									}
+								/>
+							</div>
+							<div>
+								<span className={styles.inputs}>address</span>
+								<br />
+								<input
+									className={styles.text}
+									type="text"
+									value={address}
+									disabled
+								/>
+							</div>
+							<div className="input-container">
+								<span className={styles.inputs}>category</span>
+								<FormControl>
+									<Select
+										displayEmpty
+										value={companyType}
+										onChange={(event) => {
+											setCompanyType(event.target.value);
+										}}
+										input={<BootstrapInputModal />}
+										inputProps={{
+											"aria-label": "Without label",
+										}}>
+										<MenuItem
+											disabled
+											value="">
+											<em></em>
 										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-						</div>
-						<div>
-							<input
-								type="checkbox"
-								onChange={() => {
-									setUpvote(true);
-									setDownvote(false);
-								}}
-								checked={upvote}
-							/>
-							<label>Upvote</label>
-							<input
-								type="checkbox"
-								onChange={() => {
-									setDownvote(true);
-									setUpvote(false);
-								}}
-								checked={downvote}
-							/>
-							<label>Downvote</label>
-						</div>
-						<button type="submit">Add</button>
-					</form>
-					<button onClick={() => setOpen(false)}>Cancel</button>
+										{categories.map((type) => (
+											<MenuItem
+												key={type}
+												value={type}>
+												{type}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</div>
+							<div className={styles.ratingSearch}>
+								{/* <span className={styles.inputs}>rating</span> */}
+								<div>
+									<input
+										type="checkbox"
+										id="upvote"
+										style={{ display: "none" }}
+										onChange={() => {
+											setUpvote(true);
+											setDownvote(false);
+										}}
+										checked={upvote}
+									/>
+									<label
+										for="upvote"
+										style={{
+											fontSize: upvote
+												? "1.8rem"
+												: "1.1rem",
+										}}>
+										👍
+									</label>
+									<input
+										type="checkbox"
+										id="downvote"
+										style={{ display: "none" }}
+										onChange={() => {
+											setDownvote(true);
+											setUpvote(false);
+										}}
+										checked={downvote}
+									/>
+									<label
+										for="downvote"
+										style={{
+											fontSize: downvote
+												? "1.8rem"
+												: "1.1rem",
+										}}>
+										👎
+									</label>
+								</div>
+							</div>
+							<div
+								style={{
+									display: "flex",
+									justifyContent: "space-between",
+									width: "100%",
+								}}>
+								<button
+									type="submit"
+									className={styles.gumb}
+									style={{ width: "40%" }}>
+									Add
+								</button>
+								<button
+									className={styles.gumb}
+									onClick={() => setOpen(false)}
+									style={{ width: "40%" }}>
+									Cancel
+								</button>
+							</div>
+						</form>
+					</div>
 				</div>
 			</Modal>
 		</>
@@ -323,7 +395,7 @@ export default function Home({ initCompanies, initLocations }) {
 
 	const containerStyle = {
 		width: "100%",
-		height: "100%",
+		height: "100vh",
 	};
 
 	const [center, setCenter] = useState({
@@ -555,8 +627,7 @@ export default function Home({ initCompanies, initLocations }) {
 				onClose={() => {
 					setModalOpen(false);
 					setModalData(null);
-				}}
-			>
+				}}>
 				<div className="modal">
 					{modalData?.company && (
 						<>
@@ -608,8 +679,7 @@ export default function Home({ initCompanies, initLocations }) {
 												company: true,
 												id: modalData.companyId,
 											})
-										}
-									>
+										}>
 										Upvote
 									</button>
 									<button
@@ -618,8 +688,7 @@ export default function Home({ initCompanies, initLocations }) {
 												company: true,
 												id: modalData.companyId,
 											})
-										}
-									>
+										}>
 										Downvote
 									</button>
 									{companies
@@ -646,7 +715,7 @@ export default function Home({ initCompanies, initLocations }) {
 					)}
 					{modalData?.location && (
 						<>
-							<h2>
+							<h2 className={styles.title}>
 								{
 									locations.find(
 										(location) =>
@@ -654,89 +723,142 @@ export default function Home({ initCompanies, initLocations }) {
 									)?.name
 								}
 							</h2>
-							<p>
-								{
-									locations.find(
-										(location) =>
-											location.id === modalData.locationId
-									)?.address
-								}
-							</p>
-							<p>
-								{
-									locations.find(
-										(location) =>
-											location.id === modalData.locationId
-									)?.description
-								}
-							</p>
-							<p>
-								{
-									locations.find(
-										(location) =>
-											location.id === modalData.locationId
-									)?.upvotes?.length
-								}
-							</p>
-							<p>
-								{
-									locations.find(
-										(location) =>
-											location.id === modalData.locationId
-									)?.downvotes?.length
-								}
-							</p>
-							{authUser && !user.companyOwner && (
+							<div>
+								<span className={styles.inputs}>address</span>
+								<p className={styles.text}>
+									{
+										locations.find(
+											(location) =>
+												location.id ===
+												modalData.locationId
+										)?.address
+									}
+								</p>
+							</div>
+							
+							{/* prikaz kategorije ako je ima */}
+							{locations.find(
+									(location) =>
+										location.id === modalData.locationId
+								)?.category
+							 && (
 								<div>
-									<button
-										onClick={() =>
-											upvote({
-												company: false,
-												id: modalData.locationId,
-											})
-										}
-									>
-										Upvote
-									</button>
-									<button
-										onClick={() =>
-											downvote({
-												company: false,
-												id: modalData.locationId,
-											})
-										}
-									>
-										Downvote
-									</button>
-									{locations && locations
-										.find(
-											(location) =>
-												location.id ===
-												modalData.locationId
-										)
-										?.upvotes?.includes(authUser.uid) && (
-										<p>Upvoted</p>
-									)}
-									{locations && locations
-										.find(
-											(location) =>
-												location.id ===
-												modalData.locationId
-										)
-										?.downvotes?.includes(authUser.uid) && (
-										<p>Downvoted</p>
-									)}
-									{authUser.uid === locations.find((location) => location.id === modalData.locationId).user && (
-										<button onClick={() => deleteLocation(modalData.locationId)}>Delete</button>
-									)}
+									<span className={styles.inputs}>category</span>
+									<p className={styles.text}>{locations.find(
+									(location) =>
+										location.id === modalData.locationId
+								)?.category}</p>
 								</div>
+							)}
+
+							{authUser && !user.companyOwner && (
+								<>
+									<div className={styles.divGumbi}>
+										<button
+											className={styles.gumbLikes}
+											onClick={() =>
+												upvote({
+													company: false,
+													id: modalData.locationId,
+												})
+											}>
+											<span
+												style={{
+													fontSize: locations
+														.find(
+															(location) =>
+																location.id ===
+																modalData.locationId
+														)
+														?.upvotes?.includes(
+															authUser.uid
+														)
+														? "1.8rem"
+														: "1.2rem",
+												}}>
+												👍
+											</span>
+											<span>
+												(
+												{
+													locations.find(
+														(location) =>
+															location.id ===
+															modalData.locationId
+													)?.upvotes?.length
+												}
+												)
+											</span>
+										</button>
+										<button
+											className={styles.gumbLikes}
+											onClick={() =>
+												downvote({
+													company: false,
+													id: modalData.locationId,
+												})
+											}>
+											<span
+												style={{
+													fontSize: locations
+														.find(
+															(location) =>
+																location.id ===
+																modalData.locationId
+														)
+														?.downvotes?.includes(
+															authUser.uid
+														)
+														? "1.8rem"
+														: "1.2rem",
+												}}>
+												👎
+											</span>
+											<span>
+												(
+												{
+													locations.find(
+														(location) =>
+															location.id ===
+															modalData.locationId
+													)?.downvotes?.length
+												}
+												)
+											</span>
+										</button>
+									</div>
+
+									<div>
+										{authUser.uid ===
+											locations.find(
+												(location) =>
+													location.id ===
+													modalData.locationId
+											).user && (
+											<button
+												className={styles.gumb}
+												onClick={() =>
+													deleteLocation(
+														modalData.locationId
+													)
+												}>
+												Delete
+											</button>
+										)}
+									</div>
+								</>
 							)}
 						</>
 					)}
 					{modalData?.search && (
 						<>
-							<h2>{modalData.name}</h2>
-							<p>{modalData.address}</p>
+							<h2 className={styles.title}>{modalData.name}</h2>
+							<div>
+								<span className={styles.inputs}>address</span>
+								<p className={styles.text}>
+									{modalData.address}
+								</p>
+							</div>
 							{authUser && !user.companyOwner && (
 								<div>
 									<ChildModal
@@ -761,9 +883,11 @@ export default function Home({ initCompanies, initLocations }) {
 						{isLoaded && (
 							<StandaloneSearchBox
 								onLoad={onAutoCompleteLoad}
-								onPlacesChanged={onPlaceChanged}
-							>
-								<input type="text" placeholder="Search" />
+								onPlacesChanged={onPlaceChanged}>
+								<input
+									type="text"
+									placeholder="Search"
+								/>
 							</StandaloneSearchBox>
 						)}
 						<div className="input-container">
@@ -777,13 +901,16 @@ export default function Home({ initCompanies, initLocations }) {
 									input={<BootstrapInput />}
 									inputProps={{
 										"aria-label": "Without label",
-									}}
-								>
-									<MenuItem disabled value="">
+									}}>
+									<MenuItem
+										disabled
+										value="">
 										<em>Category</em>
 									</MenuItem>
 									{companyTypes.map((type) => (
-										<MenuItem key={type} value={type}>
+										<MenuItem
+											key={type}
+											value={type}>
 											{type}
 										</MenuItem>
 									))}
@@ -799,8 +926,7 @@ export default function Home({ initCompanies, initLocations }) {
 							center={center}
 							zoom={15}
 							onClick={handleMapClick}
-							onLoad={onMapLoad}
-						>
+							onLoad={onMapLoad}>
 							{/* Child components, such as markers, info windows, etc. */}
 							<MarkerF
 								onLoad={onLoad}

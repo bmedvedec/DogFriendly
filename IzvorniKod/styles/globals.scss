@@ -188,11 +188,13 @@ form {
 	padding: 32px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	gap: 16px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+
+	@media (max-width: 1000px) {
+		width: 85vw;
+	}
 }
