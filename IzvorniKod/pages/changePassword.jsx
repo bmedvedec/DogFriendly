@@ -1,8 +1,10 @@
+import styles from "../styles/login.module.scss";
 import Layout from "../components/layout";
 import { useAuth } from "../lib/context";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useEffect, useState } from "react";
+import { async } from "@firebase/util";
 import PlacanjeForm from "../components/forms/PlacanjeForm";
 import PersonalForm from "../components/forms/PersonalForm";
 import CompanyForm from "../components/forms/CompanyForm";
@@ -36,23 +38,29 @@ export default function UserInfo() {
 					});
 				}
 			} else {
-				console.log("No such document!"); 
+				console.log("No such document!");
 			}
 		}
 		if (authUser) {
 			getUserInfo();
+			console.log(userInfo);
 		}
 	}, [authUser]);
+
+
+	// function that redirects to changeInfo page when button is clicked and sends userInfo as a prop
+	const changeInfo = () => {
+		window.location.href = "/changeInfo";
+	};
+
 	
 
-	// prikaži izmjenjivu formu koja kao inicijalne vrijednosti ima podatke o korisniku
-	// ako je korisnik vlasnik firme, prikaži i podatke o firmi
-	
+
 	return (
 		<Layout>
 			<a href="/">Home page link</a>
 
-			<h1>User info</h1>
+			{/* <h1>User info</h1>
 			{userInfo && <p>{userInfo.username}</p>}
 			{userInfo && <p>{userInfo.email}</p>}
 			{companyInfo && <p>{userInfo.paymentInfo.firstName}</p>}
@@ -67,9 +75,9 @@ export default function UserInfo() {
 			{companyInfo && <p>{userInfo.paymentInfo.VAT}</p>}
 			{companyInfo && <p>{userInfo.paymentInfo.cardNumber}</p>}
 			{companyInfo && <p>{userInfo.paymentInfo.cardExpiryDate}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.cardCVC}</p>}
+			{companyInfo && <p>{userInfo.paymentInfo.cardCVC}</p>} */}
 
-			<br />
+			{/* <br />
 			{companyInfo && (
 				<p>
 					<b>Company info</b>
@@ -80,31 +88,41 @@ export default function UserInfo() {
 			{companyInfo && <p>{companyInfo.description}</p>}
 			{companyInfo && <p>{companyInfo.phone}</p>}
 			{companyInfo && <p>{companyInfo.type}</p>}
-			{companyInfo && <p>{userInfo.dateOfExpiry.toDate().toString()}</p>}
+			{companyInfo && <p>{userInfo.dateOfExpiry.toDate().toString()}</p>} */}
 
 
 			{userInfo && <h1>Personal Information</h1>}
-			{userInfo && <PersonalForm props={userInfo} />	}
+			{userInfo && <PersonalForm props={userInfo} />}
 
 			<br />
 			<br />
 
 			{companyInfo && <h1>Company Information</h1>}
-			{companyInfo && <CompanyForm props = {companyInfo} />}
+			{companyInfo && <CompanyForm props={companyInfo} />}
 
 			<br />
 			<br />
 
 			{companyInfo && <h1>Payment Information</h1>}
-			{companyInfo && <PlacanjeForm props={userInfo.paymentInfo}/>}
+			{companyInfo && <PlacanjeForm props={userInfo.paymentInfo} />}
 
-			{userInfo && <button onClick={() => window.location.href = "/changeInfo"}>Change user info</button>}
-			{userInfo && <button onClick={() => window.location.href = "/changePassword"}>Change password</button>}
+			<button
+				className={styles.button}
+				onClick={changeInfo}
+				type="submit">
+				Change username
+			</button>
+			<button
+				a href="/changePassword"
+				className={styles.button}
+				type="button">
+				Change password
+			</button>
 
-			<br />
-			<br />
+
+
 
 		</Layout>
 	);
-	
+
 }
