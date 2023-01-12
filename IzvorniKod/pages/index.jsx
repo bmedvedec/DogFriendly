@@ -426,17 +426,17 @@ export default function Home({ initCompanies, initLocations }) {
 			companyFound = companies.find(
 				(company) =>
 					company.geopoint.latitude ===
-						autocomplete.getPlaces()[0].geometry.location.lat() &&
+					autocomplete.getPlaces()[0].geometry.location.lat() &&
 					company.geopoint.longitude ===
-						autocomplete.getPlaces()[0].geometry.location.lng()
+					autocomplete.getPlaces()[0].geometry.location.lng()
 			);
 			let locationFound = undefined;
 			locationFound = locations.find(
 				(location) =>
 					location.geopoint.latitude ===
-						autocomplete.getPlaces()[0].geometry.location.lat() &&
+					autocomplete.getPlaces()[0].geometry.location.lat() &&
 					location.geopoint.longitude ===
-						autocomplete.getPlaces()[0].geometry.location.lng()
+					autocomplete.getPlaces()[0].geometry.location.lng()
 			);
 
 			if (companyFound) {
@@ -584,10 +584,10 @@ export default function Home({ initCompanies, initLocations }) {
 				console.log("no place id");
 				fetch(
 					"https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
-						lat +
-						"," +
-						lng +
-						"&key=AIzaSyDM6Dg-tuF7e6WrT88NoKbKo2BCIUvsa1Y"
+					lat +
+					"," +
+					lng +
+					"&key=AIzaSyDM6Dg-tuF7e6WrT88NoKbKo2BCIUvsa1Y"
 				)
 					.then((response) => response.json())
 					.then((data) => {
@@ -628,7 +628,7 @@ export default function Home({ initCompanies, initLocations }) {
 				<div className="modal">
 					{modalData?.company && (
 						<>
-							<h2>
+							<h2 className={styles.title}>
 								{
 									companies.find(
 										(company) =>
@@ -636,41 +636,73 @@ export default function Home({ initCompanies, initLocations }) {
 									).name
 								}
 							</h2>
-							<p>
-								{
-									companies.find(
-										(company) =>
-											company.id === modalData.companyId
-									).address
-								}
-							</p>
-							<p>
-								{
-									companies.find(
-										(company) =>
-											company.id === modalData.companyId
-									).description
-								}
-							</p>
-							<p>
+							<div>
+								<span className={styles.inputs}>address</span>
+								<p className={styles.text}>
+									{
+										companies.find(
+											(company) =>
+												company.id === modalData.companyId
+										).address
+									}
+								</p>
+							</div>
+
+							<div>
+								<span className={styles.inputs}>category</span>
+								<p className={styles.text}>
+									{
+										companies.find(
+											(company) =>
+												company.id === modalData.companyId
+										).type
+									}
+								</p>
+							</div>
+
+							<div>
+								<span className={styles.inputs}>contact number</span>
+								<p className={styles.text}>
+									{
+										companies.find(
+											(company) =>
+												company.id === modalData.companyId
+										).phone
+									}
+								</p>
+							</div>
+
+							<div>
+								<span className={styles.inputs}>description</span>
+								<p className={styles.text}>
+									{
+										companies.find(
+											(company) =>
+												company.id === modalData.companyId
+										).description
+									}
+								</p>
+							</div>
+							{/* <p>
 								{
 									companies.find(
 										(company) =>
 											company.id === modalData.companyId
 									)?.upvotes?.length
 								}
-							</p>
-							<p>
+							</p> */}
+							{/* <p>
 								{
 									companies.find(
 										(company) =>
 											company.id === modalData.companyId
 									)?.downvotes?.length
 								}
-							</p>
+							</p> */}
 							{authUser && !user.companyOwner && (
-								<div>
+								<div className={styles.divGumbi}>
 									<button
+										className={styles.gumbLikes}
 										onClick={() =>
 											upvote({
 												company: true,
@@ -678,9 +710,36 @@ export default function Home({ initCompanies, initLocations }) {
 											})
 										}
 									>
-										Upvote
+										<span
+											style={{
+												fontSize: companies
+													.find(
+														(company) =>
+															company.id ===
+															modalData.companyId
+													)
+													?.upvotes?.includes(
+														authUser.uid
+													)
+													? "1.8rem"
+													: "1.2rem",
+											}}>
+											👍
+										</span>
+										<span>
+											(
+											{
+												companies.find(
+													(company) =>
+														company.id ===
+														modalData.companyId
+												)?.upvotes?.length
+											}
+											)
+										</span>
 									</button>
 									<button
+										className={styles.gumbLikes}
 										onClick={() =>
 											downvote({
 												company: true,
@@ -688,27 +747,56 @@ export default function Home({ initCompanies, initLocations }) {
 											})
 										}
 									>
-										Downvote
+										<span
+											style={{
+												fontSize: companies
+													.find(
+														(company) =>
+															company.id ===
+															modalData.companyId
+													)
+													?.downvotes?.includes(
+														authUser.uid
+													)
+													? "1.8rem"
+													: "1.2rem",
+											}}
+										>
+											👎
+										</span>
+										<span>
+											(
+											{
+												companies.find(
+													(company) =>
+														company.id ===
+														modalData.companyId
+												)?.downvotes?.length
+											}
+											)
+										</span>
 									</button>
-									{companies
-										.find(
-											(company) =>
-												company.id ===
-												modalData.companyId
-										)
-										?.upvotes?.includes(authUser.uid) && (
-										<p>Upvoted</p>
-									)}
-									{companies
-										.find(
-											(company) =>
-												company.id ===
-												modalData.companyId
-										)
-										?.downvotes?.includes(authUser.uid) && (
-										<p>Downvoted</p>
-									)}
 								</div>
+								// <div>
+								// 	{companies
+								// 		.find(
+								// 			(company) =>
+								// 				company.id ===
+								// 				modalData.companyId
+								// 		)
+								// 		?.upvotes?.includes(authUser.uid) && (
+								// 			<p>Upvoted</p>
+								// 		)}
+								// 	{companies
+								// 		.find(
+								// 			(company) =>
+								// 				company.id ===
+								// 				modalData.companyId
+								// 		)
+								// 		?.downvotes?.includes(authUser.uid) && (
+								// 			<p>Downvoted</p>
+								// 		)}
+								// </div>
 							)}
 						</>
 					)}
@@ -740,21 +828,21 @@ export default function Home({ initCompanies, initLocations }) {
 								(location) =>
 									location.id === modalData.locationId
 							)?.category && (
-								<div>
-									<span className={styles.inputs}>
-										category
-									</span>
-									<p className={styles.text}>
-										{
-											locations.find(
-												(location) =>
-													location.id ===
-													modalData.locationId
-											)?.category
-										}
-									</p>
-								</div>
-							)}
+									<div>
+										<span className={styles.inputs}>
+											category
+										</span>
+										<p className={styles.text}>
+											{
+												locations.find(
+													(location) =>
+														location.id ===
+														modalData.locationId
+												)?.category
+											}
+										</p>
+									</div>
+								)}
 
 							{authUser && !user.companyOwner && (
 								<>
@@ -844,17 +932,17 @@ export default function Home({ initCompanies, initLocations }) {
 													location.id ===
 													modalData.locationId
 											).user && (
-											<button
-												className={styles.gumb}
-												onClick={() =>
-													deleteLocation(
-														modalData.locationId
-													)
-												}
-											>
-												Delete
-											</button>
-										)}
+												<button
+													className={styles.gumb}
+													onClick={() =>
+														deleteLocation(
+															modalData.locationId
+														)
+													}
+												>
+													Delete
+												</button>
+											)}
 									</div>
 								</>
 							)}
@@ -986,7 +1074,7 @@ export default function Home({ initCompanies, initLocations }) {
 									}}
 								/>
 							))}
-							{locations.map((location) => ((companyType === "" || companyType === "all") || companyType === location.category) &&  (
+							{locations.map((location) => ((companyType === "" || companyType === "all") || companyType === location.category) && (
 								<MarkerF
 									key={location.id}
 									position={{

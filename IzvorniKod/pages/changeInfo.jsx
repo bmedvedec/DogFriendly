@@ -248,7 +248,7 @@ export default function UserInfo() {
             <form onSubmit={
                 (event) => {
                     handleSave(event).then(() => {
-                        alert("Password changed!")
+                        alert("Your changes have been saved")
 
                         //after pressing ok on alert go to userinfo page
                         window.location.href = "/userInfo";
