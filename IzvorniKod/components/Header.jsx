@@ -12,9 +12,9 @@ export default function Header(params) {
 				<div className={styles.right}>
 					<div className={styles.accountInfo}>
 						<img src="/corgiHeader.png" alt="corgi header Icon for user" />
-						<Link href="/userinfo">Profile</Link>
+						<Link href="/userInfo">Profile</Link>
 					</div>
-					<span onClick={firebaseSignOut}><i>Sign out</i></span>
+					<Link href="/"><span onClick={firebaseSignOut}><i>Sign out</i></span></Link>
 				</div>
 			) : (
 				<div className={styles.right}>

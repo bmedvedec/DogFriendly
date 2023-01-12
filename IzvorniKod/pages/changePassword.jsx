@@ -3,121 +3,187 @@ import Layout from "../components/layout";
 import { useAuth } from "../lib/context";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import debounce from "lodash.debounce";
 import { async } from "@firebase/util";
 import PlacanjeForm from "../components/forms/PlacanjeForm";
 import PersonalForm from "../components/forms/PersonalForm";
 import CompanyForm from "../components/forms/CompanyForm";
+import Header from "../components/Header";
+import { getAuth, updatePassword } from "firebase/auth";
+import { useMyHooks } from "../lib/hooks";
 
-export default function UserInfo() {
-	// sprema kontekst autentifikacije u authUser
-	const { authUser } = useAuth();
-	// inicijalizacija hook state-a za podatke o korisniku, podatke o firmi i da li je korisnik vlasnik firme
-	const [userInfo, setUserInfo] = useState(null);
-	const [companyInfo, setCompanyInfo] = useState(null);
 
-	// funkcija koja povlaci podatke o korisniku iz baze i ako je korisnik vlasnik firme, povlaci i podatke o firmi
-	// poziva se na promjenu authUser-a
+
+export default function changePassword() {
+	// inicijalizacija hook state-a
+
+	const [loading, setLoading] = useState(false);
+
+
+	const [newPassword, setNewPassword] = useState("");
+	const [passwordError, setPasswordError] = useState("");
+
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+	const [disabled, setDisabled] = useState(false); // disabled state za submit button
+
+	const { checkPasswordBlacklist } = useMyHooks();
+
+
+	// funkcija (hook) koja se izvrsava svaki put kada se promijeni vrijednost new password
 	useEffect(() => {
-		async function getUserInfo() {
-			const docRef = doc(db, "users", authUser.uid); // referenca na dokument korisnika
-			const docSnap = await getDoc(docRef); // povlaci podatke o korisniku iz baze koji imaju id jednak authUser.uid
-			if (docSnap.exists()) {
-				// ako postoji dokument sa tim id-em
-				setUserInfo(docSnap.data()); // sprema podatke o korisniku u hook state
-				if (docSnap.data().companyOwner) {
-					// ako je korisnik vlasnik firme
-					const companyRef = collection(db, "companies"); // referenca na kolekciju firmi
-					const companySnap = await getDocs(companyRef); // povlaci sve dokumente iz kolekcije firmi
-					companySnap.forEach((doc) => {
-						// prolazi kroz sve dokumente iz kolekcije firmi
-						if (doc.data().owner === authUser.uid) {
-							// ako je id vlasnika firme jednak authUser.uid
-							setCompanyInfo(doc.data()); // sprema podatke o firmi u hook state
-						}
-					});
-				}
+		if (
+			newPassword &&
+			!passwordError &&
+
+			!loading
+		) {
+			// ako su sva polja popunjena i nema gresaka, omoguci submit button, inace onemoguci
+			setDisabled(false);
+		} else {
+			setDisabled(true);
+		}
+	}, [newPassword, loading]); // state-ovi koji se provjeravaju
+
+	useEffect(() => {
+		if (
+			confirmPassword &&
+			!confirmPasswordError &&
+
+			!loading
+		) {
+			// ako su sva polja popunjena i nema gresaka, omoguci submit button, inace onemoguci
+			setDisabled(false);
+		} else {
+			setDisabled(true);
+		}
+	}, [confirmPassword, loading]); // state-ovi koji se provjeravaju
+
+
+
+
+	const checkPassword = useCallback(
+		debounce(async (password) => {
+			setLoading(true);
+			if (password.length < 8) { // ako je password manji od 8 znakova, postavi passwordError
+				setPasswordError("Password must be at least 8 characters");
 			} else {
-				console.log("No such document!");
+				const isBlacklisted = await checkPasswordBlacklist(password);
+				if (isBlacklisted) { // ako je password na blacklisti, postavi passwordError
+					setPasswordError("Password blacklisted, too common!");
+					setLoading(false);
+				} else { // inace postavi passwordError na prazan string
+					setPasswordError("");
+					setLoading(false);
+				}
 			}
-		}
-		if (authUser) {
-			getUserInfo();
-			console.log(userInfo);
-		}
-	}, [authUser]);
+		}, 500),
+		[]
+	);
 
+	const checkConfirmPassword = useCallback(
+		// check if newPassword and confirmPassword are equal
 
-	// function that redirects to changeInfo page when button is clicked and sends userInfo as a prop
-	const changeInfo = () => {
-		window.location.href = "/changeInfo";
-	};
+		debounce(async (confirmPassword) => {
+			setLoading(true);
+			if (confirmPassword !== newPassword) { // ako je password manji od 8 znakova, postavi passwordError
+				setConfirmPasswordError("Passwords do not match");
+			} else {
+				setConfirmPasswordError("");
+				setLoading(false);
+			}
+		}, 500),
+		[newPassword]
+	);
+
 
 	
+
+	// function which updates password in firestore
+	async function changePassword(event) {
+
+		event.preventDefault(); // sprijecava ponovno ucitavanje stranice
+
+
+		console.log(newPassword);
+		const auth = getAuth();
+		const user = auth.currentUser;
+		console.log(user);
+
+		updatePassword(user, newPassword)
+			.then(() => {
+				console.log("Password updated!");
+				alert("Password changed!")
+
+				//after pressing ok on alert go to userinfo page
+				window.location.href = "/userInfo";
+
+
+
+			})
+			.catch((error) => {
+				console.log(error);
+
+			});
+	}
 
 
 	return (
 		<Layout>
-			<a href="/">Home page link</a>
+			<Header />
 
-			{/* <h1>User info</h1>
-			{userInfo && <p>{userInfo.username}</p>}
-			{userInfo && <p>{userInfo.email}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.firstName}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.lastName}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.companyNamePay}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.companyOIBPay}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.address}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.country}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.region}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.city}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.zipCode}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.VAT}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.cardNumber}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.cardExpiryDate}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.cardCVC}</p>} */}
+			<div className={styles.login}>
+				<h1>Change password</h1>
 
-			{/* <br />
-			{companyInfo && (
-				<p>
-					<b>Company info</b>
-				</p>
-			)}
-			{companyInfo && <p>{companyInfo.name}</p>}
-			{companyInfo && <p>{companyInfo.address}</p>}
-			{companyInfo && <p>{companyInfo.description}</p>}
-			{companyInfo && <p>{companyInfo.phone}</p>}
-			{companyInfo && <p>{companyInfo.type}</p>}
-			{companyInfo && <p>{userInfo.dateOfExpiry.toDate().toString()}</p>} */}
+				<form onSubmit={changePassword}>
 
+					<div className="input-container">
+						<label htmlFor="newPassword">New password</label>
 
-			{userInfo && <h1>Personal Information</h1>}
-			{userInfo && <PersonalForm props={userInfo} />}
+						<input
+							name="newPassword"
+							type="password"
+							placeholder="New password"
+							onChange={(event) => {
+								// svaki put kada se promijeni vrijednost password-a, pozovi funkciju checkPassword
+								setLoading(true);
+								setNewPassword(event.target.value);
+								checkPassword(event.target.value);
+							}}
+						/>
+						{passwordError && <p className="error">{passwordError}</p>}
 
-			<br />
-			<br />
+					</div>
 
-			{companyInfo && <h1>Company Information</h1>}
-			{companyInfo && <CompanyForm props={companyInfo} />}
+					<div className="input-container">
+						<label htmlFor="confirmPassword">Confirm password</label>
 
-			<br />
-			<br />
+						<input
+							name="confirmPassword"
+							type="password"
+							placeholder="Confirm password"
+							onChange={(event) => {
+								// svaki put kada se promijeni vrijednost password-a, pozovi funkciju checkPassword
+								setLoading(true);
+								setConfirmPassword(event.target.value);
+								checkConfirmPassword(event.target.value);
+							}}
+						/>
+						{confirmPasswordError && <p className="error">{confirmPasswordError}</p>}
 
-			{companyInfo && <h1>Payment Information</h1>}
-			{companyInfo && <PlacanjeForm props={userInfo.paymentInfo} />}
+					</div>
 
-			<button
-				className={styles.button}
-				onClick={changeInfo}
-				type="submit">
-				Change username
-			</button>
-			<button
-				a href="/changePassword"
-				className={styles.button}
-				type="button">
-				Change password
-			</button>
+					<input
+						className={styles.button}
+						type="submit"
+						value="Save changes"
+						disabled={disabled}
+					/>
+				</form>
+			</div>
+
 
 
 

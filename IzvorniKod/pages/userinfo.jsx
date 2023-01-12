@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import PlacanjeForm from "../components/forms/PlacanjeForm";
 import PersonalForm from "../components/forms/PersonalForm";
 import CompanyForm from "../components/forms/CompanyForm";
+import Header from "../components/Header";
+import styles from "../styles/userinfo.module.scss";
+
 
 export async function getServerSideProps(context) {
 
@@ -32,7 +35,7 @@ export async function getServerSideProps(context) {
 	return {
 		props: {
 			initLocations,
-			
+
 		},
 	};
 }
@@ -41,7 +44,7 @@ export default function UserInfo({ initLocations }) {
 	// sprema kontekst autentifikacije u authUser
 	const { authUser } = useAuth();
 	// inicijalizacija hook state-a za podatke o korisniku, podatke o firmi i da li je korisnik vlasnik firme
-	
+
 	const [userInfo, setUserInfo] = useState(null);
 	const [companyInfo, setCompanyInfo] = useState(null);
 	const [userID, setUserID] = useState(null);
@@ -69,7 +72,7 @@ export default function UserInfo({ initLocations }) {
 					});
 				}
 			} else {
-				console.log("No such document!"); 
+				console.log("No such document!");
 			}
 		}
 		if (authUser) {
@@ -92,20 +95,20 @@ export default function UserInfo({ initLocations }) {
 
 
 		});
-		
 
 
 
-		
+
+
 	};
-	
+
 
 	// prikaži izmjenjivu formu koja kao inicijalne vrijednosti ima podatke o korisniku
 	// ako je korisnik vlasnik firme, prikaži i podatke o firmi
-	
+
 	return (
 		<Layout>
-			<a href="/">Home page link</a>
+			<Header />
 
 			<h1>User info</h1>
 			{userInfo && <p>{userInfo.username}</p>}
@@ -146,18 +149,19 @@ export default function UserInfo({ initLocations }) {
 						(location.user === userID) &&
 
 						<div>
-							
+
 							<p>{location.name}</p>
 
-							<button onClick={() => {
-								deleteLocation(location.id);
-								initLocations.filter((location) => location.id !== location.id);
+							<button className={styles.button}
+								onClick={() => {
+									deleteLocation(location.id);
+									initLocations.filter((location) => location.id !== location.id);
 								}}>Delete location</button>
-							
-						</div>
-						
 
-						
+						</div>
+
+
+
 
 
 					))}
@@ -165,28 +169,15 @@ export default function UserInfo({ initLocations }) {
 			)}
 
 
-			{/* {userInfo && <h1>Personal Information</h1>}
-			{userInfo && <PersonalForm props={userInfo} />	}
-
-			<br />
-			<br />
-
-			{companyInfo && <h1>Company Information</h1>}
-			{companyInfo && <CompanyForm props = {companyInfo} />}
-
-			<br />
-			<br />
-
-			{companyInfo && <h1>Payment Information</h1>}
-			{companyInfo && <PlacanjeForm props={userInfo.paymentInfo}/>} */}
-
-			{userInfo && <button onClick={() => window.location.href = "/changeInfo"}>Change user info</button>}
-			{userInfo && <button onClick={() => window.location.href = "/changePassword"}>Change password</button>}
+			{userInfo && <button className={styles.button}
+				onClick={() => window.location.href = "/changeInfo"}>Change user info</button>}
+			{userInfo && <button className={styles.button} 
+								onClick={() => window.location.href = "/changePassword"}>Change password</button>}
 
 			<br />
 			<br />
 
 		</Layout>
 	);
-	
+
 }

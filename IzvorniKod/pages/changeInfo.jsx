@@ -3,11 +3,12 @@ import { useAuth } from "../lib/context";
 import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useEffect, useState, useCallback } from "react";
-import styles from "../styles/PrivatnaForm.module.scss";
+import styles from "../styles/userinfo.module.scss";
 import debounce from "lodash.debounce";
 
 import { async } from "@firebase/util";
 import { getAuth } from "firebase/auth";
+import Header from "../components/Header";
 
 
 export default function UserInfo() {
@@ -37,12 +38,12 @@ export default function UserInfo() {
 
 
 
-    // funkcija (hook) koja se izvrsava svaki put kada se promijeni vrijednost username
+    // funkcija (hook) koja se izvrsava svaki put kada se promijeni vrijednost username, companyName i companyDesc
     useEffect(() => {
         console.log("username err " + !usernameExists);
         console.log("comp name err " + !companyNameError);
         console.log("comp desc err " + !companyDescError);
-        if (!companyInfo) { 
+        if (!companyInfo) {
             if (
                 username &&
                 !usernameExists &&
@@ -76,23 +77,8 @@ export default function UserInfo() {
     }, [username, companyName, companyDesc, loading]); // state-ovi koji se provjeravaju
 
 
-
-
-
-
-    function handleSubmit(event) {
-        let isExecuted = confirm("Are you sure you want to save your changes?");
-
-        if (isExecuted) {
-            handleSave(event);
-        }
-
-        window.location.href = "/userinfo";
-    }
-
-
     // funkcija koju poziva forma na pritisak gumba
-    function handleSave(event) {
+    async function handleSave(event) {
         event.preventDefault(); // sprijecava ponovno ucitavanje stranice
 
         let isExecuted = confirm("Are you sure you want to save your changes?");
@@ -104,11 +90,10 @@ export default function UserInfo() {
             const docRef = doc(db, "users", userUid);
             setUsername(username);
 
-            updateDoc(docRef, {
+            await updateDoc(docRef, {
                 username: username,
             }).then(() => {
                 console.log("Username successfully updated!");
-
 
             }).catch((error) => {
 
@@ -122,11 +107,12 @@ export default function UserInfo() {
                 setCompanyName(companyName);
                 setCompanyDesc(companyDesc);
 
-                updateDoc(companyRef, {
+                await updateDoc(companyRef, {
                     name: companyName,
                     description: companyDesc
                 }).then(() => {
                     console.log("CompanyInfo successfully updated!");
+
                 }).catch((error) => {
 
 
@@ -139,11 +125,6 @@ export default function UserInfo() {
 
 
     }
-
-    // hook koji se poziva svaki put kada se promijeni vrijednost username, a obavlja provjeru username-a u bazi
-    // useEffect(() => {
-    //     checkUsername(username);
-    // }, [username]);
 
     // funkcija koja provjerava username u bazi
     const checkUsername = useCallback(
@@ -165,13 +146,6 @@ export default function UserInfo() {
         }, 500),
         []
     );
-
-
-
-    // hook koji se poziva svaki put kada se promijeni vrijednost companyName, a obavlja provjeru companyName-a u bazi
-    // useEffect(() => {
-    //     checkCompanyName(companyName);
-    // }, [companyName]);
 
     // funkcija za provjeru ispravnosti naziva tvrtke
     // naziv tvrtke mora biti duzi od 3 znaka, ne smiju biti svi brojevi i ne smije vec postojat u bazi
@@ -205,10 +179,6 @@ export default function UserInfo() {
         []
     );
 
-
-    // useEffect(() => {
-    //     checkCompanyDesc(companyDesc);
-    // }, [companyDesc]);
 
     const checkCompanyDesc = useCallback(
         debounce(async (companyDesc) => {
@@ -274,7 +244,19 @@ export default function UserInfo() {
 
     return (
         <Layout>
-            <form onSubmit={handleSave}>
+            <Header />
+            <form onSubmit={
+                (event) => {
+                    handleSave(event).then(() => {
+                        alert("Password changed!")
+
+                        //after pressing ok on alert go to userinfo page
+                        window.location.href = "/userInfo";
+
+                    })
+                }
+            }>
+
                 {userInfo && <h1>Username: </h1>}
 
                 {userInfo && <>
