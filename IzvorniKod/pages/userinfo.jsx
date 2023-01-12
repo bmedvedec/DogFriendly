@@ -1,18 +1,50 @@
 import Layout from "../components/layout";
 import { useAuth } from "../lib/context";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, deleteDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useEffect, useState } from "react";
 import PlacanjeForm from "../components/forms/PlacanjeForm";
 import PersonalForm from "../components/forms/PersonalForm";
 import CompanyForm from "../components/forms/CompanyForm";
 
-export default function UserInfo() {
+export async function getServerSideProps(context) {
+
+
+	const locationsRef = collection(db, "locations");
+	const locationsSnapshot = await getDocs(locationsRef);
+	const initLocations = locationsSnapshot.docs.map((doc) => {
+		const newItem = {};
+		newItem.id = doc.id;
+		Object.entries(doc.data()).forEach(([key, value]) => {
+			if (key === "geopoint") {
+				newItem[key] = {
+					latitude: value.latitude,
+					longitude: value.longitude,
+				};
+			} else {
+				newItem[key] = value;
+			}
+		});
+		return newItem;
+	});
+	console.log(initLocations);
+
+	return {
+		props: {
+			initLocations,
+			
+		},
+	};
+}
+
+export default function UserInfo({ initLocations }) {
 	// sprema kontekst autentifikacije u authUser
 	const { authUser } = useAuth();
 	// inicijalizacija hook state-a za podatke o korisniku, podatke o firmi i da li je korisnik vlasnik firme
+	
 	const [userInfo, setUserInfo] = useState(null);
 	const [companyInfo, setCompanyInfo] = useState(null);
+	const [userID, setUserID] = useState(null);
 
 	// funkcija koja povlaci podatke o korisniku iz baze i ako je korisnik vlasnik firme, povlaci i podatke o firmi
 	// poziva se na promjenu authUser-a
@@ -23,6 +55,7 @@ export default function UserInfo() {
 			if (docSnap.exists()) {
 				// ako postoji dokument sa tim id-em
 				setUserInfo(docSnap.data()); // sprema podatke o korisniku u hook state
+				setUserID(docSnap.id);
 				if (docSnap.data().companyOwner) {
 					// ako je korisnik vlasnik firme
 					const companyRef = collection(db, "companies"); // referenca na kolekciju firmi
@@ -42,7 +75,29 @@ export default function UserInfo() {
 		if (authUser) {
 			getUserInfo();
 		}
-	}, [authUser]);
+	}, [authUser, initLocations]);
+
+	const deleteLocation = (id) => {
+		const locationRef = doc(db, "locations", id);
+		initLocations.filter((location) => location.id !== id);
+
+		// after filter reload page
+		deleteDoc(locationRef).then(() => {
+			console.log("Document successfully deleted!");
+
+			window.location.reload();
+
+		}).catch((error) => {
+			console.error("Error removing document: ", error);
+
+
+		});
+		
+
+
+
+		
+	};
 	
 
 	// prikaži izmjenjivu formu koja kao inicijalne vrijednosti ima podatke o korisniku
@@ -55,6 +110,7 @@ export default function UserInfo() {
 			<h1>User info</h1>
 			{userInfo && <p>{userInfo.username}</p>}
 			{userInfo && <p>{userInfo.email}</p>}
+			{companyInfo && <h1>Payment info</h1>}
 			{companyInfo && <p>{userInfo.paymentInfo.firstName}</p>}
 			{companyInfo && <p>{userInfo.paymentInfo.lastName}</p>}
 			{companyInfo && <p>{userInfo.paymentInfo.companyNamePay}</p>}
@@ -82,8 +138,34 @@ export default function UserInfo() {
 			{companyInfo && <p>{companyInfo.type}</p>}
 			{companyInfo && <p>{userInfo.dateOfExpiry.toDate().toString()}</p>}
 
+			{initLocations.length > 0 && (
+				<div>
+					<h1>Locations</h1>
+					{initLocations.map((location) => (
 
-			{userInfo && <h1>Personal Information</h1>}
+						(location.user === userID) &&
+
+						<div>
+							
+							<p>{location.name}</p>
+
+							<button onClick={() => {
+								deleteLocation(location.id);
+								initLocations.filter((location) => location.id !== location.id);
+								}}>Delete location</button>
+							
+						</div>
+						
+
+						
+
+
+					))}
+				</div>
+			)}
+
+
+			{/* {userInfo && <h1>Personal Information</h1>}
 			{userInfo && <PersonalForm props={userInfo} />	}
 
 			<br />
@@ -96,7 +178,7 @@ export default function UserInfo() {
 			<br />
 
 			{companyInfo && <h1>Payment Information</h1>}
-			{companyInfo && <PlacanjeForm props={userInfo.paymentInfo}/>}
+			{companyInfo && <PlacanjeForm props={userInfo.paymentInfo}/>} */}
 
 			{userInfo && <button onClick={() => window.location.href = "/changeInfo"}>Change user info</button>}
 			{userInfo && <button onClick={() => window.location.href = "/changePassword"}>Change password</button>}

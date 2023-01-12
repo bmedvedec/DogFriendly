@@ -7,11 +7,14 @@ import styles from "../styles/PrivatnaForm.module.scss";
 import debounce from "lodash.debounce";
 
 import { async } from "@firebase/util";
+import { getAuth } from "firebase/auth";
 
 
 export default function UserInfo() {
     // sprema kontekst autentifikacije u authUser
     const { authUser } = useAuth();
+
+    const currentUser = getAuth().currentUser;
 
     const [userInfo, setUserInfo] = useState(null);
     const [companyInfo, setCompanyInfo] = useState(null);
@@ -36,24 +39,45 @@ export default function UserInfo() {
 
     // funkcija (hook) koja se izvrsava svaki put kada se promijeni vrijednost username
     useEffect(() => {
-        if (
-            username &&
-            !usernameExists &&
+        console.log("username err " + !usernameExists);
+        console.log("comp name err " + !companyNameError);
+        console.log("comp desc err " + !companyDescError);
+        if (!companyInfo) { 
+            if (
+                username &&
+                !usernameExists &&
 
-            companyName &&
-            !companyNameError &&
-
-            companyDesc &&
-            !companyDescError &&
-
-            !loading
-        ) {
-            // ako nema gresaka, omoguci submit button, inace onemoguci
-            setDisabled(false);
+                !loading
+            ) {
+                // ako nema gresaka, omoguci submit button, inace onemoguci
+                setDisabled(false);
+            } else {
+                setDisabled(true);
+            }
         } else {
-            setDisabled(true);
+            if (
+                username &&
+                !usernameExists &&
+
+                companyName &&
+                !companyNameError &&
+
+                companyDesc &&
+                !companyDescError &&
+
+                !loading
+            ) {
+                // ako nema gresaka, omoguci submit button, inace onemoguci
+                setDisabled(false);
+            } else {
+                setDisabled(true);
+            }
         }
     }, [username, companyName, companyDesc, loading]); // state-ovi koji se provjeravaju
+
+
+
+
 
 
     function handleSubmit(event) {
@@ -117,9 +141,9 @@ export default function UserInfo() {
     }
 
     // hook koji se poziva svaki put kada se promijeni vrijednost username, a obavlja provjeru username-a u bazi
-    useEffect(() => {
-        checkUsername(username);
-    }, [username]);
+    // useEffect(() => {
+    //     checkUsername(username);
+    // }, [username]);
 
     // funkcija koja provjerava username u bazi
     const checkUsername = useCallback(
@@ -133,7 +157,6 @@ export default function UserInfo() {
 
                 if (doc.data().username === username && doc.id !== userUid) {
                     // ako postoji korisnik s istim username-om, postavi usernameExists na true
-                    console.log("username exists");
                     setUsernameExists(true);
                 }
 
@@ -146,9 +169,9 @@ export default function UserInfo() {
 
 
     // hook koji se poziva svaki put kada se promijeni vrijednost companyName, a obavlja provjeru companyName-a u bazi
-    useEffect(() => {
-        checkCompanyName(companyName);
-    }, [companyName]);
+    // useEffect(() => {
+    //     checkCompanyName(companyName);
+    // }, [companyName]);
 
     // funkcija za provjeru ispravnosti naziva tvrtke
     // naziv tvrtke mora biti duzi od 3 znaka, ne smiju biti svi brojevi i ne smije vec postojat u bazi
@@ -182,6 +205,11 @@ export default function UserInfo() {
         []
     );
 
+
+    // useEffect(() => {
+    //     checkCompanyDesc(companyDesc);
+    // }, [companyDesc]);
+
     const checkCompanyDesc = useCallback(
         debounce(async (companyDesc) => {
             setLoading(true);
@@ -209,6 +237,7 @@ export default function UserInfo() {
                 setUserInfo(docSnap.data());
                 setUsername(docSnap.data().username)
                 setUserUid(docSnap.id) // sprema podatke o korisniku u hook state
+
                 if (docSnap.data().companyOwner) {
                     // ako je korisnik vlasnik firme
                     const companyRef = collection(db, "companies"); // referenca na kolekciju firmi
