@@ -160,19 +160,13 @@ const ChildModal = ({
 
 	return (
 		<>
-			<button
-				className={styles.gumb}
-				onClick={() => setOpen(true)}>
+			<button className={styles.gumb} onClick={() => setOpen(true)}>
 				Add location
 			</button>
-			<Modal
-				open={open}
-				onClose={() => setOpen(false)}>
+			<Modal open={open} onClose={() => setOpen(false)}>
 				<div className="modal">
 					<div>
-						<form
-							onSubmit={handleSubmit}
-							style={{ width: "100%" }}>
+						<form onSubmit={handleSubmit} style={{ width: "100%" }}>
 							<div>
 								<span className={styles.inputs}>name</span>
 								<br />
@@ -212,16 +206,13 @@ const ChildModal = ({
 										input={<BootstrapInputModal />}
 										inputProps={{
 											"aria-label": "Without label",
-										}}>
-										<MenuItem
-											disabled
-											value="">
+										}}
+									>
+										<MenuItem disabled value="">
 											<em></em>
 										</MenuItem>
 										{categories.map((type) => (
-											<MenuItem
-												key={type}
-												value={type}>
+											<MenuItem key={type} value={type}>
 												{type}
 											</MenuItem>
 										))}
@@ -247,7 +238,8 @@ const ChildModal = ({
 											fontSize: upvote
 												? "1.8rem"
 												: "1.1rem",
-										}}>
+										}}
+									>
 										👍
 									</label>
 									<input
@@ -266,7 +258,8 @@ const ChildModal = ({
 											fontSize: downvote
 												? "1.8rem"
 												: "1.1rem",
-										}}>
+										}}
+									>
 										👎
 									</label>
 								</div>
@@ -276,17 +269,20 @@ const ChildModal = ({
 									display: "flex",
 									justifyContent: "space-between",
 									width: "100%",
-								}}>
+								}}
+							>
 								<button
 									type="submit"
 									className={styles.gumb}
-									style={{ width: "40%" }}>
+									style={{ width: "40%" }}
+								>
 									Add
 								</button>
 								<button
 									className={styles.gumb}
 									onClick={() => setOpen(false)}
-									style={{ width: "40%" }}>
+									style={{ width: "40%" }}
+								>
 									Cancel
 								</button>
 							</div>
@@ -627,7 +623,8 @@ export default function Home({ initCompanies, initLocations }) {
 				onClose={() => {
 					setModalOpen(false);
 					setModalData(null);
-				}}>
+				}}
+			>
 				<div className="modal">
 					{modalData?.company && (
 						<>
@@ -679,7 +676,8 @@ export default function Home({ initCompanies, initLocations }) {
 												company: true,
 												id: modalData.companyId,
 											})
-										}>
+										}
+									>
 										Upvote
 									</button>
 									<button
@@ -688,7 +686,8 @@ export default function Home({ initCompanies, initLocations }) {
 												company: true,
 												id: modalData.companyId,
 											})
-										}>
+										}
+									>
 										Downvote
 									</button>
 									{companies
@@ -735,19 +734,25 @@ export default function Home({ initCompanies, initLocations }) {
 									}
 								</p>
 							</div>
-							
+
 							{/* prikaz kategorije ako je ima */}
 							{locations.find(
-									(location) =>
-										location.id === modalData.locationId
-								)?.category
-							 && (
+								(location) =>
+									location.id === modalData.locationId
+							)?.category && (
 								<div>
-									<span className={styles.inputs}>category</span>
-									<p className={styles.text}>{locations.find(
-									(location) =>
-										location.id === modalData.locationId
-								)?.category}</p>
+									<span className={styles.inputs}>
+										category
+									</span>
+									<p className={styles.text}>
+										{
+											locations.find(
+												(location) =>
+													location.id ===
+													modalData.locationId
+											)?.category
+										}
+									</p>
 								</div>
 							)}
 
@@ -761,7 +766,8 @@ export default function Home({ initCompanies, initLocations }) {
 													company: false,
 													id: modalData.locationId,
 												})
-											}>
+											}
+										>
 											<span
 												style={{
 													fontSize: locations
@@ -775,7 +781,8 @@ export default function Home({ initCompanies, initLocations }) {
 														)
 														? "1.8rem"
 														: "1.2rem",
-												}}>
+												}}
+											>
 												👍
 											</span>
 											<span>
@@ -797,7 +804,8 @@ export default function Home({ initCompanies, initLocations }) {
 													company: false,
 													id: modalData.locationId,
 												})
-											}>
+											}
+										>
 											<span
 												style={{
 													fontSize: locations
@@ -811,7 +819,8 @@ export default function Home({ initCompanies, initLocations }) {
 														)
 														? "1.8rem"
 														: "1.2rem",
-												}}>
+												}}
+											>
 												👎
 											</span>
 											<span>
@@ -841,7 +850,8 @@ export default function Home({ initCompanies, initLocations }) {
 													deleteLocation(
 														modalData.locationId
 													)
-												}>
+												}
+											>
 												Delete
 											</button>
 										)}
@@ -883,11 +893,9 @@ export default function Home({ initCompanies, initLocations }) {
 						{isLoaded && (
 							<StandaloneSearchBox
 								onLoad={onAutoCompleteLoad}
-								onPlacesChanged={onPlaceChanged}>
-								<input
-									type="text"
-									placeholder="Search"
-								/>
+								onPlacesChanged={onPlaceChanged}
+							>
+								<input type="text" placeholder="Search" />
 							</StandaloneSearchBox>
 						)}
 						<div className="input-container">
@@ -901,16 +909,14 @@ export default function Home({ initCompanies, initLocations }) {
 									input={<BootstrapInput />}
 									inputProps={{
 										"aria-label": "Without label",
-									}}>
-									<MenuItem
-										disabled
-										value="">
+									}}
+								>
+									<MenuItem disabled value="">
 										<em>Category</em>
 									</MenuItem>
+									<MenuItem value="all">All</MenuItem>
 									{companyTypes.map((type) => (
-										<MenuItem
-											key={type}
-											value={type}>
+										<MenuItem key={type} value={type}>
 											{type}
 										</MenuItem>
 									))}
@@ -926,7 +932,8 @@ export default function Home({ initCompanies, initLocations }) {
 							center={center}
 							zoom={15}
 							onClick={handleMapClick}
-							onLoad={onMapLoad}>
+							onLoad={onMapLoad}
+						>
 							{/* Child components, such as markers, info windows, etc. */}
 							<MarkerF
 								onLoad={onLoad}
@@ -958,7 +965,7 @@ export default function Home({ initCompanies, initLocations }) {
 									}}
 								/>
 							)}
-							{companies.map((company) => (
+							{companies.map((company) => ((companyType === "" || companyType === "all") || companyType === company.type) && (
 								<MarkerF
 									key={company.id}
 									position={{
@@ -979,7 +986,7 @@ export default function Home({ initCompanies, initLocations }) {
 									}}
 								/>
 							))}
-							{locations.map((location) => (
+							{locations.map((location) => ((companyType === "" || companyType === "all") || companyType === location.category) &&  (
 								<MarkerF
 									key={location.id}
 									position={{

@@ -102,7 +102,7 @@ export function useFirebaseAuth() {
 					console.error("Error adding document: ", e);
 				}
 				await sendEmailVerification(user, {
-					url: "https://dogfriendly-progi.vercel.app/",
+					url: "https://dogfriendly-progi.vercel.app/login",
 				});
 			}
 		);
