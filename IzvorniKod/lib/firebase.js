@@ -101,7 +101,9 @@ export function useFirebaseAuth() {
 				} catch (e) {
 					console.error("Error adding document: ", e);
 				}
-				await sendEmailVerification(user);
+				await sendEmailVerification(user, {
+					url: "https://dogfriendly-progi.vercel.app/",
+				});
 			}
 		);
 	};
