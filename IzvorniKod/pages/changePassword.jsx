@@ -1,4 +1,4 @@
-import styles from "../styles/userInfo.module.scss";
+import styles from "../styles/userinfo.module.scss";
 import Layout from "../components/layout";
 import { useAuth } from "../lib/context";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";

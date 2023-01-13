@@ -4,7 +4,7 @@ import { collection, doc, getDoc, getDocs, deleteDoc } from "firebase/firestore"
 import { db } from "../lib/firebase";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
-import styles from "../styles/userInfo.module.scss";
+import styles from "../styles/userinfo.module.scss";
 import Link from "next/link";
 
 

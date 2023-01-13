@@ -3,7 +3,7 @@ import { useAuth } from "../lib/context";
 import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useEffect, useState, useCallback } from "react";
-import styles from "../styles/userInfo.module.scss";
+import styles from "../styles/userinfo.module.scss";
 import debounce from "lodash.debounce";
 import { async } from "@firebase/util";
 import { getAuth } from "firebase/auth";
