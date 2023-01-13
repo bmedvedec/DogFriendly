@@ -180,3 +180,21 @@ form {
 	padding-left: 12px;
 	color: red;
 }
+
+.modal {
+	max-width: 500px;
+	background: white;
+	border-radius: 8px;
+	padding: 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	@media (max-width: 1000px) {
+		width: 85vw;
+	}
+}
