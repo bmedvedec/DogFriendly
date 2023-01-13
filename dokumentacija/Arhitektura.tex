@@ -183,35 +183,44 @@ MVC koncept sastoji se od:
 	        Register korisniku prikazuje stranicu za registraciju. U zavisnisti od odabranog prikazuje se ili "PrivatnaForma" ili "VlasnikForma"
 	        
 	        UserInfo prikazuje stranicu sa podatcima o ulogiranom korisniku. Prvotno funkcija povlači podatke o korisniku iz baze i ako je korisnik vlasnik firme, povlači i podatke o firmi. Te se isti podatci prikazuju na stranici
-	        
+
+            
+         
 	        \begin{figure}[H]
 			\includegraphics[scale=0.2]{slike/DijagramRazreda.png}
 			\centering
 			\caption{Dijagram razreda}
 			\label{fig:promjene}
 		          \end{figure}
-			
+            
+			\section{Dijagram stanja}
+
+           Dijagram stanja prikazuje stanje objekta te prijelaze iz jednog stanja u drugo temeljenje na događajima. Na slici 4.4 prikazan je dijagram stanja za registriranog korisnika. Nakon prijave, klijentu se prikazuje početna stranica na kojoj vidi kartu, te lokacije. Za odabranu lokaciju, korisnik može ostaviti ocjenu prikladnosti ako je lokacija postojeća, ili dodati novu ako ne postoji u bazi. Također, korisnik može pristupiti kartici Osobni podatci gdje može vidjeti i  uređivati osobne podatke, te obrisati račun ili dodatnu lokaciju. 
 
 			\begin{figure}[H]
-			\includegraphics[scale=0.2]{slike/DijagramStanja.png}
+			\includegraphics[scale=0.4]{slike/DijagramStanja.png}
 			\centering
 			\caption{Dijagram stanja}
 			\label{fig:promjene}
 				\end{figure}
+
+         \section{Dijagram aktivnosti}
+         
+            Dijagram aktivnosti primjenjuje se za opis modela toka upravljanja ili toka podataka. Ne upotrebljava se za modeliranje događajima poticanog ponašanja. U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog, a naglasak je na jednostavnosti. Na dijagramu akticnosti 4.5 prikazan je proces dodavanja lokacije. Korisnik se prijavljuje u sustav, odabire lokaciju na karti koja već nije u bazi podataka, te ispunjava podatke za lokaciju i dodaje je u bazu. 
+         
 			
 			\begin{figure}[H]
-			\includegraphics[scale=0.2]{slike/DijagramAktivnosti.png}
+			\includegraphics[scale=0.4]{slike/DijagramAktivnosti.png}
 			\centering
 			\caption{Dijagram aktivnosti}
 			\label{fig:promjene}
 				\end{figure}
 
-			\begin{figure}[H]
-			\includegraphics[scale=0.2]{slike/DijagramRazmjestaja.png}
-			\centering
-			\caption{Dijagram razmještaja}
-			\label{fig:promjene}
-				\end{figure}
+            \section{Dijagram komponenti}
+
+            Dijagram komponenti prikazan na slici 4.6. opisuje organizaciju i međuovisnost komponenti, interne strukture i odnose prema okolini. Sustavu se pristupa preko dva različita sučelja. Preko sučelja za dohvat HTML, CSS i JS datoteka poslužuju se datoteke koje pripadaju frontende dijelu aplikacije. Router je komponenta koja na upis s url određuje koja datoteka će se poslužiti na sučelje. Frontend dio se sastoji od niza
+    
+            
 			%\textbf{\textit{dio 2. revizije}}\\			
 			
 			%\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
