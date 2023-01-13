@@ -144,7 +144,9 @@ class Tests {
     -db: object
     -checkDatabaseRead(): void
     -checkDatabaseWrite(): void
-    -checkAuthenticatoinRegistration(): void
-    -checkAuthenticatoinLogin(): void
+    -checkAuthenticationRegistration(): void
+    -checkAuthenticationRegistrationExistingEmail(): void
+    -checkAuthenticationLoginInvalidEmail(): void
+    -checkAuthenticationLogin(): void
     +Test(): html
 }
