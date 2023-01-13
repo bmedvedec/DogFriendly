@@ -126,7 +126,7 @@ export default function changePassword() {
 					<div className={styles.right}>
 						<div className={styles.accountInfo}>
 							<img src="/corgiHeader.png" alt="corgi header Icon for user" />
-							<Link href="/userInfo">Profile</Link>
+							<Link href="/userinfo">Profile</Link>
 						</div>
 						<Link href="/"><span onClick={firebaseSignOut}><i>Sign out</i></span></Link>
 					</div>

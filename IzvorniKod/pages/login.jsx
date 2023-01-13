@@ -38,9 +38,9 @@ export default function Login(params) {
 					"User with this email and password combination does not exist"
 				);
 			})
-			.then((authUser) => {
-				router.push("/");
-			});
+			// .then((authUser) => {
+			// 	router.push("/");
+			// });
 
 		setChecking(false);
 	}
