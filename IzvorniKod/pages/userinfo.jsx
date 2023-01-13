@@ -110,7 +110,7 @@ export default function UserInfo({ initLocations }) {
 	// ako je korisnik vlasnik firme, prikaži i podatke o firmi
 
 	return (
-		<Layout>
+		<Layout >
 			<div className={styles.container}>
 				<header className={styles.header}>
 					<Link href="/"><span style={{ fontWeight: "bold" }}>Dog Friendly</span></Link>
@@ -134,6 +134,7 @@ export default function UserInfo({ initLocations }) {
 				</header>
 
 				<div className={styles.body}>
+
 					<div className={styles.center}>
 						<div className={styles.myAccount}>
 							<img src="/corgi.png" height="100vh" />
