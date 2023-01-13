@@ -363,3 +363,15 @@ class ChangeInfo {
     -getUserInfo(): void
     +UserInfo(): html
 }
+
+class Tests {
+    -firebaseConfig: object
+    -app: object
+    -auth: object
+    -db: object
+    -checkDatabaseRead(): void
+    -checkDatabaseWrite(): void
+    -checkAuthenticatoinRegistration(): void
+    -checkAuthenticatoinLogin(): void
+    +Test(): html
+}

@@ -1,0 +1,69 @@
+@startuml modeli iz baze
+authUser <.. User : uid
+authUser ..> Firebase : authUser
+Context ..> authUser
+MyApp ..> Context : AuthUserProvider
+Layout --|> MyApp
+Index --|> Layout
+Register --|> Layout
+Login --|> Layout
+UserInfo --|> Layout
+ChangePassword --|> Layout
+ChangeInfo --|> Layout
+ChangePassword ..|> useMyHooks
+VlasnikForm --|> Register
+PrivatnaForm --|> Register
+VlasnikForm ..|> useMyHooks
+PrivatnaForm ..|> useMyHooks
+Company --* User : companyOwner? -> uid
+
+class authUser {
+}
+
+class User {
+}
+
+class Company {
+}
+
+class Firebase {
+}
+
+class Context {
+}
+
+interface useMyHooks {
+}
+
+class MyApp {
+}
+
+abstract class Layout {
+}
+
+class Login {
+}
+
+class Register {
+}
+
+class PrivatnaForm {
+}
+
+class VlasnikForm {
+}
+
+class UserInfo {
+}
+
+class Index {
+}
+
+class ChangePassword {
+}
+
+class ChangeInfo {
+}
+
+class Tests {
+}
