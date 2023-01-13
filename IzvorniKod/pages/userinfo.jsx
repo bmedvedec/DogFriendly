@@ -3,11 +3,10 @@ import { useAuth } from "../lib/context";
 import { collection, doc, getDoc, getDocs, deleteDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useEffect, useState } from "react";
-import PlacanjeForm from "../components/forms/PlacanjeForm";
-import PersonalForm from "../components/forms/PersonalForm";
-import CompanyForm from "../components/forms/CompanyForm";
 import Header from "../components/Header";
-import styles from "../styles/userinfo.module.scss";
+import styles from "../styles/userInfo.module.scss";
+import Link from "next/link";
+
 
 
 export async function getServerSideProps(context) {
@@ -15,6 +14,7 @@ export async function getServerSideProps(context) {
 
 	const locationsRef = collection(db, "locations");
 	const locationsSnapshot = await getDocs(locationsRef);
+
 	const initLocations = locationsSnapshot.docs.map((doc) => {
 		const newItem = {};
 		newItem.id = doc.id;
@@ -30,7 +30,7 @@ export async function getServerSideProps(context) {
 		});
 		return newItem;
 	});
-	console.log(initLocations);
+	console.log("lokacije " + initLocations);
 
 	return {
 		props: {
@@ -42,12 +42,15 @@ export async function getServerSideProps(context) {
 
 export default function UserInfo({ initLocations }) {
 	// sprema kontekst autentifikacije u authUser
-	const { authUser } = useAuth();
+	const { authUser, firebaseSignOut } = useAuth();
 	// inicijalizacija hook state-a za podatke o korisniku, podatke o firmi i da li je korisnik vlasnik firme
 
 	const [userInfo, setUserInfo] = useState(null);
 	const [companyInfo, setCompanyInfo] = useState(null);
 	const [userID, setUserID] = useState(null);
+
+	const [personal, setPersonal] = useState(true);
+	const [company, setCompany] = useState(false);
 
 	// funkcija koja povlaci podatke o korisniku iz baze i ako je korisnik vlasnik firme, povlaci i podatke o firmi
 	// poziva se na promjenu authUser-a
@@ -108,75 +111,297 @@ export default function UserInfo({ initLocations }) {
 
 	return (
 		<Layout>
-			<Header />
+			<div className={styles.container}>
+				<header className={styles.header}>
+					<Link href="/"><span style={{ fontWeight: "bold" }}>Dog Friendly</span></Link>
+					{authUser ? (
+						<div className={styles.right}>
+							<div className={styles.accountInfo}>
+								<img src="/corgiHeader.png" alt="corgi header Icon for user" />
+								<Link href="/userInfo">Profile</Link>
+							</div>
+							<Link href="/"><span onClick={firebaseSignOut}><i>Sign out</i></span></Link>
+						</div>
+					) : (
+						<div className={styles.right}>
+							<div className={styles.loginOrRegister}>
+								<Link href="/login"><i>Login</i></Link>
+								or
+								<Link href="/register"><i>Register</i></Link>
+							</div>
+						</div>
+					)}
+				</header>
 
-			<h1>User info</h1>
-			{userInfo && <p>{userInfo.username}</p>}
-			{userInfo && <p>{userInfo.email}</p>}
-			{companyInfo && <h1>Payment info</h1>}
-			{companyInfo && <p>{userInfo.paymentInfo.firstName}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.lastName}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.companyNamePay}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.companyOIBPay}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.address}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.country}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.region}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.city}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.zipCode}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.VAT}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.cardNumber}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.cardExpiryDate}</p>}
-			{companyInfo && <p>{userInfo.paymentInfo.cardCVC}</p>}
-
-			<br />
-			{companyInfo && (
-				<p>
-					<b>Company info</b>
-				</p>
-			)}
-			{companyInfo && <p>{companyInfo.name}</p>}
-			{companyInfo && <p>{companyInfo.address}</p>}
-			{companyInfo && <p>{companyInfo.description}</p>}
-			{companyInfo && <p>{companyInfo.phone}</p>}
-			{companyInfo && <p>{companyInfo.type}</p>}
-			{companyInfo && <p>{userInfo.dateOfExpiry.toDate().toString()}</p>}
-
-			{initLocations.length > 0 && (
-				<div>
-					<h1>Locations</h1>
-					{initLocations.map((location) => (
-
-						(location.user === userID) &&
-
-						<div>
-
-							<p>{location.name}</p>
-
-							<button className={styles.button}
+				<div className={styles.body}>
+					<div className={styles.center}>
+						<div className={styles.myAccount}>
+							<img src="/corgi.png" height="100vh" />
+							<h1>My Account</h1>
+						</div>
+						<div className={styles.registerChoiceContainer}>
+							<div
+								className={`tabButton tabButton-personal ${personal ? "tabButtonSelected" : ""
+									}`}
 								onClick={() => {
-									deleteLocation(location.id);
-									initLocations.filter((location) => location.id !== location.id);
-								}}>Delete location</button>
+									setPersonal(true);
+									setCompany(false);
+								}}
+							>
+								Personal information
+							</div>
+							{companyInfo && (<div
+								className={`tabButton tabButton-company ${company ? "tabButtonSelected" : ""
+									}`}
+								onClick={() => {
+									setPersonal(false);
+									setCompany(true);
+								}}
+							>
+								Company information
+							</div>)}
+						</div>
 
+						{personal && userInfo && (<div className={styles.info}>
+							<span className={styles.inputs}>
+								username
+							</span>
+							<p className={styles.text}>
+								{userInfo.username}
+							</p>
+						</div>)}
+						{personal && userInfo && (<div className={styles.info}>
+							<span className={styles.inputs}>
+								email
+							</span>
+							<p className={styles.text}>
+								{userInfo.email}
+							</p>
+						</div>)}
+
+						{company && companyInfo && (<div className={styles.info}>
+							<span className={styles.inputs}>
+								name
+							</span>
+							<p className={styles.text}>
+								{companyInfo.name}
+							</p>
+						</div>)}
+						{company && companyInfo && (<div className={styles.info}>
+							<span className={styles.inputs}>
+								address
+							</span>
+							<p className={styles.text}>
+								{companyInfo.address}
+							</p>
+						</div>)}
+						{company && companyInfo && (<div className={styles.info}>
+							<span className={styles.inputs}>
+								description
+							</span>
+							<p className={styles.text}>
+								{companyInfo.description}
+							</p>
+						</div>)}
+						{company && companyInfo && (<div className={styles.info}>
+							<span className={styles.inputs}>
+								phone
+							</span>
+							<p className={styles.text}>
+								{companyInfo.phone}
+							</p>
+						</div>)}
+						{company && companyInfo && (<div className={styles.info}>
+							<span className={styles.inputs}>
+								type
+							</span>
+							<p className={styles.text}>
+								{companyInfo.type}
+							</p>
+						</div>)}
+
+						<br />
+
+						{company && companyInfo && (
+							<div className={styles.registerChoiceContainer}>
+								<div className={"tabButton tabButton-personal tabButtonSelected"}>
+									Payment info
+								</div>
+							</div>)
+						}
+
+						<div className={styles.paymentInfo}>
+							<div className={styles.sides}>
+
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										first name
+									</span>
+									<p className={styles.text}>
+										{userInfo.paymentInfo.firstName}
+									</p>
+								</div>)}
+
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										last name
+									</span>
+									<p className={styles.text}>
+										{userInfo.paymentInfo.lastName}
+									</p>
+								</div>)}
+
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										card number
+									</span>
+									<p className={styles.text}>
+										{userInfo.paymentInfo.cardNumber}
+									</p>
+								</div>)}
+
+								<div className={styles.mmCVC}>
+									{company && companyInfo && (<div className={styles.info}>
+										<span className={styles.inputs}>
+											mm / yy
+										</span>
+										<p className={styles.text}>
+											{userInfo.paymentInfo.cardExpiryDate}
+										</p>
+									</div>)}
+
+									{company && companyInfo && (<div className={styles.info}>
+										<span className={styles.inputs}>
+											CVC
+										</span>
+										<p className={styles.text}>
+											{userInfo.paymentInfo.cardCVC}
+										</p>
+									</div>)}
+								</div>
+
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										city
+									</span>
+									<p className={styles.text}>
+										{userInfo.paymentInfo.city}
+									</p>
+								</div>)}
+
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										zip code
+									</span>
+									<p className={styles.text}>
+										{userInfo.paymentInfo.zipCode}
+									</p>
+								</div>)}
+							</div>
+
+							<div className={styles.sides}>
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										company name
+									</span>
+									<p className={styles.text}>
+										{userInfo.paymentInfo.companyNamePay}
+									</p>
+								</div>)}
+
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										company OIB
+									</span>
+									<p className={styles.text}>
+										{userInfo.paymentInfo.companyOIBPay}
+									</p>
+								</div>)}
+
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										VAT
+									</span>
+									<p className={styles.text}>
+										{userInfo.paymentInfo.VAT}
+									</p>
+								</div>)}
+
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										address
+									</span>
+									<p className={styles.text}>
+										{companyInfo.address}
+									</p>
+								</div>)}
+
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										state/region
+									</span>
+									<p className={styles.text}>
+										{userInfo.paymentInfo.region}
+									</p>
+								</div>)}
+
+								{company && companyInfo && (<div className={styles.info}>
+									<span className={styles.inputs}>
+										country
+									</span>
+									<p className={styles.text}>
+										{userInfo.paymentInfo.country}
+									</p>
+								</div>)}
+							</div>
 						</div>
 
 
+						{personal && initLocations && !companyInfo && (
+							<div className={styles.registerChoiceContainer}>
+								<div className={"tabButton tabButton-personal tabButtonSelected"}>
+									Added locations
+								</div>
+							</div>)
+						}
+
+						{personal && initLocations && !companyInfo && (
+							<div className={styles.locationsContainer}>
+
+								{initLocations.map((location) => (
+
+									(location.user === userID) &&
+
+									<div className={styles.location}>
+
+										<p>{location.name}</p>
+
+										<button className={styles.button}
+											onClick={() => {
+												deleteLocation(location.id);
+												initLocations.filter((location) => location.id !== location.id);
+											}}><i>delete</i></button>
+
+									</div>
 
 
 
-					))}
+
+
+								))}
+							</div>
+						)}
+
+						<div className={styles.changeButtonsContainer}>
+							{userInfo && <button className={styles.button}
+								onClick={() => window.location.href = "/changeInfo"}><i>Change user info</i></button>}
+							{userInfo && <button className={styles.button}
+								onClick={() => window.location.href = "/changePassword"}><i>Change password</i></button>}
+						</div>
+
+					</div>
 				</div>
-			)}
-
-
-			{userInfo && <button className={styles.button}
-				onClick={() => window.location.href = "/changeInfo"}>Change user info</button>}
-			{userInfo && <button className={styles.button} 
-								onClick={() => window.location.href = "/changePassword"}>Change password</button>}
-
-			<br />
-			<br />
-
+			</div>
 		</Layout>
 	);
 

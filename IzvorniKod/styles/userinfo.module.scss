@@ -1,7 +1,6 @@
-
 .button {
-    background: #B847BD;
-    color: white;
+    background: transparent;
+    color: #B847BD;
     margin-bottom: 8px;
     border: 4px solid white;
     border-radius: 32px;
@@ -9,7 +8,8 @@
     padding: 12px 24px;
 
     &:hover {
-        border: 4px solid #dba3de;
+        background: white;
+        color: #7842acf5;
         cursor: pointer;
     }
 
@@ -24,3 +24,205 @@
     }
 }
 
+//header
+.header {
+    min-height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    padding: 16px 32px;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-weight: light;
+
+    span:hover {
+        cursor: pointer;
+    }
+}
+
+.accountInfo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.myAccount {
+    max-height: 100px;
+    margin: 30px;
+
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #B646BC;
+}
+
+.loginOrRegister {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.container {
+    background: linear-gradient(204.16deg, #423E9E 22.48%, #BD47BE 88.65%);
+    //background: white;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 32px;
+    color: #F5F5F5;
+}
+
+.center {
+    background: white;
+    border-radius: 15px;
+    margin-bottom: 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    min-width: 350px;
+    height: 90%;
+    padding: 32px;
+    color: black;
+
+    @media (max-width: 1100px) {
+        width: 80%;
+
+    }
+
+    @media (max-width: 700px) {
+        width: 90%;
+
+    }
+
+    @media (max-width: 640px) {
+        width: 95%;
+
+    }
+
+    @media (max-width: 600px) {
+        width: 100%;
+
+    }
+
+
+}
+
+.registerChoiceContainer {
+    border-bottom: 1px solid #3F126B;
+    display: flex;
+    margin-bottom: 24px;
+    //strech children over the whole width
+    justify-content: space-between;
+    width: 75%;
+}
+
+.text {
+    color: #7842acf5;
+    font-size: 1.2rem;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: none;
+    border-bottom: solid #d9d9d9 1px;
+    border-radius: 0px;
+    background-color: white;
+}
+
+.inputs {
+    color: #bcbcbc;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+.info {
+    width: 55%;
+    margin: auto;
+}
+
+.locationsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: black;
+}
+
+.location {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+
+    align-items: center;
+    width: 60%;
+    height: 100%;
+    color: black;
+}
+
+//select a <p> element that is a child of a <div> element
+.location>p {
+    color: #423e9e;
+    font-size: 1.2rem;
+    align-self: flex-start;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.changeButtonsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.changeButtonsContainer>button {
+    font-weight: bold;
+    color: #423E9E;
+
+    :hover {
+        color: #B646BC;
+    }
+}
+
+.sides {
+    width: 100%;
+
+}
+
+.mmCVC {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 55%;
+    margin: auto;
+}
+
+.paymentInfo {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    // center the content
+
+}

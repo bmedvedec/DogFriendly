@@ -3,9 +3,8 @@ import { useAuth } from "../lib/context";
 import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useEffect, useState, useCallback } from "react";
-import styles from "../styles/userinfo.module.scss";
+import styles from "../styles/userInfo.module.scss";
 import debounce from "lodash.debounce";
-
 import { async } from "@firebase/util";
 import { getAuth } from "firebase/auth";
 import Header from "../components/Header";
@@ -243,87 +242,92 @@ export default function UserInfo() {
     // }}
 
     return (
-        <Layout>
-            <Header />
-            <form onSubmit={
-                (event) => {
-                    handleSave(event).then(() => {
-                        alert("Your changes have been saved")
+        <div className={styles.background}>
+            <Layout>
+                <Header />
+                <div className="modal">
 
-                        //after pressing ok on alert go to userinfo page
-                        window.location.href = "/userInfo";
+                    <form onSubmit={
+                        (event) => {
+                            handleSave(event).then(() => {
+                                alert("Your changes have been saved")
 
-                    })
-                }
-            }>
+                                //after pressing ok on alert go to userinfo page
+                                window.location.href = "/userInfo";
 
-                {userInfo && <h1>Username: </h1>}
+                            })
+                        }
+                    }>
 
-                {userInfo && <>
-                    <div className="input-container">
+                        {userInfo && <h1>Username: </h1>}
+
+                        {userInfo && <>
+                            <div className="input-container">
+                                <input
+                                    name="username"
+                                    type="text"
+                                    value={username}
+                                    onChange={(event) => {
+                                        setLoading(true);
+                                        setUsername(event.target.value);
+                                        checkUsername(event.target.value);
+                                    }}
+                                />
+                                {/* prikaz greske ispod inputa ako je state postavljen na true */}
+                                {usernameExists && (<p className="error">Username already exists</p>)}
+                            </div>
+
+                        </>
+                        }
+                        {companyInfo && <h1>Company name: </h1>}
+
+                        {companyInfo &&
+
+                            <div className="input-container">
+                                <input
+                                    name="companyName"
+                                    type="text"
+                                    value={companyName}
+                                    onChange={(event) => {
+                                        setLoading(true);
+                                        setCompanyName(event.target.value);
+                                        checkCompanyName(event.target.value);
+                                    }}
+                                />
+                                {companyNameError && (
+                                    <p className="error">{companyNameError}</p>
+                                )}
+                            </div>
+
+                        }
+                        {companyInfo &&
+                            <div className="input-container">
+                                <input
+                                    name="companyDesc"
+                                    type="text"
+                                    value={companyDesc}
+                                    onChange={(event) => {
+                                        setLoading(true);
+                                        setCompanyDesc(event.target.value);
+                                        checkCompanyDesc(event.target.value);
+                                    }}
+                                />
+                                {companyDescError && (
+                                    <p className="error">{companyDescError}</p>
+                                )}
+                            </div>
+                        }
+
                         <input
-                            name="username"
-                            type="text"
-                            value={username}
-                            onChange={(event) => {
-                                setLoading(true);
-                                setUsername(event.target.value);
-                                checkUsername(event.target.value);
-                            }}
+                            className={styles.button}
+                            type="submit"
+                            value="Save changes"
+                            disabled={disabled}
                         />
-                        {/* prikaz greske ispod inputa ako je state postavljen na true */}
-                        {usernameExists && (<p className="error">Username already exists</p>)}
-                    </div>
-
-                </>
-                }
-                {companyInfo && <h1>Company name: </h1>}
-
-                {companyInfo &&
-
-                    <div className="input-container">
-                        <input
-                            name="companyName"
-                            type="text"
-                            value={companyName}
-                            onChange={(event) => {
-                                setLoading(true);
-                                setCompanyName(event.target.value);
-                                checkCompanyName(event.target.value);
-                            }}
-                        />
-                        {companyNameError && (
-                            <p className="error">{companyNameError}</p>
-                        )}
-                    </div>
-
-                }
-                {companyInfo &&
-                    <div className="input-container">
-                        <input
-                            name="companyDesc"
-                            type="text"
-                            value={companyDesc}
-                            onChange={(event) => {
-                                setLoading(true);
-                                setCompanyDesc(event.target.value);
-                                checkCompanyDesc(event.target.value);
-                            }}
-                        />
-                        {companyDescError && (
-                            <p className="error">{companyDescError}</p>
-                        )}
-                    </div>
-                }
-
-                <input
-                    className={styles.button}
-                    type="submit"
-                    value="Save changes"
-                    disabled={disabled}
-                />
-            </form>
-        </Layout>
+                    </form>
+                </div>
+            </Layout>
+        </div>
     );
 
 }
