@@ -191,15 +191,36 @@ MVC koncept sastoji se od:
             
          
 	        \begin{figure}[H]
-			\includegraphics[scale=0.2]{slike/DijagramRazreda.png}
+			\includegraphics[scale=0.6]{slike/DijagramRazreda_veze.png}
+			\centering
+			\caption{Prikaz ovisnosti među razredima}
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.25]{slike/DijagramRazreda_partial.png}
 			\centering
 			\caption{Dijagram razreda}
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.6]{slike/PrivatnaForm.png}
+			\centering
+			\caption{Detaljniji prikaz razreda PrivatnaForm}
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.35]{slike/VlasnikForm.png}
+			\centering
+			\caption{Detaljniji prikaz razreda VlasnikForm}
 			\label{fig:promjene}
 		          \end{figure}
             
 			\section{Dijagram stanja}
 
-			Dijagram stanja prikazuje stanja objekta te prijelaze iz jednog stanja u drugo temeljenje na događajima. Na slici 4.4 prikazan je dijagram stanja za registriranog korisnika. Nakon prijave, klijentu se prikazuje početna stranica na kojoj vidi kartu te lokacije. Za odabranu lokaciju, korisnik može ostaviti ocjenu prikladnosti ako je lokacija postojeća ili dodati novu ako ne postoji u bazi. Također, korisnik može klikom na "Account" pregledati i uređivati osobne podatke te obrisati račun ili dodanu lokaciju. 
+			Dijagram stanja prikazuje stanja objekta te prijelaze iz jednog stanja u drugo temeljenje na događajima. Na slici 4.7 prikazan je dijagram stanja za registriranog korisnika. Nakon prijave, klijentu se prikazuje početna stranica na kojoj vidi kartu te lokacije. Za odabranu lokaciju, korisnik može ostaviti ocjenu prikladnosti ako je lokacija postojeća ili dodati novu ako ne postoji u bazi. Također, korisnik može klikom na "Account" pregledati i uređivati osobne podatke te obrisati račun ili dodanu lokaciju. 
 
 			\begin{figure}[H]
 			\includegraphics[scale=0.4]{slike/DijagramStanja.png}
@@ -210,7 +231,7 @@ MVC koncept sastoji se od:
 
          \section{Dijagram aktivnosti}
          
-		 Dijagram aktivnosti primjenjuje se za opis modela toka upravljanja ili toka podataka. Ne upotrebljava se za modeliranje događajima poticanog ponašanja. U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog, a naglasak je na jednostavnosti. Na dijagramu aktivnosti 4.5 prikazan je proces dodavanja lokacije. Korisnik se prijavljuje u sustav, odabire lokaciju na karti koja već nije u bazi podataka (nema marker)  te mu se prikazuju informacije o toj lokaciji.  Odabire opciju dodavanja lokacije, ispunjava podatke za lokaciju i lokacija se sprema u bazu podataka te se korisniku prikazuje karta s novododanim markerom. 
+		 Dijagram aktivnosti primjenjuje se za opis modela toka upravljanja ili toka podataka. Ne upotrebljava se za modeliranje događajima poticanog ponašanja. U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog, a naglasak je na jednostavnosti. Na dijagramu aktivnosti 4.8 prikazan je proces dodavanja lokacije. Korisnik se prijavljuje u sustav, odabire lokaciju na karti koja već nije u bazi podataka (nema marker)  te mu se prikazuju informacije o toj lokaciji.  Odabire opciju dodavanja lokacije, ispunjava podatke za lokaciju i lokacija se sprema u bazu podataka te se korisniku prikazuje karta s novododanim markerom. 
          
 			
 			\begin{figure}[H]
@@ -222,7 +243,7 @@ MVC koncept sastoji se od:
 
             \section{Dijagram komponenti}
 
-			Dijagram komponenti prikazan na slici 4.6. opisuje organizaciju i međuovisnost komponenti, interne strukture i odnose prema okolini. Sustavu se pristupa preko dva različita sučelja. Preko sučelja za dohvat HTML, CSS i JS datoteka poslužuju se datoteke koje pripadaju frontende dijelu aplikacije. Router je komponenta koja na upis s url određuje koja datoteka će se poslužiti na sučelje. Frontend dio se sastoji od niza JavaScript datoteka koje su raspore dene u logičke cjeline nazvane po tipovima aktora koji im pristupaju. Sve JavaScript datoteke ovise o React biblioteci iz koje dohvaćaju gotove komponente kao što su gumbi, forme i slično. Preko sučelja za dohvat JSON podataka pristupa se next-router komponenti. next-router poslužuje podatke koji pripadaju backend dijelu aplikacije, a podatke s poslužitelja se dohvaća pomoću komponente GetServerSideProps. Firebase je zadužen za dohvaćanje tablica iz firestore baze podataka. Podaci koji su pristigli iz baze se šalju dalje u obliku DTO (Data transfer object). Reactview komponenta preko dostupnih sučelja komunicira s Dog friendly aplikacijom te ovisno o korisnikovim akcijama osvježava prikaz i dohvaća nove podatke ili datoteke.
+			Dijagram komponenti prikazan na slici 4.9. opisuje organizaciju i međuovisnost komponenti, interne strukture i odnose prema okolini. Sustavu se pristupa preko dva različita sučelja. Preko sučelja za dohvat HTML, CSS i JS datoteka poslužuju se datoteke koje pripadaju frontende dijelu aplikacije. Router je komponenta koja na upis s url određuje koja datoteka će se poslužiti na sučelje. Frontend dio se sastoji od niza JavaScript datoteka koje su raspore dene u logičke cjeline nazvane po tipovima aktora koji im pristupaju. Sve JavaScript datoteke ovise o React biblioteci iz koje dohvaćaju gotove komponente kao što su gumbi, forme i slično. Preko sučelja za dohvat JSON podataka pristupa se next-router komponenti. next-router poslužuje podatke koji pripadaju backend dijelu aplikacije, a podatke s poslužitelja se dohvaća pomoću komponente GetServerSideProps. Firebase je zadužen za dohvaćanje tablica iz firestore baze podataka. Podaci koji su pristigli iz baze se šalju dalje u obliku DTO (Data transfer object). Reactview komponenta preko dostupnih sučelja komunicira s Dog friendly aplikacijom te ovisno o korisnikovim akcijama osvježava prikaz i dohvaća nove podatke ili datoteke.
 			
 			\begin{figure}[H]
 			\includegraphics[scale=0.4]{slike/DijagramKomponenti.png}
