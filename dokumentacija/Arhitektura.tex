@@ -195,7 +195,7 @@ MVC koncept sastoji se od:
             
 			\section{Dijagram stanja}
 
-           Dijagram stanja prikazuje stanje objekta te prijelaze iz jednog stanja u drugo temeljenje na događajima. Na slici 4.4 prikazan je dijagram stanja za registriranog korisnika. Nakon prijave, klijentu se prikazuje početna stranica na kojoj vidi kartu, te lokacije. Za odabranu lokaciju, korisnik može ostaviti ocjenu prikladnosti ako je lokacija postojeća, ili dodati novu ako ne postoji u bazi. Također, korisnik može pristupiti kartici Osobni podatci gdje može vidjeti i  uređivati osobne podatke, te obrisati račun ili dodatnu lokaciju. 
+			Dijagram stanja prikazuje stanja objekta te prijelaze iz jednog stanja u drugo temeljenje na događajima. Na slici 4.4 prikazan je dijagram stanja za registriranog korisnika. Nakon prijave, klijentu se prikazuje početna stranica na kojoj vidi kartu te lokacije. Za odabranu lokaciju, korisnik može ostaviti ocjenu prikladnosti ako je lokacija postojeća ili dodati novu ako ne postoji u bazi. Također, korisnik može klikom na "Account" pregledati i uređivati osobne podatke te obrisati račun ili dodanu lokaciju. 
 
 			\begin{figure}[H]
 			\includegraphics[scale=0.4]{slike/DijagramStanja.png}
@@ -206,7 +206,7 @@ MVC koncept sastoji se od:
 
          \section{Dijagram aktivnosti}
          
-            Dijagram aktivnosti primjenjuje se za opis modela toka upravljanja ili toka podataka. Ne upotrebljava se za modeliranje događajima poticanog ponašanja. U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog, a naglasak je na jednostavnosti. Na dijagramu akticnosti 4.5 prikazan je proces dodavanja lokacije. Korisnik se prijavljuje u sustav, odabire lokaciju na karti koja već nije u bazi podataka, te ispunjava podatke za lokaciju i dodaje je u bazu. 
+		 Dijagram aktivnosti primjenjuje se za opis modela toka upravljanja ili toka podataka. Ne upotrebljava se za modeliranje događajima poticanog ponašanja. U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog, a naglasak je na jednostavnosti. Na dijagramu aktivnosti 4.5 prikazan je proces dodavanja lokacije. Korisnik se prijavljuje u sustav, odabire lokaciju na karti koja već nije u bazi podataka (nema marker)  te mu se prikazuju informacije o toj lokaciji.  Odabire opciju dodavanja lokacije, ispunjava podatke za lokaciju i lokacija se sprema u bazu podataka te se korisniku prikazuje karta s novododanim markerom. 
          
 			
 			\begin{figure}[H]
