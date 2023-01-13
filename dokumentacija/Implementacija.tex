@@ -3,56 +3,225 @@
 		
 		\section{Korištene tehnologije i alati}
 		
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
 			
 			
-			\eject 
-		
+			Članovi unutar tima su komunicirali koristeći aplikaciju Discord. 
+			Za izradu UML dijagrama koristen je alat Astah Professional
+			, a kao sustav za upravljanje
+			izvornim kodom Git. Udaljeni repozitorij projekta je dostupan na web platformi
+			GitLab. Od razvojnih okruženja smo koristili Microsoft Visual Studio Code i Sublime Text 3. Svi djelovi aplikacije su ostvareni korištenjem programskog jezika JavaScript. Za izradu frontenda koristena je biblioteka ReactJs. Održavana je od strane Facebooka. React se najčešće koristi kao osnova  u razvoju web ili mobilnih aplikacija. Za backend je korišten Next.js framework kreirao od strane Vercela. Next.js se koristi za "server-side rendering" i generiranje statičkih stranica. Za prikaz podataka na karti koristili smo Google Maps api. Dizajn je ostvaren koristeći web aplikaciju Figma koja služi za dizajn korisnićkih sučelja. Bazu podataka smo napravili koristeći Firebase, koji služi za izradu NoSql baza i održava ga Google. Za pisanje dokumentacije korištena je web aplikacija Overleaf.
+            \eject 
+			
 	
 		\section{Ispitivanje programskog rješenja}
+
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
+			 Testiranje programskog rješenja provedeno je ručno napisanim funkcijama i selenium testovima. U nastavku slijedi programski kod funkcija i rezultati testiranja.
 	
 			
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+   
+		  \begin{figure}[H]
+			\includegraphics[scale=0.6]{slike/provjera citanja baze.png}
+			\centering
+			\caption{Provjera čitanja podataka iz baze}
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/citanje baze kod.png}
+			\centering
+			\caption{Provjera čitanja podataka iz baze kod }
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.5]{slike/provjera logina.png}
+			\centering
+			\caption{Provjera prijave }
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/provjera logina kod.png}
+			\centering
+			\caption{Provjera prijave kod}
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.6]{slike/provjera logina s krivim mailom.png}
+			\centering
+			\caption{Provjera prijave s krivim mailom }
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/krivi mail kod.png}
+			\centering
+			\caption{Provjera prijave s krivim mailom kod }
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/provjera pisanja u bazu.png}
+			\centering
+			\caption{Provjera unosa podataka u bazu }
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/provjera pisanja u bazu kod.png}
+			\centering
+			\caption{Provjera unosa podataka u bazu kod }
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.45]{slike/provjera registracije.png}
+			\centering
+			\caption{Provjera registracije }
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.6]{slike/provjera registracije kod.png}
+			\centering
+			\caption{Provjera registracije kod }
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.6]{slike/provjera registracije s postojecim mailom.png}
+			\centering
+			\caption{Provjera registracije sa već postojećim mailom}
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/reg sa postojecim mailom kod.png}
+			\centering
+			\caption{Provjera registracije sa već postojećim mailom kod}
+			\label{fig:promjene}
+		          \end{figure}
 			
 			
 			
 			\subsection{Ispitivanje sustava}
-			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
-			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
+
+
+
+    \textbf{Ispitni slučaj 1: Uspješna prijava korisnika}
+    Prijavljujemo se kao već registrirani korisnik sa točnim podatcima. 
+    
+    Rezultat: Uspješna prijava
+
+    \begin{figure}[H]
+			\includegraphics[scale=0.5]{slike/UspjesnaPrijava1.png}
+			\centering
+			\caption{Selenium Uspješna prijava}
+			\label{fig:promjene}
+		          \end{figure}
+
+
+\begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/UspjesnaPrijava2.png}
+			\centering
+			\caption{Selenium Uspješna prijava - log}
+			\label{fig:promjene}
+		          \end{figure}
+    
+
+
+
+    \textbf{Ispitni slučaj 2: Neuspješna prijava korisnika}
+    Prijavljujemo se kao već registrirani korisnik sa netočnim podatcima. 
+    
+    Rezultat: Neuspješna prijava - vraćanje na početnu stranicu
+
+    \begin{figure}[H]
+			\includegraphics[scale=0.5]{slike/NeuspjesnaPrijava1.png}
+			\centering
+			\caption{Selenium Neuspješna prijava}
+			\label{fig:promjene}
+		          \end{figure}
+
+
+\begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/NeuspjesnaPrijava2.png}
+			\centering
+			\caption{Selenium Neuspješna prijava - log}
+			\label{fig:promjene}
+		          \end{figure}
+
+    \textbf{Ispitni slučaj 3: Uspješna registracija privatnog korisnika}
+    Popunjavamo obrazac za registraciju sa ispravnim podatcima.
+    
+    Rezultat: Uspještna registracija korisnika
+
+    \begin{figure}[H]
+			\includegraphics[scale=0.5]{slike/UspjesnaRegistracija1.png}
+			\centering
+			\caption{Selenium Uspješna Registracija}
+			\label{fig:promjene}
+		          \end{figure}
+
+
+\begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/UspjesnaRegistracija2.png}
+			\centering
+			\caption{Selenium Uspješna registracija - log}
+			\label{fig:promjene}
+		          \end{figure}
+
+            \textbf{Ispitni slučaj 4: Neuspješna registracija privatnog korisnika}
+    Popunjavamo obrazac za registraciju sa neispravnim podatcima.
+    
+    Rezultat: Sustav javlja pogrešku, te nam nudi ponovni upis novih podataka
+
+    \begin{figure}[H]
+			\includegraphics[scale=0.5]{slike/NeuspjesnaRegistracija2.png}
+			\centering
+			\caption{Selenium Neuspješna Registracija}
+			\label{fig:promjene}
+		          \end{figure}
+
+
+\begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/NeuspjesnaRegistracija1.png}
+			\centering
+			\caption{Selenium Neupješna registracija - log}
+			\label{fig:promjene}
+		          \end{figure}
+    
 			
 			\eject 
 		
 		
 		\section{Dijagram razmještaja}
-			
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
+
+
+            Dijagrami razmještaja opisuju topologiju sklopovlja i programsku potporu koja se koristi u implementaciji sustava  u njegovom radnom okruženju. Na jednom poslužiteljskom računalu nalazi se web poslužitelj, a na drugom poslužitelj baze podataka. Klijenti koriste web preglednik kako bi pristupili web aplikaciji. Sustav je baziran na arhitekturi klijent - poslužitelj, a komunikacija između računala korisnika i poslužitelja odvija se preko HTTP veze. 
+            
+			\begin{figure}[H]
+			\includegraphics[scale=0.7]{slike/DijagramRazmjestaja.png}
+			\centering
+			\caption{Dijagram razmještaja}
+			\label{fig:promjene}
+				\end{figure}
 			
 			\eject 
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
-			
-			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+
+   \textbf{Baza podataka}
+
+    Za bazu podataka koristili smo Googleov \href{https://firebase.google.com/}{Firebase} u koji se prijavljujemo koristeći google račun progi.dogfriendly@gmail.com. Nakon prijave imamo pristup svim podatcima u bazi podataka. Možemo vidjeti sve tablice (collection), uređivati ih, dodavati/brisati nove podatke
+
+    \textbf{Hosting aplikacije}
+    
+    Za hostanje aplikacije koristili smo \href{https://vercel.com/}{Vercel}. To je platforma koja nam omogućuje jednostavno i besplatno povezivanje sa Gitlab računom i hostanje aplikacije. Potrebno je samo povezati gitlab račun te odabrati ime web stranice. 
 			
 			
 			\eject 

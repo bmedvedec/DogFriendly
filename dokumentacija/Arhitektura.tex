@@ -47,87 +47,118 @@ MVC koncept sastoji se od:
 		
 
 				
-		\section{Baza podataka}
+			\section{Baza podataka}
 
-  Za potrebe našeg sustava koristit ćemo Firestore, Google-ovu NoSQL cloud bazu podataka iz njihovog servisa Firebase koja svojom strukturom omogućava lake izmijene koje će pratiti skaliranje aplikacije. Gradivna jedinka baze je kolekcija (engl. \textit{collection}) definirana svojim imenom i skupom dokumenata (engl. \textit{documents}). Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu. Baza podataka ove aplikacije sastoji se od sljedećih kolekcija:
-  \begin{packed_item}
-	
-        	\item  users
-        	\item  companies
-        	\item  locations
-            \end{packed_item}
-		
-			\subsection{Opis tablica}
-			
-				
-				
-				\textbf{Users}\hspace{1cm}  Ova tablica sadrži sve relevantne informacije za korisnike aplikacije. Sadrži atribute: UserId, Username, email i CompanyOwner(boolean atribut koji nam govori je li korisnik vlasnik obrta). Tablica je u vezi \textit{One-to-One} s tablicom Companies i u vezi \textit{One-to-Many} je s tablicom Locations. 
-
-                
-                \begin{longtblr}[
-					label=none,
-					entry=none
-					]{
-						width = \textwidth,
-						colspec={|X[7,l]|X[6, l]|X[20, l]|}, 
-						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline {\textbf{Users}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}UserId & VARCHAR	&  	Hashirani string jedinstven za svakog korisnika  	\\ \hline
-					Username	& VARCHAR & Nadimak pod kojim će se korisnik predstavljati u aplikaciji  	\\ \hline 
-					email & VARCHAR &  E-mail adresa korisnika \\ \hline 
-					CompanyOwner & BOOLEAN	&  True ako je korisnik vlasnik obrta, inače False		\\ \hline  
-				\end{longtblr}
-                \textbf{Locations} \hspace{1cm} Ova tablica sadrži informacije o lokacijama dodanih od strane korisnika. Sadrži atribute: Ime lokacije, id korisnika koji je dodao lokaciju, status prikladnosti i koordinate. U vezi  \textit{Many-to-One} je s tablicom Users.
-                \begin{longtblr}[
-					label=none,
-					entry=none
-					]{
-						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
-						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline {\textbf{Locations}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}Name & VARCHAR	&  Ime lokacije  	\\ \hline
-					\SetCell{LightBlue} UserId	& VARCHAR &  Hashirani string niz jedinstven za korisnika koji je dodao lokaciju 	\\ \hline  
-					Prikladna & BOOLEAN	&  True ako je prikladna za ljubimce, inače False		\\ \hline 
-                    Coordinates & VARCHAR &  Koordinate lokacije \\ \hline 
-				\end{longtblr}
-                \textbf{Companies} \hspace{1cm} Ova tablica sadrži informacije o dodanim obrtima. Posjeduje atribute: OIB obrta, Id vlasnika obrta, adresu, naziv obrta, kojoj kategoriji pripada i kratki opis obrta.  U vezi  \textit{One-to-One} je s tablicom Users.
-                \begin{longtblr}[
-					label=none,
-					entry=none
-					]{
-						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
-						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline {\textbf{Companies}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}OIB & VARCHAR	&  Niz od 11 znamenki karakterističan za tu pravnu osobu  	\\ \hline
-					\SetCell{LightBlue} OwnerId	& VARCHAR &  Hashirani string niz jedinstven za korisnika koji je ujedino i vlasnik obrta 	\\ \hline  
-					Adress & VARCHAR	&  Adresa obrta	\\ \hline 
-                    Name & VARCHAR &  Ime obrta \\ \hline 
-                    Type & VARCHAR &  Kategorija kojoj obrt pripada \\ \hline 
-                    Phone & VARCHAR &  Kontakt broj obrta\\ \hline 
-					Description & VARCHAR &  Kratki opis obrta \\ \hline 
-				\end{longtblr}
-
-                
-				
-				
-			
-			\subsection{Dijagram baze podataka}
-				%\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
-                %oznaci kljuceve
-				Na dijagramu ključevi su "boldani", a strani ključevi podcrtani.
-                \begin{figure}[H]
-			\includegraphics[scale=1.2]{slike/Baza.png}
-			\centering
-			\caption{Dijagram baze podataka}
-			\label{fig:promjene}
-		          \end{figure}
-			
-			\eject
+			Za potrebe našeg sustava koristit ćemo Firestore, Google-ovu NoSQL cloud bazu podataka iz njihovog servisa Firebase koja svojom strukturom omogućava lake izmijene koje će pratiti skaliranje aplikacije. Gradivna jedinka baze je kolekcija (engl. \textit{collection}) definirana svojim imenom i skupom dokumenata (engl. \textit{documents}). Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu. Baza podataka ove aplikacije sastoji se od sljedećih kolekcija:
+			\begin{packed_item}
+			  
+					  \item  users
+					  \item  companies
+					  \item  locations
+					  \item  PaymentInfo
+					  \end{packed_item}
+				  
+					  \subsection{Opis tablica}
+					  
+						  
+						  
+						  \textbf{Users}\hspace{1cm}  Ova tablica sadrži sve relevantne informacije za korisnike aplikacije. Sadrži atribute: UserId, Username, email i CompanyOwner(boolean atribut koji nam govori je li korisnik vlasnik obrta). Unutar sebe tablica sadrži kolekciju PaymentInfo u kojoj su informacije o kartičnom plaćanju. Tablica je u vezi \textit{One-to-One} s tablicom Companies i u vezi \textit{One-to-Many} je s tablicom Locations. 
+		  
+						  
+						  \begin{longtblr}[
+							  label=none,
+							  entry=none
+							  ]{
+								  width = \textwidth,
+								  colspec={|X[7,l]|X[6, l]|X[20, l]|}, 
+								  rowhead = 1,
+							  } %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+							  \hline {\textbf{Users}}	 \\ \hline[3pt]
+							  \SetCell{LightGreen}UserId & VARCHAR	&  	Hashirani string jedinstven za svakog korisnika  	\\ \hline
+							  Username	& VARCHAR & Nadimak pod kojim će se korisnik predstavljati u aplikaciji  	\\ \hline 
+							  email & VARCHAR &  E-mail adresa korisnika \\ \hline 
+							  CompanyOwner & BOOLEAN	&  True ako je korisnik vlasnik obrta, inače False		\\ \hline  
+							  PaymentInfo & COLLECTION	&  Kolekcija s informacijama u plačanju		\\ \hline  
+						  \end{longtblr}
+		  
+						  \textbf{PaymentInfo}\hspace{1cm} ova tablica(kolekcija) je sadržana unutar tablice Users. Ovakav način rada nam dopuštaju NoSql baze poput Firebasea. Unutar ove kolekcije nalaze se svi potrebni podatci o plačanju karticom. 
+						  \begin{longtblr}[
+							  label=none,
+							  entry=none
+							  ]{
+								  width = \textwidth,
+								  colspec={|X[9,l]|X[6, l]|X[20, l]|}, 
+								  rowhead = 1,
+							  } %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+							  \SetCell{LightGreen}\hline {\textbf{PaymentInfo}}	 \\ \hline[3pt]
+							  VAT & INT	&  	Identifikacijski broj  	\\ \hline
+							  Adress	& VARCHAR & Adresa vlasnika kartice  	\\ \hline 
+							  CardCVC & INT &  Verifikacijski broj kartice \\ \hline 
+							  ExpiryDate & DATE	&  Datum isteka kartice	\\ \hline  
+							  City & VARCHAR	&  Grad vlasnika	\\ \hline  
+							  CompanyNamePay & VARCHAR	&  Ime vlasnika kartice	\\ \hline 
+							  CompanyOIBPay & VARCHAR	&  OIB vlasnika kartice	\\ \hline 
+							  Country & VARCHAR	&  Zemlja vlasnika 	\\ \hline
+							  FirstName & VARCHAR	&  Ime vlasnika 	\\ \hline 
+							  LastName & VARCHAR	&  Prezime vlasnika	\\ \hline 
+							  Region & VARCHAR	&  Regija vlasnika	\\ \hline
+							  ZipCode & INT	&  Poštarski broj	\\ \hline 
+							  Geopoint & GEOPOINT	&  Lokacija vlasnika kartice	\\ \hline 
+							  
+						  \end{longtblr}
+							  
+						  \textbf{Locations} \hspace{1cm} Ova tablica sadrži informacije o lokacijama dodanih od strane korisnika. Sadrži atribute: Ime lokacije, id korisnika koji je dodao lokaciju, status prikladnosti i koordinate. U vezi  \textit{Many-to-One} je s tablicom Users.
+						  \begin{longtblr}[
+							  label=none,
+							  entry=none
+							  ]{
+								  width = \textwidth,
+								  colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+								  rowhead = 1,
+							  } %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+							  \hline {\textbf{Locations}}	 \\ \hline[3pt]
+							  \SetCell{LightGreen}Name & VARCHAR	&  Ime lokacije  	\\ \hline
+							  \SetCell{LightBlue} UserId	& VARCHAR &  Hashirani string niz jedinstven za korisnika koji je dodao lokaciju 	\\ \hline  
+							  Coordinates & VARCHAR &  Koordinate lokacije \\ \hline 
+							  Category & VARCHAR &  Kategorija lokacije \\ \hline 
+							  Upvotes & INT &  Broj pozitivnih ocjena \\ \hline 
+							  Downvotes & INT &  Broj negativnih ocjena \\ \hline 
+						  \end{longtblr}
+						  \textbf{Companies} \hspace{1cm} Ova tablica sadrži informacije o dodanim obrtima. Posjeduje atribute: OIB obrta, Id vlasnika obrta, adresu, naziv obrta, kojoj kategoriji pripada i kratki opis obrta.  U vezi  \textit{One-to-One} je s tablicom Users.
+						  \begin{longtblr}[
+							  label=none,
+							  entry=none
+							  ]{
+								  width = \textwidth,
+								  colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+								  rowhead = 1,
+							  } %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+							  \hline {\textbf{Companies}}	 \\ \hline[3pt]
+							  \SetCell{LightGreen}OIB & VARCHAR	&  Niz od 11 znamenki karakterističan za tu pravnu osobu  	\\ \hline
+							  \SetCell{LightBlue} OwnerId	& VARCHAR &  Hashirani string niz jedinstven za korisnika koji je ujedino i vlasnik obrta 	\\ \hline  
+							  Adress & VARCHAR	&  Adresa obrta	\\ \hline 
+							  Name & VARCHAR &  Ime obrta \\ \hline 
+							  Type & VARCHAR &  Kategorija kojoj obrt pripada \\ \hline 
+							  Phone & VARCHAR &  Kontakt broj obrta\\ \hline 
+							  Description & VARCHAR &  Kratki opis obrta \\ \hline 
+							  Coordinates & GEOPOINT &  Koordinate obrta \\ \hline 
+						  \end{longtblr}
+		  
+						  
+						  
+						  
+					  
+					  \subsection{Dijagram baze podataka}
+						  %\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
+						  %oznaci kljuceve
+						  Na dijagramu ključevi su "boldani", a strani ključevi podcrtani.
+						  \begin{figure}[H]
+					  \includegraphics[scale=0.9]{slike/Baza.png}
+					  \centering
+					  \caption{Dijagram baze podataka}
+					  \label{fig:promjene}
+							\end{figure}
+					  
 			
 		\section{Dijagram razreda}
 		
@@ -137,27 +168,91 @@ MVC koncept sastoji se od:
 			
 			PrivatnaForm služi za unos informacija o privatnom korisniku, vrši provjeru ispravnosti unosa i ako je sve u redu kreira korisnika u firebaseu
 			
-			VlasnikForm služi za unos informacija o obrtu. Sadrži podatke potrebne za neki obrt, provjerava ispravnost unesenih podataka i ako je sve u redu kreira korisnika u firebaseu.
+			VlasnikForm služi za unos informacija o obrtu. Sadrži podatke potrebne za neki obrt, provjerava ispravnost unesenih podataka. Sadrži podatke o kartici  za plaćanje  i ako je sve u redu kreira korisnika u firebaseu.
 	
 	        Firebase služi za konfiguraciju baze i komunikaciju s istom. 
 	        
 	        Context stvara kontekst za trenutnog korisnika
 	        
-	        UseMyHooks provjerava nalazi li se lozinka u "password blacklisti" i ako da, traži promjenu lozinke.
-	        
+	        Hooks provjerava nalazi li se lozinka u "password blacklisti" i ako da, traži promjenu lozinke.
+
+             ChangePassword prikazuje stranicu za promjenu lozinke. Ako su sva polja popunjena i nema grešaka, submit gumb je omogućen. U protivnom nije. Provjerava se ispunjava li lozinka sve zahtjeve. Ako su svi zahtjevi ispunjeni, omogućuje se promjena trenutne lozinke u novu lozinku.
+    
+             ChangeInfo prikazuje stranicu za promjenu osobnih podataka. Omogućuje promjenu osobnih podataka ako novi podatci zadovoljavaju postavljene uvjete. 
+
+            Index prikazuje početnu stranicu na kojoj se prikazuje mapa, te sa koje se može prebaciti na ostale stranice.
+            
 	        Login korisniku prikazuje stranicu za ulogiravanje u aplikaciju. Prilikom log-ina gleda se postoji li korisnik u bazi, ako ne javlja se greška. Ako postoji ulogirava se u aplikaciju. Ne dozvoljava se upis dok sva polja nisu ispravno upisana.
 	        
 	        Register korisniku prikazuje stranicu za registraciju. U zavisnisti od odabranog prikazuje se ili "PrivatnaForma" ili "VlasnikForma"
 	        
 	        UserInfo prikazuje stranicu sa podatcima o ulogiranom korisniku. Prvotno funkcija povlači podatke o korisniku iz baze i ako je korisnik vlasnik firme, povlači i podatke o firmi. Te se isti podatci prikazuju na stranici
-	        
+
+            
+         
 	        \begin{figure}[H]
-			\includegraphics[scale=0.2]{slike/DijagramRazreda.png}
+			\includegraphics[scale=0.45]{slike/DijagramRazreda_veze.png}
+			\centering
+			\caption{Prikaz ovisnosti među razredima}
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.21]{slike/DijagramRazreda_partial.png}
 			\centering
 			\caption{Dijagram razreda}
 			\label{fig:promjene}
 		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.6]{slike/PrivatnaForm.png}
+			\centering
+			\caption{Detaljniji prikaz razreda PrivatnaForm}
+			\label{fig:promjene}
+		          \end{figure}
+
+            \begin{figure}[H]
+			\includegraphics[scale=0.35]{slike/VlasnikForm.png}
+			\centering
+			\caption{Detaljniji prikaz razreda VlasnikForm}
+			\label{fig:promjene}
+		          \end{figure}
+            
+			\section{Dijagram stanja}
+
+			Dijagram stanja prikazuje stanja objekta te prijelaze iz jednog stanja u drugo temeljenje na događajima. Na slici 4.7 prikazan je dijagram stanja za registriranog korisnika. Nakon prijave, klijentu se prikazuje početna stranica na kojoj vidi kartu te lokacije. Za odabranu lokaciju, korisnik može ostaviti ocjenu prikladnosti ako je lokacija postojeća ili dodati novu ako ne postoji u bazi. Također, korisnik može klikom na "Account" pregledati i uređivati osobne podatke te obrisati račun ili dodanu lokaciju. 
+
+			\begin{figure}[H]
+			\includegraphics[scale=0.4]{slike/DijagramStanja.png}
+			\centering
+			\caption{Dijagram stanja}
+			\label{fig:promjene}
+				\end{figure}
+
+         \section{Dijagram aktivnosti}
+         
+		 Dijagram aktivnosti primjenjuje se za opis modela toka upravljanja ili toka podataka. Ne upotrebljava se za modeliranje događajima poticanog ponašanja. U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog, a naglasak je na jednostavnosti. Na dijagramu aktivnosti 4.8 prikazan je proces dodavanja lokacije. Korisnik se prijavljuje u sustav, odabire lokaciju na karti koja već nije u bazi podataka (nema marker)  te mu se prikazuju informacije o toj lokaciji.  Odabire opciju dodavanja lokacije, ispunjava podatke za lokaciju i lokacija se sprema u bazu podataka te se korisniku prikazuje karta s novododanim markerom. 
+         
 			
+			\begin{figure}[H]
+			\includegraphics[scale=0.4]{slike/DijagramAktivnosti.png}
+			\centering
+			\caption{Dijagram aktivnosti}
+			\label{fig:promjene}
+				\end{figure}
+
+            \section{Dijagram komponenti}
+
+			Dijagram komponenti prikazan na slici 4.9. opisuje organizaciju i međuovisnost komponenti, interne strukture i odnose prema okolini. Sustavu se pristupa preko dva različita sučelja. Preko sučelja za dohvat HTML, CSS i JS datoteka poslužuju se datoteke koje pripadaju frontende dijelu aplikacije. Router je komponenta koja na upis s url određuje koja datoteka će se poslužiti na sučelje. Frontend dio se sastoji od niza JavaScript datoteka koje su raspore dene u logičke cjeline nazvane po tipovima aktora koji im pristupaju. Sve JavaScript datoteke ovise o React biblioteci iz koje dohvaćaju gotove komponente kao što su gumbi, forme i slično. Preko sučelja za dohvat JSON podataka pristupa se next-router komponenti. next-router poslužuje podatke koji pripadaju backend dijelu aplikacije, a podatke s poslužitelja se dohvaća pomoću komponente GetServerSideProps. Firebase je zadužen za dohvaćanje tablica iz firestore baze podataka. Podaci koji su pristigli iz baze se šalju dalje u obliku DTO (Data transfer object). Reactview komponenta preko dostupnih sučelja komunicira s Dog friendly aplikacijom te ovisno o korisnikovim akcijama osvježava prikaz i dohvaća nove podatke ili datoteke.
+			
+			\begin{figure}[H]
+			\includegraphics[scale=0.4]{slike/DijagramKomponenti.png}
+			\centering
+			\caption{Dijagram komponenti}
+			\label{fig:promjene}
+				\end{figure}
+    
+            
 			%\textbf{\textit{dio 2. revizije}}\\			
 			
 			%\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}

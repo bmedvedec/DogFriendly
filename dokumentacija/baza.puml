@@ -8,6 +8,9 @@ Index --|> Layout
 Register --|> Layout
 Login --|> Layout
 UserInfo --|> Layout
+ChangePassword --|> Layout
+ChangeInfo --|> Layout
+ChangePassword ..|> useMyHooks
 VlasnikForm --|> Register
 PrivatnaForm --|> Register
 VlasnikForm ..|> useMyHooks
@@ -99,6 +102,7 @@ class Login {
 class Register {
     -router: object
     -authUser: object
+    -loading: boolean
     -privatna: boolean
     -setPrivatna(privatna): void
     -vlasnik: boolean
@@ -147,6 +151,8 @@ class VlasnikForm {
     -setCompanyName(companyName): void
     -companyAddress: string
     -setCompanyAddress(companyAddress): void
+    -companyGeopoint: object
+    -setCompanyGeopoint(companyGeopoint): void
     -companyOIB: string
     -setCompanyOIB(companyOIB): void
     -companyPhone: string
@@ -163,13 +169,61 @@ class VlasnikForm {
     -setPasswordError(passwordError): void
     -companyNameError: string
     -setCompanyNameError(companyNameError): void
+    -companyOIBError: string
+    -setCompanyOIBError(companyOIBError): void
     -companyPhoneError: string
     -setCompanyPhoneError(companyPhoneError): void
     -companyDescError: string
     -setCompanyDescError(companyDescError): void
+    -firstName: string
+    -setFirstName(firstName): void
+    -lastName: string
+    -setLastName(lastName): void
+    -companyNamePay: string
+    -setCompanyNamePay(companyNamePay): void
+    -companyOIBPay: string
+    -setCompanyOIBPay(companyOIBPay): void
+    -address: string
+    -setAddress(address): void
+    -geopoint: object
+    -setGeopoint(geopoint): void
+    -country: string
+    -setCountry(country): void
+    -region: string
+    -setRegion(region): void
+    -city: string
+    -setCity(city): void
+    -zipCode: string
+    -setZipCode(zipCode): void
+    -VAT: string
+    -setVAT(VAT): void
+    -cardNumber: string
+    -setCardNumber(cardNumber): void
+    -cardExpiryDate: string
+    -setCardExpiryDate(cardExpiryDate): void
+    -cardCVC: string
+    -setCardCVC(cardCVC): void
+    -companyNamePayError: string
+    -setCompanyNamePayError(companyNamePayError): void
+    -companyOIBPayError: string
+    -setCompanyOIBPayError(companyOIBPayError): void
     -companyTypes: array
     -disabled: boolean
     -setDisabled(disabled): void
+    -checked: boolean
+    -setChecked(checked): void
+    -isLoaded: boolean
+    -loadError: string
+    -search: object
+    -setSearch(search): void
+    -searchCard: object
+    -setSearchCard(searchCard): void
+    -onSearchLoad(search): void
+    -onSearchLoadCard(searchCard): void
+    -onPlaceChanged(): void
+    -onPlaceChangedCard(): void
+    -libraries: array
+    -router: object
     -firebaseCreateCompanyOwner(username, email, password, companyName, companyAddress, companyOIB, companyPhone, companyDesc, companyType)
     -handleSubmit(event): void
     -useEffectDisabled(username, password, email, usernameExists, loading, companyName, companyAddress, companyOIB, companyPhone, companyDesc, companyType, loading): void
@@ -180,7 +234,11 @@ class VlasnikForm {
     -checkCompanyPhone(companyPhone): void
     -checkCompanyDesc(companyDesc): void
     -checkCompanyOIB(companyOIB): void
-    -VlasnikForm(): html
+    -checkCompanyNamePay(companyNamePay): void
+    -checkCompanyOIBPay(companyOIBPay): void
+    -addUserInfo(): void
+    -userInfoSwitch: object
+    +VlasnikForm(): html
 }
 
 class UserInfo {
@@ -194,7 +252,128 @@ class UserInfo {
 }
 
 class Index {
+    -libraries: array
+    -BootstrapInput: object
+    -BootstrapInputModal: object
+    -getServerSideProps(context): object
+    -companiesRef: object
+    -comapniesSnapshot: object
+    -initCompanies: array
+    -locationsRef: object
+    -locationsSnapshot: object
+    -initLocations: array
+    -ChildModal(name, address, categories, lat, lng, setMySearch, setParentOpen, uid) : html
     -authUser: object
     -loading: boolean
-    -firebaseSignOut(): void
+    -firebaseSignOut(): voi
+    -user: object
+    -setUser(user): void
+    -companyTypes: array
+    -companyType: string
+    -setCompanyType(companyType): void
+    -companies: array
+    -setCompanies(companies): void
+    -locations: array
+    -setLocations(locations): void
+    -getUserInfo(): void
+    -unsubscribeCompanies: object
+    -unsubscribeLocations: object
+    -isLoaded: boolean
+    -loadError: string
+    -modalData: object
+    -setModalData(modalData): void
+    -modalOpen: boolean
+    -setModalOpen(modalOpen): void
+    -map: object
+    -setMap(map): void
+    -containerStyle: object
+    -center: object
+    -setCenter(center): void
+    -myLocation: object
+    -setMyLocation(myLocation): void
+    -mySearch: object
+    -setMySearch(mySearch): void
+    -onLoad(marker): void
+    -autoComplete: object
+    -setAutoComplete(autoComplete): void
+    -onPlaceChanged(): void
+    -onAutocompleteLoad(autoComplete): void
+    -useEffectCurrentLocation(): void
+    -upvote(data): void
+    -downvote(data): void
+    -deleteLocation(id): void
+    -onMapLoad(map): void
+    -handleMapClick(event): void
+    +Home(initCompanies, initLocations): html 
+}
+
+class ChangePassword {
+    -loading: boolean
+    -setLoading(loading): void
+    -newPassowrd: string
+    -setNewPassword(newPassword): void
+    -passwordError: string
+    -setPasswordError(passwordError): void
+    -confirmPassword: string
+    -setConfirmPassword(confirmPassword): void
+    -confirmPasswordError: string
+    -setConfirmPasswordError(confirmPasswordError): void
+    -disabled: boolean
+    -setDisabled(disabled): void
+    -checkPasswordBlacklist(password): void
+    -useEffectDisabled(newPassword, passwordError, loading): void
+    -useEffectDisabledConfirm(confirmPassword, confirmPasswordError, loading): void
+    -checkPassword(password): void
+    -checkConfirmPassword(confirmPassword): void
+    -changePassowrd(event): void
+    +ChangePassword(): html
+}
+
+class ChangeInfo {
+    -authUser: object
+    -userInfo: object
+    -setUserInfo(userInfo): void
+    -companyInfo: object
+    -setCompanyInfo(companyInfo): void
+    -loading: boolean
+    -setLoading(loading): void
+    -disabled: boolean
+    -setDisabled(disabled): void
+    -username: string
+    -setUsername(username): void
+    -usernameExists: boolean
+    -setUsernameExists(usernameExists): void
+    -userUid: string
+    -setUserUid(userUid): void
+    -companyId: string
+    -setCompanyId(companyId): void
+    -companyName: string
+    -setCompanyName(companyName): void
+    -companyNameError: string
+    -setCompanyNameError(companyNameError): void
+    -companyDesc: string
+    -setCompanyDesc(companyDesc): void
+    -companyDescError: string
+    -setCompanyDescError(companyDescError): void
+    -useEffectDisabled(username, usernameExists, loading, companyName, companyDesc, companyNameError, companyDescError): void
+    -handleSave(event): void
+    -checkUsername(username): void
+    -checkCompanyName(companyName): void
+    -checkCompanyDesc(companyDesc): void
+    -getUserInfo(): void
+    +UserInfo(): html
+}
+
+class Tests {
+    -firebaseConfig: object
+    -app: object
+    -auth: object
+    -db: object
+    -checkDatabaseRead(): void
+    -checkDatabaseWrite(): void
+    -checkAuthenticationRegistration(): void
+    -checkAuthenticationRegistrationExistingEmail(): void
+    -checkAuthenticationLoginInvalidEmail(): void
+    -checkAuthenticationLogin(): void
+    +Test(): html
 }
