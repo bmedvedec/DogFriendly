@@ -6,10 +6,12 @@ import {
 	getDoc,
 	getDocs,
 	getFirestore,
-	setDoc,
 } from "firebase/firestore";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
+import {
+	createUserWithEmailAndPassword,
+	getAuth,
+	signInWithEmailAndPassword,
+} from "firebase/auth";
 import styles from "../styles/Test.module.scss";
 
 const firebaseConfig = {
@@ -77,7 +79,7 @@ export default function Test() {
 				console.log("WRITING DATA");
 				addDoc(collection(db, "dummyData"), data)
 					.then((docRef) => {
-						console.log("Document written with ID: ", docRef.id);
+						// console.log("Document written with ID: ", docRef.id);
 						console.log("####################");
 						console.log("DATA AFTER WRITE");
 						getDocs(collection(db, "dummyData")).then(
@@ -97,54 +99,129 @@ export default function Test() {
 			});
 	};
 
-    const checkAuthenticationRegistration = () => {
-        console.clear();
-        console.log("Creating user... ♻️");
-        const email = "testing@testing.com"
-        const password = "test12341234"
-        console.log("Email: " + email);
-        console.log("Password: " + password);
-        createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log("Successfully created user ✅");
-            console.log("User: ", user);
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log("Error creating user ❌");
-            console.log("Error code: " + errorCode);
-            console.log("Error message: " + errorMessage);
-            // ..
-        });
-    }
+	const checkAuthenticationRegistration = () => {
+		console.clear();
+		console.log("Creating user... ♻️");
+		const email = "testing@testing.com";
+		const password = "test12341234";
+		console.log("Email: " + email);
+		console.log("Password: " + password);
+		createUserWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				// Signed in
+				const user = userCredential.user;
+				console.log("Successfully created user ✅");
+				console.log("User: ", user);
+				// ...
+				// delete user
+				console.log("Deleting user... ♻️");
+				user.delete()
+					.then(() => {
+						// User deleted.
+						console.log("Successfully deleted user ✅");
+					})
+					.catch((error) => {
+						// An error ocurred
+						// ...
+						console.log("Error deleting user ❌");
+					});
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log("Error creating user ❌");
+				console.log("Error code: " + errorCode);
+				console.log("Error message: " + errorMessage);
+				// ..
+			});
+	};
 
-    const checkAuthenticationLogin = () => {
-        console.clear();
-        console.log("Logging in... ♻️");
-        const email = "testing@testing.com";
-        const password = "test12341234"
-        console.log("Email: " + email);
-        console.log("Password: " + password);
+	const checkAuthenticationRegistrationExistingEmail = () => {
+		console.clear();
+		console.log("Creating user... ♻️");
+		const email = "permanent@test.com";
+		const password = "test12341234";
+		console.log("Email: " + email);
+		console.log("Password: " + password);
+		createUserWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				// Signed in
+				const user = userCredential.user;
+				console.log("Successfully created user ✅");
+				console.log("User: ", user);
+				// ...
+				// delete user
+				console.log("Deleting user... ♻️");
+				user.delete()
+					.then(() => {
+						// User deleted.
+						console.log("Successfully deleted user ✅");
+					})
+					.catch((error) => {
+						// An error ocurred
+						// ...
+						console.log("Error deleting user ❌");
+					});
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log("Error creating user ❌");
+				console.log("Error code: " + errorCode);
+				console.log("Error message: " + errorMessage);
+				// ..
+			});
+	};
 
-        signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log("Successfully logged in ✅");
-            console.log("User: ", user);
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log("Error logging in ❌");
-            console.log("Error code: " + errorCode);
-            console.log("Error message: " + errorMessage);
-        });
-    }
-        
+	const checkAuthenticationLogin = () => {
+		console.clear();
+		console.log("Logging in... ♻️");
+		const email = "permanent@test.com";
+		const password = "test12341234";
+		console.log("Email: " + email);
+		console.log("Password: " + password);
+
+		signInWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				// Signed in
+				const user = userCredential.user;
+				console.log("Successfully logged in ✅");
+				console.log("User: ", user);
+				// ...
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log("Error logging in ❌");
+				console.log("Error code: " + errorCode);
+				console.log("Error message: " + errorMessage);
+			});
+	};
+
+	const checkAuthenticationLoginInvalidEmail = () => {
+		console.clear();
+		console.log("Logging in... ♻️");
+		const email = "permanent2@test.com";
+		const password = "test12341234";
+		console.log("Email: " + email);
+		console.log("Password: " + password);
+
+		signInWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				// Signed in
+				const user = userCredential.user;
+				console.log("Successfully logged in ✅");
+				console.log("User: ", user);
+				// ...
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log("Error logging in ❌");
+				console.log("Error code: " + errorCode);
+				console.log("Error message: " + errorMessage);
+			});
+	};
 
 	return (
 		<main className={styles.main}>
@@ -161,18 +238,38 @@ export default function Test() {
 					<button onClick={checkDatabaseWrite}>test</button>
 				</h2>
 			</div>
-            <div>
-                <h2>
-                    Check authentication registration{" "}
-                    <button onClick={checkAuthenticationRegistration}>test</button>
-                </h2>
-            </div>
-            <div>
-                <h2>
-                    Check authentication login{" "}
-                    <button onClick={checkAuthenticationLogin}>test</button>
-                </h2>
-            </div>
+			<div>
+				<h2>
+					Check authentication registration{" "}
+					<button onClick={checkAuthenticationRegistration}>
+						test
+					</button>
+				</h2>
+			</div>
+			<div>
+				<h2>
+					Check authentication registration with existing email{" "}
+					<button
+						onClick={checkAuthenticationRegistrationExistingEmail}
+					>
+						test
+					</button>
+				</h2>
+			</div>
+			<div>
+				<h2>
+					Check authentication login{" "}
+					<button onClick={checkAuthenticationLogin}>test</button>
+				</h2>
+			</div>
+			<div>
+				<h2>
+					Check authentication login with invalid email{" "}
+					<button onClick={checkAuthenticationLoginInvalidEmail}>
+						test
+					</button>
+				</h2>
+			</div>
 		</main>
 	);
 }
