@@ -1,8 +1,140 @@
 .container {
     display: flex;
+    flex-direction: row;
+    position: relative;
+    min-height: 100vh;
+
+    @media (max-width: 820px) {
+        flex-direction: column;
+
+        .leftSide {
+            width: 100%;
+            height: 50%;
+            padding-top: 48px;
+            flex-grow: 1;
+        }
+
+        .rightSide {
+            width: 100%;
+            height: 50%;
+            padding-top: 24px;
+            flex-grow: 1;
+        }
+
+        .login {
+            color: white;
+        }
+    }
+}
+
+.leftSide {
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 30%;
-    margin: auto;
-    height: 100vh;
+    align-items: center;
+    width: 50%;
+    background: linear-gradient(204.16deg, #423E9E 22.48%, #BD47BE 88.65%);
+    font-size: 2rem;
+    font-weight: 400;
+    text-align: center;
+    color: #F5F5F5;
+    padding: 24px;
+
+    @media (max-width: 430px) {
+        font-size: 1.5rem;
+    }
+}
+
+.appName {
+    position: absolute;
+    top: 0px;
+    left: 48px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+
+    @media (max-width: 430px) {
+        left: 24px;
+        font-size: 1rem;
+    }
+}
+
+.dog {
+    width: 40%;
+    height: auto;
+    object-fit: cover;
+}
+
+.rightSide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 24px;
+}
+
+.login {
+    position: absolute;
+    top: 0px;
+    right: 48px;
+    font-size: 1.1rem;
+    color: #423E9E;
+    font-weight: 100;
+
+    @media (max-width: 430px) {
+        right: 24px;
+        font-size: 1rem;
+    }
+}
+
+.link {
+    font-weight: 600;
+}
+
+.heading {
+    text-align: center;
+}
+
+.headingWelcome {
+    font-size: 2.4rem;
+    font-weight: bolder;
+    color: #3F126B;
+    margin-bottom: 0;
+    padding: 0px 12px;
+
+    @media (max-width: 430px) {
+        font-size: 1.8rem;
+    }
+}
+
+.headingRegister {
+    margin-top: 0;
+    padding-top: 4px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #B646BC;
+
+    @media (max-width: 430px) {
+        font-size: 1.2rem;
+    }
+}
+
+.registerChoiceContainer {
+    border-bottom: 1px solid #3F126B;
+    display: flex;
+    margin-bottom: 24px;
+    //strech children over the whole width
+    justify-content: space-between;
+    width: 75%;
+}
+
+.heroText {
+    margin: 0;
+}
+
+.already {
+    @media (max-width: 370px) {
+        display: none;
+    }
 }

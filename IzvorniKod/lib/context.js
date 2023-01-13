@@ -1,7 +1,8 @@
 import { createContext, useContext } from 'react';
 import { useFirebaseAuth } from './firebase';
 
-const authUserContext = createContext({
+// stvara kontekst za korisnika
+const authUserContext = createContext({ 
     authUser: null,
     loading: true,
     firebaseEmailPassSignIn: async () => {},
@@ -9,9 +10,11 @@ const authUserContext = createContext({
     firebaseSignOut: async () => {},
 })
 
+// hook koji koristimo za dohvat konteksta
 export function AuthUserProvider({ children }) {
     const auth = useFirebaseAuth();
     return (
+        // koristimo kontekst i proslijedimo mu vrijednosti
         <authUserContext.Provider value={auth}>
             {children}
         </authUserContext.Provider>

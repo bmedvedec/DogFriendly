@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-
+/firebaseEmulator
 # next.js
 /.next/
 /out/

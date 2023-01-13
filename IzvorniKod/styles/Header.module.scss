@@ -1,0 +1,30 @@
+.header {
+    min-height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #3F126B;
+    padding: 16px 32px;
+    color: white;
+    font-size: 1.1rem;
+}
+.right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-weight: light;
+    span:hover {
+        cursor: pointer;
+    }
+}
+.accountInfo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.loginOrRegister {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
