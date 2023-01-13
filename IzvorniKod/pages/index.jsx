@@ -777,26 +777,7 @@ export default function Home({ initCompanies, initLocations }) {
 										</span>
 									</button>
 								</div>
-								// <div>
-								// 	{companies
-								// 		.find(
-								// 			(company) =>
-								// 				company.id ===
-								// 				modalData.companyId
-								// 		)
-								// 		?.upvotes?.includes(authUser.uid) && (
-								// 			<p>Upvoted</p>
-								// 		)}
-								// 	{companies
-								// 		.find(
-								// 			(company) =>
-								// 				company.id ===
-								// 				modalData.companyId
-								// 		)
-								// 		?.downvotes?.includes(authUser.uid) && (
-								// 			<p>Downvoted</p>
-								// 		)}
-								// </div>
+								
 							)}
 						</>
 					)}

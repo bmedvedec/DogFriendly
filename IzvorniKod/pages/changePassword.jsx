@@ -1,25 +1,21 @@
-import styles from "../styles/login.module.scss";
+import styles from "../styles/userInfo.module.scss";
 import Layout from "../components/layout";
 import { useAuth } from "../lib/context";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useEffect, useState, useCallback } from "react";
 import debounce from "lodash.debounce";
-import { async } from "@firebase/util";
-import PlacanjeForm from "../components/forms/PlacanjeForm";
-import PersonalForm from "../components/forms/PersonalForm";
-import CompanyForm from "../components/forms/CompanyForm";
-import Header from "../components/Header";
+
 import { getAuth, updatePassword } from "firebase/auth";
 import { useMyHooks } from "../lib/hooks";
-
+import Link from "next/link";
 
 
 export default function changePassword() {
 	// inicijalizacija hook state-a
+	const { authUser, firebaseSignOut } = useAuth();
 
 	const [loading, setLoading] = useState(false);
-
 
 	const [newPassword, setNewPassword] = useState("");
 	const [passwordError, setPasswordError] = useState("");
@@ -30,7 +26,6 @@ export default function changePassword() {
 	const [disabled, setDisabled] = useState(false); // disabled state za submit button
 
 	const { checkPasswordBlacklist } = useMyHooks();
-
 
 	// funkcija (hook) koja se izvrsava svaki put kada se promijeni vrijednost new password
 	useEffect(() => {
@@ -60,8 +55,6 @@ export default function changePassword() {
 			setDisabled(true);
 		}
 	}, [confirmPassword, loading]); // state-ovi koji se provjeravaju
-
-
 
 
 	const checkPassword = useCallback(
@@ -99,13 +92,10 @@ export default function changePassword() {
 	);
 
 
-	
-
 	// function which updates password in firestore
 	async function changePassword(event) {
 
 		event.preventDefault(); // sprijecava ponovno ucitavanje stranice
-
 
 		console.log(newPassword);
 		const auth = getAuth();
@@ -120,8 +110,6 @@ export default function changePassword() {
 				//after pressing ok on alert go to userinfo page
 				window.location.href = "/userInfo";
 
-
-
 			})
 			.catch((error) => {
 				console.log(error);
@@ -131,16 +119,34 @@ export default function changePassword() {
 
 
 	return (
-		<Layout>
-			<Header />
+		<div className={styles.background}>
+			<header className={styles.header}>
+				<Link href="/"><span style={{ fontWeight: "bold" }}>Dog Friendly</span></Link>
+				{authUser ? (
+					<div className={styles.right}>
+						<div className={styles.accountInfo}>
+							<img src="/corgiHeader.png" alt="corgi header Icon for user" />
+							<Link href="/userInfo">Profile</Link>
+						</div>
+						<Link href="/"><span onClick={firebaseSignOut}><i>Sign out</i></span></Link>
+					</div>
+				) : (
+					<div className={styles.right}>
+						<div className={styles.loginOrRegister}>
+							<Link href="/login"><i>Login</i></Link>
+							or
+							<Link href="/register"><i>Register</i></Link>
+						</div>
+					</div>
+				)}
+			</header>
 
-			<div className={styles.login}>
-				<h1>Change password</h1>
+			<div className={styles.body}>
 
-				<form onSubmit={changePassword}>
+				<form className={styles.center} onSubmit={changePassword}>
+					<h1 className={styles.changeTitle}>Change password</h1>
 
 					<div className="input-container">
-						<label htmlFor="newPassword">New password</label>
 
 						<input
 							name="newPassword"
@@ -158,7 +164,6 @@ export default function changePassword() {
 					</div>
 
 					<div className="input-container">
-						<label htmlFor="confirmPassword">Confirm password</label>
 
 						<input
 							name="confirmPassword"
@@ -176,19 +181,14 @@ export default function changePassword() {
 					</div>
 
 					<input
-						className={styles.button}
+						className={styles.changeButton}
 						type="submit"
 						value="Save changes"
 						disabled={disabled}
 					/>
 				</form>
 			</div>
-
-
-
-
-
-		</Layout>
+		</div>
 	);
 
 }

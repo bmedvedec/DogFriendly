@@ -8,9 +8,7 @@ import styles from "../styles/userInfo.module.scss";
 import Link from "next/link";
 
 
-
 export async function getServerSideProps(context) {
-
 
 	const locationsRef = collection(db, "locations");
 	const locationsSnapshot = await getDocs(locationsRef);
@@ -96,12 +94,7 @@ export default function UserInfo({ initLocations }) {
 		}).catch((error) => {
 			console.error("Error removing document: ", error);
 
-
 		});
-
-
-
-
 
 	};
 
@@ -306,7 +299,7 @@ export default function UserInfo({ initLocations }) {
 										company name
 									</span>
 									<p className={styles.text}>
-										{userInfo.paymentInfo.companyNamePay}
+										{companyInfo.name}
 									</p>
 								</div>)}
 
@@ -366,7 +359,7 @@ export default function UserInfo({ initLocations }) {
 							</div>)
 						}
 
-						{personal && initLocations && !companyInfo && (
+						{personal && (initLocations.length > 0) && !companyInfo && (
 							<div className={styles.locationsContainer}>
 
 								{initLocations.map((location) => (
@@ -384,10 +377,6 @@ export default function UserInfo({ initLocations }) {
 											}}><i>delete</i></button>
 
 									</div>
-
-
-
-
 
 								))}
 							</div>
