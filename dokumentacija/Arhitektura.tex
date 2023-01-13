@@ -222,7 +222,14 @@ MVC koncept sastoji se od:
 
             \section{Dijagram komponenti}
 
-            Dijagram komponenti prikazan na slici 4.6. opisuje organizaciju i međuovisnost komponenti, interne strukture i odnose prema okolini. Sustavu se pristupa preko dva različita sučelja. Preko sučelja za dohvat HTML, CSS i JS datoteka poslužuju se datoteke koje pripadaju frontende dijelu aplikacije. Router je komponenta koja na upis s url određuje koja datoteka će se poslužiti na sučelje. Frontend dio se sastoji od niza
+			Dijagram komponenti prikazan na slici 4.6. opisuje organizaciju i međuovisnost komponenti, interne strukture i odnose prema okolini. Sustavu se pristupa preko dva različita sučelja. Preko sučelja za dohvat HTML, CSS i JS datoteka poslužuju se datoteke koje pripadaju frontende dijelu aplikacije. Router je komponenta koja na upis s url određuje koja datoteka će se poslužiti na sučelje. Frontend dio se sastoji od niza JavaScript datoteka koje su raspore dene u logičke cjeline nazvane po tipovima aktora koji im pristupaju. Sve JavaScript datoteke ovise o React biblioteci iz koje dohvaćaju gotove komponente kao što su gumbi, forme i slično. Preko sučelja za dohvat JSON podataka pristupa se next-router komponenti. next-router poslužuje podatke koji pripadaju backend dijelu aplikacije, a podatke s poslužitelja se dohvaća pomoću komponente GetServerSideProps. Firebase je zadužen za dohvaćanje tablica iz firestore baze podataka. Podaci koji su pristigli iz baze se šalju dalje u obliku DTO (Data transfer object). Reactview komponenta preko dostupnih sučelja komunicira s Dog friendly aplikacijom te ovisno o korisnikovim akcijama osvježava prikaz i dohvaća nove podatke ili datoteke.
+			
+			\begin{figure}[H]
+			\includegraphics[scale=0.4]{slike/DijagramKomponenti.png}
+			\centering
+			\caption{Dijagram komponenti}
+			\label{fig:promjene}
+				\end{figure}
     
             
 			%\textbf{\textit{dio 2. revizije}}\\			
