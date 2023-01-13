@@ -168,13 +168,17 @@ MVC koncept sastoji se od:
 			
 			PrivatnaForm služi za unos informacija o privatnom korisniku, vrši provjeru ispravnosti unosa i ako je sve u redu kreira korisnika u firebaseu
 			
-			VlasnikForm služi za unos informacija o obrtu. Sadrži podatke potrebne za neki obrt, provjerava ispravnost unesenih podataka i ako je sve u redu kreira korisnika u firebaseu.
+			VlasnikForm služi za unos informacija o obrtu. Sadrži podatke potrebne za neki obrt, provjerava ispravnost unesenih podataka. Sadrži podatke o kartici  za plaćanje  i ako je sve u redu kreira korisnika u firebaseu.
 	
 	        Firebase služi za konfiguraciju baze i komunikaciju s istom. 
 	        
 	        Context stvara kontekst za trenutnog korisnika
 	        
 	        Hooks provjerava nalazi li se lozinka u "password blacklisti" i ako da, traži promjenu lozinke.
+
+             ChangePassword prikazuje stranicu za promjenu lozinke. Ako su sva polja popunjena i nema grešaka, submit gumb je omogućen. U protivnom nije. Provjerava se ispunjava li lozinka sve zahtjeve. Ako su svi zahtjevi ispunjeni, omogućuje se promjena trenutne lozinke u novu lozinku.
+    
+             ChangeInfo prikazuje stranicu za promjenu osobnih podataka. Omogućuje promjenu osobnih podataka ako novi podatci zadovoljavaju postavljene uvjete. 
 
             Index prikazuje početnu stranicu na kojoj se prikazuje mapa, te sa koje se može prebaciti na ostale stranice.
             
