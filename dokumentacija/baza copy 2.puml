@@ -1,0 +1,138 @@
+@startuml modeli iz baze
+authUser <.. User : uid
+authUser ..> Firebase : authUser
+Context ..> authUser
+MyApp ..> Context : AuthUserProvider
+Layout --|> MyApp
+Index --|> Layout
+Register --|> Layout
+Login --|> Layout
+UserInfo --|> Layout
+ChangePassword --|> Layout
+ChangeInfo --|> Layout
+ChangePassword ..|> useMyHooks
+VlasnikForm --|> Register
+PrivatnaForm --|> Register
+VlasnikForm ..|> useMyHooks
+PrivatnaForm ..|> useMyHooks
+Company --* User : companyOwner? -> uid
+
+class authUser {
+    -uid: string
+    -email: string
+    -verified: boolean
+}
+
+class User {
+    -uid: string
+    -email: string
+    -username: string
+    -companyOwner: boolean
+}
+
+class Company {
+    -uid: string
+    -name: string
+    -address: string
+    -phone: string
+    -description: string
+    -type: string
+    -owner: string
+}
+
+class Firebase {
+    -firebaseConfig: object
+    -app: object
+    -db: object
+    -auth: object
+    -formatAuthUser(authUser): object
+    -authStateChanged(): void
+    -firebaseEmailPassSignIn(email, password): promise
+    -firebaseCreateUserEmailPass(username, email, password): void
+    -firebaseCreateCompanyOwner(username, email, password, companyName, companyAddress, companyOIB, companyPhone, companyDesc, companyType): void
+    -firebaseSignOut(): void
+    -firebase(): object
+}
+
+class Context {
+    -authUserContext(authUser, loading, firebaseEmailPassSignIn, firebaseCreateUserEmailPass, firebaseCreateCompanyOwner, firebaseSignOut): object
+    -auth(): object
+    -AuthUserProvider(children): object
+}
+
+interface useMyHooks {
+    -checkPasswordBlaclist(password): boolean
+}
+
+class MyApp {
+    -AuthUserProvider: object
+    -children: any
+    -myapp(): app
+}
+
+abstract class Layout {
+    -children: any
+    -description: string
+    -head: any
+    -linkFavicon: string
+    -title: string
+    -title(page): title
+    -layout(): html
+}
+
+class Login {
+    -router: object
+    -authUser: object
+    -email: string
+    -setEmail(email): void
+    -password: string
+    -setPassword(password): void
+    -error: string
+    -setError(error): void
+    -loading: boolean
+    -setLoading(loading): void
+    -disabled: boolean
+    -setDisabled(disabled): void
+    -firebaseEmailPassSignIn(email, password): promise
+    -handleSubmit(event): void
+    -useEffect(email, password): void
+    -login(): html
+}
+
+class Register {
+    -router: object
+    -authUser: object
+    -loading: boolean
+    -privatna: boolean
+    -setPrivatna(privatna): void
+    -vlasnik: boolean
+    -setVlasnik(vlasnik): void
+    -PrivatnaForm: object
+    -VlasnikForm: object
+    -register(): html
+}
+
+class PrivatnaForm {
+}
+
+class VlasnikForm {
+}
+
+class UserInfo {
+    -authUser: object
+    -userInfo: object
+    -setUserInfo(userInfo): void
+    -companyInfo: object
+    -setCompanyInfo(companyInfo): void
+    -useEffect(authUser): void
+    -userInfo(): html
+}
+
+class Index {
+}
+
+class ChangePassword {
+}
+
+class ChangeInfo {
+}

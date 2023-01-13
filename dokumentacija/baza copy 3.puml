@@ -1,0 +1,36 @@
+@startuml modeli iz baze
+
+class ChangeInfo {
+    -authUser: object
+    -userInfo: object
+    -setUserInfo(userInfo): void
+    -companyInfo: object
+    -setCompanyInfo(companyInfo): void
+    -loading: boolean
+    -setLoading(loading): void
+    -disabled: boolean
+    -setDisabled(disabled): void
+    -username: string
+    -setUsername(username): void
+    -usernameExists: boolean
+    -setUsernameExists(usernameExists): void
+    -userUid: string
+    -setUserUid(userUid): void
+    -companyId: string
+    -setCompanyId(companyId): void
+    -companyName: string
+    -setCompanyName(companyName): void
+    -companyNameError: string
+    -setCompanyNameError(companyNameError): void
+    -companyDesc: string
+    -setCompanyDesc(companyDesc): void
+    -companyDescError: string
+    -setCompanyDescError(companyDescError): void
+    -useEffectDisabled(username, usernameExists, loading, companyName, companyDesc, companyNameError, companyDescError): void
+    -handleSave(event): void
+    -checkUsername(username): void
+    -checkCompanyName(companyName): void
+    -checkCompanyDesc(companyDesc): void
+    -getUserInfo(): void
+    +UserInfo(): html
+}
